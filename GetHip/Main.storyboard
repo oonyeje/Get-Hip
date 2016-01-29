@@ -26,10 +26,10 @@
             </objects>
             <point key="canvasLocation" x="671" y="362"/>
         </scene>
-        <!--View Controller-->
+        <!--Friend Request View Controller-->
         <scene sceneID="cB3-Zf-GpF">
             <objects>
-                <viewController id="Iog-DT-pLJ" sceneMemberID="viewController">
+                <viewController id="Iog-DT-pLJ" customClass="FriendRequestViewController" customModule="GetHip" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="eI1-Ht-sHw"/>
                         <viewControllerLayoutGuide type="bottom" id="TbO-r5-p5C"/>
@@ -55,12 +55,22 @@
                                 <rect key="frame" x="92" y="172" width="137" height="137"/>
                                 <color key="backgroundColor" red="0.47790404040000001" green="0.47790404040000001" blue="0.47790404040000001" alpha="1" colorSpace="calibratedRGB"/>
                             </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="No Friend Found :(" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wxx-ws-paN">
+                                <rect key="frame" x="0.0" y="143" width="320" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                     <connections>
+                        <outlet property="displayImage" destination="dcC-PI-dUM" id="Lxu-7b-iya"/>
+                        <outlet property="foundName" destination="wxx-ws-paN" id="wjW-kZ-8UT"/>
+                        <outlet property="searchBar" destination="h8Q-XM-pW1" id="MKf-3P-5b3"/>
                         <outlet property="searchDisplayController" destination="NMM-eX-IwK" id="umT-fC-wZJ"/>
+                        <outlet property="sendRequest" destination="Gck-Ni-mM6" id="TI6-8O-dns"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ADA-FB-J9A" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -79,13 +89,13 @@
         <!--Friend Requests-->
         <scene sceneID="8SI-mK-KE7">
             <objects>
-                <tableViewController title="Friend Requests" id="Rnb-lz-mp4" sceneMemberID="viewController">
+                <tableViewController title="Friend Requests" id="Rnb-lz-mp4" customClass="PendingRequestViewController" customModule="GetHip" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="6eb-it-ynj">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="65" id="0aX-nL-3Yl">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="PendingCell" rowHeight="65" id="0aX-nL-3Yl" customClass="PendingFriendCell" customModule="GetHip" customModuleProvider="target">
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="0aX-nL-3Yl" id="pEH-Wf-32b">
                                     <autoresizingMask key="autoresizingMask"/>
@@ -113,6 +123,12 @@
                                         </button>
                                     </subviews>
                                 </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="acceptButton" destination="u49-z7-QQX" id="09O-Sv-ynY"/>
+                                    <outlet property="denyButton" destination="VKQ-62-km5" id="H9w-vc-REN"/>
+                                    <outlet property="friendName" destination="J2y-S7-GWi" id="jHl-D1-hbb"/>
+                                    <outlet property="proImg" destination="SGy-7j-oTR" id="Lyq-1c-xEA"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>
@@ -121,6 +137,9 @@
                         </connections>
                     </tableView>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
+                    <connections>
+                        <outlet property="table" destination="6eb-it-ynj" id="47m-Vo-uMm"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="eVC-XV-G1v" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -194,6 +213,9 @@
                                                 </label>
                                             </subviews>
                                         </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="requestNumber" destination="TSY-RW-sS0" id="Bfr-KC-qfd"/>
+                                        </connections>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="FriendCell" rowHeight="65" id="bPE-sl-MJy" customClass="FriendsCell" customModule="GetHip" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -228,15 +250,19 @@
                                 <action selector="dismissFriendView:" destination="Wv2-hP-rqT" id="kJQ-nN-1dX"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="3QF-Yw-Pq0"/>
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="3QF-Yw-Pq0">
+                            <connections>
+                                <action selector="addFriend:" destination="Wv2-hP-rqT" id="HtN-NM-NLa"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                     <connections>
                         <outlet property="searchDisplayController" destination="HND-c4-uRE" id="EAG-al-7RJ"/>
                         <outlet property="table" destination="Bxz-d2-wT5" id="iuG-He-Fll"/>
                         <segue destination="Iog-DT-pLJ" kind="show" identifier="FriendRequestSegue" id="7VN-Pi-TCg"/>
-                        <segue destination="Rnb-lz-mp4" kind="show" identifier="PendingRequestsSegue" id="Q5N-t6-TQW"/>
-                        <segue destination="QG7-6d-dTi" kind="showDetail" identifier="NoFriendRequestSegue" id="4Uy-oz-55l"/>
+                        <segue destination="Rnb-lz-mp4" kind="show" identifier="PendingRequestSegue" id="Q5N-t6-TQW"/>
+                        <segue destination="QG7-6d-dTi" kind="showDetail" identifier="NoRequestSegue" id="4Uy-oz-55l"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="2xN-Sf-spI" userLabel="First Responder" sceneMemberID="firstResponder"/>

@@ -41,6 +41,8 @@
 		3E379F021C3F794500F7BCCD /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3E379EFC1C3F794500F7BCCD /* Security.framework */; };
 		3E379F031C3F794500F7BCCD /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3E379EFD1C3F794500F7BCCD /* StoreKit.framework */; };
 		3E379F051C3F982900F7BCCD /* FriendsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E379F041C3F982900F7BCCD /* FriendsCell.swift */; };
+		3E3B14DC1C5BBB3B001C437F /* PendingRequestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E3B14DB1C5BBB3B001C437F /* PendingRequestViewController.swift */; };
+		3E3B14DE1C5BCC9B001C437F /* FriendRequestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E3B14DD1C5BCC9B001C437F /* FriendRequestViewController.swift */; };
 		3E4169491C385F1000B193AF /* 1x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3E4169481C385F1000B193AF /* 1x.png */; };
 		3E4169551C398A5B00B193AF /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E4169541C398A5B00B193AF /* SignUpViewController.swift */; };
 		3E4169571C399C4D00B193AF /* Images-3.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3E4169561C399C4D00B193AF /* Images-3.xcassets */; };
@@ -162,6 +164,8 @@
 		3E379EFD1C3F794500F7BCCD /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		3E379F041C3F982900F7BCCD /* FriendsCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FriendsCell.swift; sourceTree = "<group>"; };
 		3E3842E11C3E15DE005DD1FB /* ParseNetDebug.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ParseNetDebug.h; sourceTree = "<group>"; };
+		3E3B14DB1C5BBB3B001C437F /* PendingRequestViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PendingRequestViewController.swift; sourceTree = "<group>"; };
+		3E3B14DD1C5BCC9B001C437F /* FriendRequestViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FriendRequestViewController.swift; sourceTree = "<group>"; };
 		3E4169481C385F1000B193AF /* 1x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = 1x.png; path = "../../../Dropbox/Gethip/Screens/Logo  Screen/6 Logo Screen/1x.png"; sourceTree = "<group>"; };
 		3E4169541C398A5B00B193AF /* SignUpViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
 		3E4169561C399C4D00B193AF /* Images-3.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Images-3.xcassets"; sourceTree = "<group>"; };
@@ -291,6 +295,8 @@
 				3E379F041C3F982900F7BCCD /* FriendsCell.swift */,
 				3EDA82E01C473E900081ED53 /* FriendData.swift */,
 				3E1AAD131C3BD92600809367 /* FriendsListViewController.swift */,
+				3E3B14DB1C5BBB3B001C437F /* PendingRequestViewController.swift */,
+				3E3B14DD1C5BCC9B001C437F /* FriendRequestViewController.swift */,
 			);
 			name = FriendListSource;
 			sourceTree = "<group>";
@@ -775,6 +781,7 @@
 				3E1AAD141C3BD92600809367 /* FriendsListViewController.swift in Sources */,
 				3E326BCE1C51C77600F785CF /* SettingsCellWrapper.swift in Sources */,
 				3E627FF31C55AE35005C0372 /* TDAudioPlayerConstants.m in Sources */,
+				3E3B14DC1C5BBB3B001C437F /* PendingRequestViewController.swift in Sources */,
 				3E379EF61C3E646000F7BCCD /* ParseNetDebug.m in Sources */,
 				3E627FED1C55AE35005C0372 /* TDAudioQueueBufferManager.m in Sources */,
 				3EBE976F1C53E6950079B54A /* InviteFriendCell.swift in Sources */,
@@ -794,6 +801,7 @@
 				3E4169551C398A5B00B193AF /* SignUpViewController.swift in Sources */,
 				3E627FEE1C55AE35005C0372 /* TDAudioQueueController.m in Sources */,
 				3E627FE71C55AE35005C0372 /* NSMutableArray+QueueMethods.m in Sources */,
+				3E3B14DE1C5BCC9B001C437F /* FriendRequestViewController.swift in Sources */,
 				3E18D4931C51F6230012F7DF /* UserParseData.swift in Sources */,
 				3E5952851C39E54A00C88C71 /* HomeScreenViewController.swift in Sources */,
 			);

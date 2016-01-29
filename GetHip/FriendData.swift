@@ -11,9 +11,14 @@ import Foundation
 class FriendData {
     var displayName: String!
     var profileImg: UIImage!
+    var status: String!
     
-    init(display: String){
+    init(display: String, status: String){
         self.displayName = display
         self.profileImg = nil
+        self.status = status
+        
     }
+    
+
 }

@@ -30,6 +30,7 @@ class FriendDataSource{
                     //var image:UIImage = UIImage()
                     
                     let userName = object.objectForKey("OtherUser")!.objectForKey("username") as! String
+                    let requestStatus = object.objectForKey("RequestStatus")! as! String
                     
                     /* let pimage:PFFile = object["profilePicture"] as! PFFile
 
@@ -41,7 +42,7 @@ class FriendDataSource{
                         }
                     })*/
                 
-                        var newFriend: FriendData = FriendData(display: userName)
+                        var newFriend: FriendData = FriendData(display: userName, status: requestStatus)
                         //print(userName)
                         self.dataSource.append(newFriend)
                     

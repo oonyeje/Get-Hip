@@ -11,6 +11,7 @@ import UIKit
 class FriendsListViewController: UIViewController, UITableViewDelegate, UITableViewDataSource/*PFQueryTableViewController*/ {
     //var manager = FriendDataSource()
     var friends = []
+    var request = []
     
     @IBOutlet weak var table: UITableView!
     
@@ -19,10 +20,13 @@ class FriendsListViewController: UIViewController, UITableViewDelegate, UITableV
         
         self.parentViewController?.dismissViewControllerAnimated(true, completion: nil)
     }
-   
+    @IBAction func addFriend(sender: UIBarButtonItem){
+        self.performSegueWithIdentifier("FriendRequestSegue", sender: nil)
+    }
     
-    func setData(frnds:[FriendData]){
+    func setData(frnds:[FriendData], requst: [FriendData]){
         self.friends = frnds
+        self.request = requst
     }
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -60,6 +64,8 @@ class FriendsListViewController: UIViewController, UITableViewDelegate, UITableV
         if( indexPath.row == 0){
             let cell = self.table.dequeueReusableCellWithIdentifier("RequestCell", forIndexPath: indexPath) as? FriendRequestCell
             
+            //sets count for current number of request
+            cell?.requestNumber.text = String(self.request.count)
             return cell!
             
         }
@@ -95,6 +101,18 @@ class FriendsListViewController: UIViewController, UITableViewDelegate, UITableV
         
     }
     
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        
+        if(indexPath.row == 0){
+            if(self.request.count == 0){
+                self.performSegueWithIdentifier("NoRequestSegue", sender: nil)
+            }else{
+                self.performSegueWithIdentifier("PendingRequestSegue", sender: nil)
+            }
+        }
+        
+    }
+    
     override func setEditing(editing: Bool, animated: Bool) {
         super.setEditing(editing, animated: animated)
         self.table.setEditing(editing, animated: true)
@@ -110,6 +128,19 @@ class FriendsListViewController: UIViewController, UITableViewDelegate, UITableV
             println("delete")
         default:
             return
+        
+        }
+    }
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if segue.identifier == "PendingRequestSegue" {
+            
+            let vc: PendingRequestViewController = (segue.destinationViewController as? PendingRequestViewController)!
+            vc.setData(self.request as! [FriendData])
+            
+        }
+        
+        if segue.identifier == "FriendRequestSegue" {
         
         }
     }

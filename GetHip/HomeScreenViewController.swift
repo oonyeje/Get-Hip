@@ -12,6 +12,7 @@ class HomeScreenViewController: UIViewController {
     var usrDataManager = UserParseDataSource()
     var frndDataManager = FriendDataSource()
     var friendData: [FriendData] = []
+    var requestData: [FriendData] = []
     var userData: [UserParseData] = []
     let partyData = PartyServiceManager()
     
@@ -20,7 +21,16 @@ class HomeScreenViewController: UIViewController {
     
     //async data update methods
     func refreshFriendData(notification:NSNotification){
-        self.friendData = self.frndDataManager.getFriends()
+        
+        let friendInfo = self.frndDataManager.getFriends()
+        
+        for pendingFriend in friendInfo {
+            if pendingFriend.status == "pending"{
+                self.requestData.append(pendingFriend)
+            }else{
+                self.friendData.append(pendingFriend)
+            }
+        }
     }
     
     func refreshUserData(notification:NSNotification){
@@ -85,7 +95,7 @@ class HomeScreenViewController: UIViewController {
             let nav: UINavigationController = (segue.destinationViewController as? UINavigationController)!
             
             let vc: FriendsListViewController = (nav.viewControllers[0] as? FriendsListViewController)!
-            vc.setData(self.friendData)
+            vc.setData(self.friendData, requst: self.requestData)
         }
     }
     
