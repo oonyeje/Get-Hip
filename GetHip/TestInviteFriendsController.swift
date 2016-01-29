@@ -55,8 +55,8 @@ class TestInviteFriendsController: UIViewController, UITableViewDelegate, UITabl
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.table.delegate = self
         self.table.dataSource = self
+        self.table.delegate = self
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
         
