@@ -8,6 +8,7 @@
 
 import Foundation
 import MultipeerConnectivity
+import MediaPlayer
 
 
 protocol PartyServiceManagerDelegate {
@@ -46,6 +47,9 @@ class PartyServiceManager: NSObject {
     
     var connectingPeersDictionary = NSMutableDictionary()
     var disconnectedPeersDictionary = NSMutableDictionary()
+    
+    //party variables
+    var currentSong: MPMediaItem! = nil
     
     /*init(){
         
@@ -130,6 +134,10 @@ class PartyServiceManager: NSObject {
     func initializeSession(){
         self.session = MCSession(peer: self.myPeerID, securityIdentity: nil, encryptionPreference: MCEncryptionPreference.Required)
         println("Started Browsing for peers")
+    }
+    
+    func setSong(media: MPMediaItem!){
+        self.currentSong = media
     }
     
     //Deprecated

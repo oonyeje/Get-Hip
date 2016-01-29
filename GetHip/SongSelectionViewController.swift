@@ -10,7 +10,7 @@ import UIKit
 import MediaPlayer
 
 class SongSelectionViewController: UIViewController, UITableViewDelegate, UITableViewDataSource  {
-    
+    var party: PartyServiceManager! = nil
     
     
     @IBOutlet weak var table: UITableView!
@@ -118,6 +118,47 @@ class SongSelectionViewController: UIViewController, UITableViewDelegate, UITabl
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        
+        if( indexPath.row == 0){
+            
+            
+        }
+        else{
+            switch self.filter{
+                
+                //return albums cell
+            case "albums":
+                let cell = self.table.dequeueReusableCellWithIdentifier("AlbumCell", forIndexPath: indexPath) as? AlbumCell
+                
+                
+                var albumsQuery = MPMediaQuery.albumsQuery()
+                var albums = albumsQuery.items
+                var rowItem: MPMediaItem = albums[indexPath.row - 1] as! MPMediaItem
+                //segue to song selection from album selection
+                
+                
+                //return artists cell
+            case "artists":
+                let cell = self.table.dequeueReusableCellWithIdentifier("ArtistCell", forIndexPath: indexPath) as? ArtistCell
+                
+                
+                var artistsQuery = MPMediaQuery.artistsQuery()
+                var artists = artistsQuery.items
+                var rowItem: MPMediaItem = artists[indexPath.row - 1] as! MPMediaItem
+                //segue to song selction from artist
+                
+                //return song cell
+            default:
+                let cell = self.table.dequeueReusableCellWithIdentifier("SongCell", forIndexPath: indexPath) as? SongCell
+                
+                
+                var songsQuery = MPMediaQuery.songsQuery()
+                var songs = songsQuery.items
+                var rowItem: MPMediaItem = songs[indexPath.row - 1] as! MPMediaItem
+                self.party.setSong(rowItem)
+            }
+        }
+        
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
