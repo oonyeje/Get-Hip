@@ -74,7 +74,7 @@ class SongSelectionViewController: UIViewController, UITableViewDelegate, UITabl
         super.viewDidLoad()
         self.table.delegate = self
         self.table.dataSource = self
-
+        self.title = "Select a Song"
         // Do any additional setup after loading the view.
     }
 

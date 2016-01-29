@@ -42,6 +42,7 @@ class HomeScreenViewController: UIViewController {
         self.view.backgroundColor = UIColor.whiteColor()
         CreateAPartyBtn.layer.cornerRadius = 5
         CreateAPartyBtn.layer.borderWidth = 1
+        self.navigationController?.navigationBarHidden = true
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "loadID:", name: "gotDisplayID", object: nil)
         

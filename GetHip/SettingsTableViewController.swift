@@ -8,7 +8,7 @@
 
 import UIKit
 
-class SettingsTableViewController: UITableViewController {
+class SettingsTableViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
    // var manager = UserParseDataSource()
     var user = []
     
@@ -39,11 +39,13 @@ class SettingsTableViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.navigationItem.title = "Settings"
+        self.title = "Settings"
         
         self.logOutBtn.layer.borderWidth = 1
         self.logOutBtn.layer.cornerRadius = 5
         self.logOutBtn.layer.borderColor = UIColor.blackColor().CGColor
+        self.table.dataSource = self
+        self.table.delegate = self
         
         //NSNotificationCenter.defaultCenter().addObserver(self, selector: "refreshTable:", name: "refreshSettingsView", object: nil)
         
@@ -62,7 +64,7 @@ class SettingsTableViewController: UITableViewController {
 
     // MARK: - Table view data source
 
-    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         // #warning Potentially incomplete method implementation.
         // Return the number of sections.
         return 1
@@ -70,17 +72,17 @@ class SettingsTableViewController: UITableViewController {
     
     
 
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete method implementation.
         // Return the number of rows in the section.
         return 5
     }
     
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         println(indexPath.row)
         switch indexPath.row {
         case 0:
-            let cell = (self.tableView.dequeueReusableCellWithIdentifier("DispNameCell", forIndexPath: indexPath) as? DisplayNameCell)!
+            let cell = (self.table.dequeueReusableCellWithIdentifier("DispNameCell", forIndexPath: indexPath) as? DisplayNameCell)!
             
             if self.user.count > 0 {
                 cell.dispName.text = (self.user[0] as? UserParseData)!.displayName
@@ -89,7 +91,7 @@ class SettingsTableViewController: UITableViewController {
             return cell
             
         case 1:
-            let cell = (self.tableView.dequeueReusableCellWithIdentifier("UserNameCell", forIndexPath: indexPath) as? UserNameCell)!
+            let cell = (self.table.dequeueReusableCellWithIdentifier("UserNameCell", forIndexPath: indexPath) as? UserNameCell)!
             
             if self.user.count > 0 {
                 cell.usrName.text = (self.user[0] as? UserParseData)!.username
@@ -98,7 +100,7 @@ class SettingsTableViewController: UITableViewController {
             return cell
             
         case 2:
-            let cell = (self.tableView.dequeueReusableCellWithIdentifier("EmailCell", forIndexPath: indexPath) as? EmailCell)!
+            let cell = (self.table.dequeueReusableCellWithIdentifier("EmailCell", forIndexPath: indexPath) as? EmailCell)!
             
             if self.user.count > 0 {
                 cell.email.text = (self.user[0] as? UserParseData)!.email
@@ -122,9 +124,10 @@ class SettingsTableViewController: UITableViewController {
             
             return cell
         }
+        
     }
     
-    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
         switch indexPath.row {
             
