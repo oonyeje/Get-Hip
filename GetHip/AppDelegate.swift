@@ -8,14 +8,21 @@
 
 import UIKit
 import CoreData
+import CoreLocation
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate , CLLocationManagerDelegate{
 
     var window: UIWindow?
+   // var locationStarted = false
+   // var locationManager: CLLocationManager = CLLocationManager()
+   // var app = UIApplication.sharedApplication()
     
-
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
+        
+        //create new CLLocaationManager
+        /*var locationStarted = false
+        locationManager.delegate = self*/
         
         Parse.logLevel()
         
@@ -25,8 +32,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Override point for customization after application launch.
         Parse.setApplicationId("OUFlGeqCzg03ZbstGcbskj7UNwp53Y0yad9Fi6I0", clientKey: "xaw0kbAFnBi3zLhT1uSnzrzju56m7CnQJ8hJHW1K")
         PFFacebookUtils.initializeFacebookWithApplicationLaunchOptions(launchOptions);
+        /*
         let paths = NSSearchPathForDirectoriesInDomains(NSSearchPathDirectory.DocumentDirectory, NSSearchPathDomainMask.UserDomainMask, true)
-        print(paths[0])
+        print(paths[0])*/
+        
         return true
     }
     
@@ -50,8 +59,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     
     func applicationDidEnterBackground(application: UIApplication) {
-        // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
-        // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
+      //  locationManager.startUpdatingLocation()
     }
 
     func applicationWillEnterForeground(application: UIApplication) {
@@ -68,7 +76,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Saves changes in the application's managed object context before the application terminates.
         self.saveContext()
     }
-
+    
+    
+    
     // MARK: - Core Data stack
 
     lazy var applicationDocumentsDirectory: NSURL = {

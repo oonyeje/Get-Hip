@@ -141,7 +141,20 @@ class FriendsListViewController: UIViewController, UITableViewDelegate, UITableV
         }
         
         if segue.identifier == "FriendRequestSegue" {
-        
+           /* var frndNames: [String] = []
+            for i in 0...self.friends.count-1{
+                var str:String! = self.friends[i].displayName as String!
+                frndNames.append(str)
+            }
+            
+            /*for name in self.friends{
+                //bad instruction here, fix later
+                println(name.displayName as String!)
+                frndNames.append(name.displayName!)
+            }*/
+            
+            let vc: FriendRequestViewController = (segue.destinationViewController as? FriendRequestViewController)!
+            vc.setData(frndNames)*/
         }
     }
 

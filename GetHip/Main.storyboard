@@ -38,18 +38,14 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <searchBar contentMode="redraw" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="h8Q-XM-pW1">
-                                <rect key="frame" x="0.0" y="64" width="320" height="44"/>
-                                <textInputTraits key="textInputTraits"/>
-                                <connections>
-                                    <outlet property="delegate" destination="Iog-DT-pLJ" id="P8f-w3-vgg"/>
-                                </connections>
-                            </searchBar>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Gck-Ni-mM6">
                                 <rect key="frame" x="85" y="329" width="150" height="30"/>
                                 <state key="normal" backgroundImage="Send.png">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="sendButtonClicked:" destination="Iog-DT-pLJ" eventType="touchUpInside" id="AqX-lB-tHv"/>
+                                </connections>
                             </button>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="dcC-PI-dUM">
                                 <rect key="frame" x="92" y="172" width="137" height="137"/>
@@ -61,6 +57,14 @@
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Search for a new Friend" textAlignment="center" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="EAo-0U-cmz">
+                                <rect key="frame" x="0.0" y="64" width="320" height="30"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                <textInputTraits key="textInputTraits"/>
+                                <connections>
+                                    <action selector="buttonClicked:" destination="Iog-DT-pLJ" eventType="editingDidEnd" id="Xrc-To-w28"/>
+                                </connections>
+                            </textField>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
@@ -68,21 +72,11 @@
                     <connections>
                         <outlet property="displayImage" destination="dcC-PI-dUM" id="Lxu-7b-iya"/>
                         <outlet property="foundName" destination="wxx-ws-paN" id="wjW-kZ-8UT"/>
-                        <outlet property="searchBar" destination="h8Q-XM-pW1" id="MKf-3P-5b3"/>
-                        <outlet property="searchDisplayController" destination="NMM-eX-IwK" id="umT-fC-wZJ"/>
+                        <outlet property="searchBar" destination="EAo-0U-cmz" id="GVg-mw-8h0"/>
                         <outlet property="sendRequest" destination="Gck-Ni-mM6" id="TI6-8O-dns"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ADA-FB-J9A" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <searchDisplayController id="NMM-eX-IwK">
-                    <connections>
-                        <outlet property="delegate" destination="Iog-DT-pLJ" id="9AD-Tz-PcE"/>
-                        <outlet property="searchBar" destination="h8Q-XM-pW1" id="dzH-oO-HLs"/>
-                        <outlet property="searchContentsController" destination="Iog-DT-pLJ" id="fVJ-8e-3wm"/>
-                        <outlet property="searchResultsDataSource" destination="Iog-DT-pLJ" id="3ar-To-0xK"/>
-                        <outlet property="searchResultsDelegate" destination="Iog-DT-pLJ" id="BDA-1Y-kVj"/>
-                    </connections>
-                </searchDisplayController>
             </objects>
             <point key="canvasLocation" x="471" y="-1207"/>
         </scene>
@@ -185,30 +179,30 @@
                                 <rect key="frame" x="0.0" y="64" width="320" height="504"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <searchBar key="tableHeaderView" contentMode="redraw" id="pFw-ta-NIX">
-                                    <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
-                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                    <rect key="frame" x="0.0" y="262" width="320" height="44"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <textInputTraits key="textInputTraits"/>
                                     <connections>
                                         <outlet property="delegate" destination="Wv2-hP-rqT" id="a4A-dx-bsZ"/>
                                     </connections>
                                 </searchBar>
                                 <prototypes>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="RequestCell" rowHeight="24" id="3OS-XI-GBP" customClass="FriendRequestCell" customModule="GetHip" customModuleProvider="target">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="RequestCell" rowHeight="23" id="3OS-XI-GBP" customClass="FriendRequestCell" customModule="GetHip" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="3OS-XI-GBP" id="02t-J2-u14">
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Friend Requests" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MOq-7s-3br">
-                                                    <rect key="frame" x="21" y="2" width="139" height="21"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="0" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TSY-RW-sS0">
                                                     <rect key="frame" x="237" y="1" width="42" height="21"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" red="0.53841145833333326" green="0.53841145833333326" blue="0.53841145833333326" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Friend Requests" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MOq-7s-3br">
+                                                    <rect key="frame" x="21" y="1" width="139" height="21"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
