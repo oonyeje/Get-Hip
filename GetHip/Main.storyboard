@@ -108,12 +108,18 @@
                                             <state key="normal" image="Accept.png">
                                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                             </state>
+                                            <connections>
+                                                <action selector="didAcceptFriend:" destination="Rnb-lz-mp4" eventType="touchUpInside" id="Tdz-pW-bEv"/>
+                                            </connections>
                                         </button>
                                         <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VKQ-62-km5">
                                             <rect key="frame" x="182" y="17" width="28" height="28"/>
                                             <state key="normal" image="Cancel.png">
                                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                             </state>
+                                            <connections>
+                                                <action selector="didRejectFriend:" destination="Rnb-lz-mp4" eventType="touchUpInside" id="cFh-Yk-AUE"/>
+                                            </connections>
                                         </button>
                                     </subviews>
                                 </tableViewCellContentView>

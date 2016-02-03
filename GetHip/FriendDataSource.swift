@@ -68,7 +68,9 @@ class FriendDataSource{
                                 var newFriend: FriendData = FriendData(display: userName, status: requestStatus)
                                 //print(userName)
                                 self.dataSource.append(newFriend)
+                                
                             }
+                            NSNotificationCenter.defaultCenter().postNotificationName("refreshTableView", object: nil)
                         }
                     })
                     
@@ -77,7 +79,7 @@ class FriendDataSource{
                 
             }
     
-            NSNotificationCenter.defaultCenter().postNotificationName("refreshTableView", object: nil)
+            
             
         }
         

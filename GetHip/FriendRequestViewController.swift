@@ -20,7 +20,6 @@ class FriendRequestViewController: UIViewController{
     @IBAction func sendButtonClicked(sender: AnyObject){
         var query = PFQuery(className: "_User")
         query.whereKey("username", equalTo: foundName.text!)
-        println(foundName.text!)
         dispatch_async(dispatch_get_main_queue(),{
             query.getFirstObjectInBackgroundWithBlock({
                 (object:PFObject?, error: NSError?) -> Void in

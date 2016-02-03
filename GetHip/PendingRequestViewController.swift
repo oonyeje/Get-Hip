@@ -13,6 +13,66 @@ class PendingRequestViewController: UITableViewController {
     
     var requests = []
     
+    
+    @IBAction func didAcceptFriend(sender: AnyObject?){
+        var path:NSIndexPath = self.table.indexPathForCell(sender?.superview!!.superview as! PendingFriendCell)!
+        var cell: PendingFriendCell! = self.table.cellForRowAtIndexPath(path) as! PendingFriendCell
+        
+        var query: PFQuery! = PFQuery(className: "FriendRequest")
+        query.whereKey("username", equalTo: PFUser.currentUser()!.username!)
+        query.whereKey("RequestStatus", equalTo: "pending")
+        query.whereKey("inRealtionTo", equalTo: cell.friendName.text!)
+        query.includeKey("OtherUser")
+        
+        dispatch_async(dispatch_get_main_queue(), {
+            query.getFirstObjectInBackgroundWithBlock({
+                (object:PFObject?, error: NSError?) -> Void in
+                
+                if(error == nil){
+                    object!.setObject("accepted", forKey: "RequestStatus")
+                    object!.save()
+                    PFUser.currentUser()?.relationForKey("FriendRequest").addObject(object!)
+                    
+                    dispatch_async(dispatch_get_main_queue(), {() -> Void in
+                        PFUser.currentUser()!.saveInBackgroundWithBlock({
+                            (succeeded, error) -> Void in
+                            
+                            if(succeeded){
+                                
+                            }
+                            
+                        })
+                        
+                    })
+                    
+                    //change requestStatus of other user who initiated request
+                    var otherQuery: PFQuery! = PFQuery(className: "FriendRequest")
+                    println(object!.objectForKey("OtherUser")!.objectForKey("username")!)
+                    otherQuery.whereKey("username", equalTo: object!.objectForKey("OtherUser")!.objectForKey("username")!)
+                    otherQuery.whereKey("inRealtionTo", equalTo: PFUser.currentUser()?.username as String!)
+                    otherQuery.whereKey("RequestStatus", equalTo: "Awaiting Response")
+                    
+                    dispatch_async(dispatch_get_main_queue(), {
+                        otherQuery.getFirstObjectInBackgroundWithBlock({
+                            (object, error) -> Void in
+                            
+                            if(error == nil){
+                                object!.setObject("accepted", forKey: "RequestStatus")
+                                object!.save()
+                            }
+                        })
+                    })
+                    
+                }
+            })
+        })
+        
+        
+    }
+    
+    @IBAction func didRejectFriend(sender: AnyObject?){
+    
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = "Friend Requests"
