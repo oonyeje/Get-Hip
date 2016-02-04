@@ -159,9 +159,9 @@ class EmailDetailViewController: UIViewController {
     
 }
 
-class ProfileDetailViewController: UIViewController {
+class ProfileDetailViewController: UIViewController, UINavigationControllerDelegate, UIImagePickerControllerDelegate {
     var profileImg: UIImageView!
-    
+    private var picker = UIImagePickerController()
     
     @IBOutlet weak var img: UIImageView!
     @IBOutlet weak var ChngPhtoBtn: UIButton!
@@ -169,7 +169,32 @@ class ProfileDetailViewController: UIViewController {
     
     
     @IBAction func changePhoto(sender: UIButton) {
-        //code to change profileImg
+        let captureMenu = UIAlertController(title: nil, message:nil, preferredStyle: .ActionSheet)
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel, handler: {
+            (alert: UIAlertAction!) -> Void in
+        })
+        
+        let cameraAction = UIAlertAction(title: "Take a New Pic", style: .Default, handler: {
+            (alert: UIAlertAction!) -> Void in
+            self.picker.allowsEditing = false
+            self.picker.sourceType = UIImagePickerControllerSourceType.Camera
+            self.picker.cameraCaptureMode = .Photo
+            self.presentViewController(self.picker, animated: true, completion: nil)
+            
+        })
+        
+        let galleryAction = UIAlertAction(title: "Select a Profile Pic", style: .Default, handler: {
+            (alert: UIAlertAction!) -> Void in
+            self.picker.allowsEditing = false
+            self.picker.sourceType = .PhotoLibrary
+            self.presentViewController(self.picker, animated: true, completion: nil)
+        })
+        
+        captureMenu.addAction(galleryAction)
+        captureMenu.addAction(cameraAction)
+        captureMenu.addAction(cancelAction)
+        self.presentViewController(captureMenu, animated: true, completion: nil)
     }
     
     
@@ -190,6 +215,7 @@ class ProfileDetailViewController: UIViewController {
         self.ChngPhtoBtn!.layer.borderWidth = 1
         self.ChngPhtoBtn!.layer.cornerRadius = 5
         self.ChngPhtoBtn!.layer.borderColor = UIColor.blackColor().CGColor
+        self.picker.delegate = self
         
         // Do any additional setup after loading the view.
     }
@@ -199,6 +225,14 @@ class ProfileDetailViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    //MARK: -Image Picker Delegate
+    func imagePickerController(picker: UIImagePickerController, didFinishPickingImage image: UIImage!, editingInfo: [NSObject : AnyObject]!) {
+        
+    }
+    
+    func imagePickerControllerDidCancel(picker: UIImagePickerController) {
+        dismissViewControllerAnimated(true, completion: nil)
+    }
     
     /*
     // MARK: - Navigation

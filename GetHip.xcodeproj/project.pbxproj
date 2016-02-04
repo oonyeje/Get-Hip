@@ -672,6 +672,7 @@
 				TargetAttributes = {
 					3E1BDA4B1C37111D00EE3B84 = {
 						CreatedOnToolsVersion = 6.3.2;
+						DevelopmentTeam = 24WJ762CQL;
 					};
 					3E1BDA631C37111D00EE3B84 = {
 						CreatedOnToolsVersion = 6.3.2;
@@ -922,6 +923,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					/Users/okechi/Documents/FacebookSDK,
@@ -935,6 +938,7 @@
 					"$(SDKROOT)/usr/lib/system",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "$PROJECT_NAME/Bridging-Header.h";
 			};
 			name = Debug;
@@ -943,6 +947,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					/Users/okechi/Documents/FacebookSDK,
@@ -956,6 +962,7 @@
 					"$(SDKROOT)/usr/lib/system",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "$PROJECT_NAME/Bridging-Header.h";
 			};
 			name = Release;

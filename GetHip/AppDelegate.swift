@@ -15,11 +15,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate , CLLocationManagerDelegat
 
     var window: UIWindow?
    // var locationStarted = false
-   // var locationManager: CLLocationManager = CLLocationManager()
+   var locationManager: CLLocationManager!
    // var app = UIApplication.sharedApplication()
     
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-        
+        application.registerForRemoteNotifications()
         //create new CLLocaationManager
         /*var locationStarted = false
         locationManager.delegate = self*/
@@ -36,6 +36,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate , CLLocationManagerDelegat
         let paths = NSSearchPathForDirectoriesInDomains(NSSearchPathDirectory.DocumentDirectory, NSSearchPathDomainMask.UserDomainMask, true)
         print(paths[0])*/
         
+        startSignificantChangeUpdates()
         return true
     }
     
@@ -76,6 +77,50 @@ class AppDelegate: UIResponder, UIApplicationDelegate , CLLocationManagerDelegat
         // Saves changes in the application's managed object context before the application terminates.
         self.saveContext()
     }
+    
+    //Core Location
+    func startSignificantChangeUpdates(){
+        
+        if(locationManager == nil){
+            locationManager = CLLocationManager()
+        }
+        
+        locationManager.delegate = self
+        locationManager.startMonitoringSignificantLocationChanges()
+    }
+    
+    func locationManager(manager: CLLocationManager!, didUpdateLocations locations: [AnyObject]!) {
+        var location: CLLocation! = locations.last as! CLLocation
+        var geo:PFGeoPoint! = PFGeoPoint(location: location)
+        
+        var query = PFQuery(className: "_User")
+        var currentUser = PFUser.currentUser()
+        
+        query.whereKey("username", equalTo: (currentUser?.username as String!))
+        
+        query.getFirstObjectInBackgroundWithBlock({
+            (object: PFObject?, error: NSError?) -> Void in
+            
+            if(error == nil){
+                object?.setObject(geo, forKey: "location")
+                object?.saveInBackground()
+            }
+        })
+    }
+    
+    /*
+    func application(application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: NSData) {
+        NSLog("Did register for remote notifications with device token (%@)", deviceToken)
+    }
+    
+    func application(application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: NSError) {
+        NSLog("Did Fail to register for remote notifications")
+        NSLog("%@, %@", error, error.localizedDescription)
+    }
+    
+    func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject]) {
+        
+    }*/
     
     
     

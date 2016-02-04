@@ -133,12 +133,12 @@ extension FriendRequestViewController: UITextFieldDelegate{
         self.searchedUsername = searchBar.text
         var inFriendsList: Bool = false
         
-        /*for name in self.frnds{
+        for name in self.frnds{
             if name == self.searchedUsername{
                 inFriendsList = true
                 break
             }
-        }*/
+        }
         if(inFriendsList == false){
             var query = PFQuery(className: "_User")
             query.whereKey("username", equalTo: searchedUsername)
@@ -157,6 +157,7 @@ extension FriendRequestViewController: UITextFieldDelegate{
             })
         }else{
            let alert = UIAlertController(title: "Already Friends", message: "You are already friends with this user!", preferredStyle: .Alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .Default, handler:{(action: UIAlertAction!) in alert.dismissViewControllerAnimated(true, completion: nil)}))
             self.presentViewController(alert, animated: true, completion: nil)
         }
         

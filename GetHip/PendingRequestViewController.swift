@@ -59,6 +59,9 @@ class PendingRequestViewController: UITableViewController {
                             if(error == nil){
                                 object!.setObject("accepted", forKey: "RequestStatus")
                                 object!.save()
+                                
+                            
+                                
                             }
                         })
                     })
@@ -67,11 +70,17 @@ class PendingRequestViewController: UITableViewController {
             })
         })
         
+        cell.proImg.hidden = true
+        cell.acceptButton.hidden = true
+        cell.denyButton.hidden = true
+        var tempString = cell.friendName.text!
+        cell.friendName.text = "You added " + tempString + "!!"
+        //self.table.reloadData()
         
     }
     
     @IBAction func didRejectFriend(sender: AnyObject?){
-    
+        
     }
     override func viewDidLoad() {
         super.viewDidLoad()

@@ -9,7 +9,7 @@
 import UIKit
 
 class ViewController: UIViewController, PFLogInViewControllerDelegate, PFSignUpViewControllerDelegate{
-    
+    var autoSignin: Bool! = true
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib
@@ -35,7 +35,10 @@ class ViewController: UIViewController, PFLogInViewControllerDelegate, PFSignUpV
             self.presentViewController(loginViewController, animated: false, completion: nil)
         }
         else{
-            presentLoggedInAlert()
+            
+                presentLoggedInAlert()
+            
+            
         }
         
     }
@@ -49,6 +52,7 @@ class ViewController: UIViewController, PFLogInViewControllerDelegate, PFSignUpV
     func logInViewController(logInController: PFLogInViewController, didLogInUser user: PFUser) {
         self.dismissViewControllerAnimated(true, completion: nil)
         presentLoggedInAlert()
+        self.autoSignin = false
     }
     
     func signUpViewController(signUpController: PFSignUpViewController, didSignUpUser user: PFUser) {
