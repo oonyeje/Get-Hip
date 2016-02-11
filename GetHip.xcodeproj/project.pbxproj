@@ -83,6 +83,9 @@
 		3E59528A1C39EB6100C88C71 /* Turntable@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3E5952871C39EB6100C88C71 /* Turntable@2x.png */; };
 		3E59528B1C39EB6100C88C71 /* Turntable@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3E5952881C39EB6100C88C71 /* Turntable@3x.png */; };
 		3E5BD3111C6C424300266B16 /* CurrentlyPlayingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5BD3101C6C424300266B16 /* CurrentlyPlayingViewController.swift */; };
+		3E5BD3151C6C45CE00266B16 /* Home Copy@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3E5BD3121C6C45CE00266B16 /* Home Copy@2x.png */; };
+		3E5BD3161C6C45CE00266B16 /* Party@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3E5BD3131C6C45CE00266B16 /* Party@2x.png */; };
+		3E5BD3171C6C45CE00266B16 /* StarPlayer@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3E5BD3141C6C45CE00266B16 /* StarPlayer@2x.png */; };
 		3E627FC31C55978E005C0372 /* PartySessionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E627FC21C55978E005C0372 /* PartySessionManager.swift */; };
 		3E627FE61C55AE35005C0372 /* NSInputStream+URLInitialization.m in Sources */ = {isa = PBXBuildFile; fileRef = 3E627FC81C55AE35005C0372 /* NSInputStream+URLInitialization.m */; };
 		3E627FE71C55AE35005C0372 /* NSMutableArray+QueueMethods.m in Sources */ = {isa = PBXBuildFile; fileRef = 3E627FCA1C55AE35005C0372 /* NSMutableArray+QueueMethods.m */; };
@@ -104,6 +107,8 @@
 		3E76CF2A1C38318200193B58 /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3E76CF291C38318200193B58 /* Bolts.framework */; };
 		3E76CF2C1C38349D00193B58 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 3E76CF2B1C38349D00193B58 /* libsqlite3.dylib */; };
 		3E7BB8E21C5B4A350005B834 /* Change Song@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3E7BB8E11C5B4A350005B834 /* Change Song@2x.png */; };
+		3EB8845D1C6C647700CCDCCE /* Add More@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3EB8845B1C6C647700CCDCCE /* Add More@2x.png */; };
+		3EB8845E1C6C647700CCDCCE /* Leave Party@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3EB8845C1C6C647700CCDCCE /* Leave Party@2x.png */; };
 		3EBE97661C53CEDA0079B54A /* Send Invites Button.png in Resources */ = {isa = PBXBuildFile; fileRef = 3EBE97651C53CEDA0079B54A /* Send Invites Button.png */; };
 		3EBE976A1C53E4290079B54A /* Blue Check.png in Resources */ = {isa = PBXBuildFile; fileRef = 3EBE97671C53E4290079B54A /* Blue Check.png */; };
 		3EBE976B1C53E4290079B54A /* cross.png in Resources */ = {isa = PBXBuildFile; fileRef = 3EBE97681C53E4290079B54A /* cross.png */; };
@@ -210,6 +215,9 @@
 		3E5952871C39EB6100C88C71 /* Turntable@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Turntable@2x.png"; path = "../Get Hip/Get Hip/Assets/Turntable@2x.png"; sourceTree = "<group>"; };
 		3E5952881C39EB6100C88C71 /* Turntable@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Turntable@3x.png"; path = "../Get Hip/Get Hip/Assets/Turntable@3x.png"; sourceTree = "<group>"; };
 		3E5BD3101C6C424300266B16 /* CurrentlyPlayingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CurrentlyPlayingViewController.swift; sourceTree = "<group>"; };
+		3E5BD3121C6C45CE00266B16 /* Home Copy@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Home Copy@2x.png"; path = "../../../Dropbox/Gethip/Screens/Song Playing/5 Play Screen/Assets/Home Copy@2x.png"; sourceTree = "<group>"; };
+		3E5BD3131C6C45CE00266B16 /* Party@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Party@2x.png"; path = "../../../Dropbox/Gethip/Screens/Song Playing/5 Play Screen/Assets/Party@2x.png"; sourceTree = "<group>"; };
+		3E5BD3141C6C45CE00266B16 /* StarPlayer@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "StarPlayer@2x.png"; path = "../../../Dropbox/Gethip/Screens/Song Playing/5 Play Screen/Assets/StarPlayer@2x.png"; sourceTree = "<group>"; };
 		3E627FC21C55978E005C0372 /* PartySessionManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PartySessionManager.swift; sourceTree = "<group>"; };
 		3E627FC71C55AE35005C0372 /* NSInputStream+URLInitialization.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSInputStream+URLInitialization.h"; sourceTree = "<group>"; };
 		3E627FC81C55AE35005C0372 /* NSInputStream+URLInitialization.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSInputStream+URLInitialization.m"; sourceTree = "<group>"; };
@@ -247,6 +255,8 @@
 		3E76CF2D1C3835C500193B58 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		3E76CF2F1C3835E300193B58 /* NetworkExtension.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = NetworkExtension.framework; path = System/Library/Frameworks/NetworkExtension.framework; sourceTree = SDKROOT; };
 		3E7BB8E11C5B4A350005B834 /* Change Song@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Change Song@2x.png"; path = "../../../Dropbox/Gethip/Screens/Song Selected/5 Song Selected/Assets/Change Song@2x.png"; sourceTree = "<group>"; };
+		3EB8845B1C6C647700CCDCCE /* Add More@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Add More@2x.png"; path = "../../../Dropbox/Gethip/Screens/iPhone 5 Party Screens/Party Screen/Assets/Add More@2x.png"; sourceTree = "<group>"; };
+		3EB8845C1C6C647700CCDCCE /* Leave Party@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Leave Party@2x.png"; path = "../../../Dropbox/Gethip/Screens/iPhone 5 Party Screens/Party Screen/Assets/Leave Party@2x.png"; sourceTree = "<group>"; };
 		3EBE97651C53CEDA0079B54A /* Send Invites Button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Send Invites Button.png"; path = "../../../Dropbox/Gethip/Screens/Friends + Invite Screens/i6/Invite Friends/Send Invites Button.png"; sourceTree = "<group>"; };
 		3EBE97671C53E4290079B54A /* Blue Check.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Blue Check.png"; path = "../../../Dropbox/Gethip/Screens/Friends + Invite Screens/i6/Invite Friends/Blue Check.png"; sourceTree = "<group>"; };
 		3EBE97681C53E4290079B54A /* cross.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = cross.png; path = "../../../Dropbox/Gethip/Screens/Friends + Invite Screens/i6/Invite Friends/cross.png"; sourceTree = "<group>"; };
@@ -438,6 +448,11 @@
 		3E438AE01C57387B0055C97A /* iPhone5 */ = {
 			isa = PBXGroup;
 			children = (
+				3EB8845B1C6C647700CCDCCE /* Add More@2x.png */,
+				3EB8845C1C6C647700CCDCCE /* Leave Party@2x.png */,
+				3E5BD3121C6C45CE00266B16 /* Home Copy@2x.png */,
+				3E5BD3131C6C45CE00266B16 /* Party@2x.png */,
+				3E5BD3141C6C45CE00266B16 /* StarPlayer@2x.png */,
 				3E33EFD71C5B56340011B9B5 /* Accept@2x.png */,
 				3E33EFD81C5B56340011B9B5 /* Cancel@2x.png */,
 				3E33EFD91C5B56340011B9B5 /* No Friend Requests i5@2x.png */,
@@ -729,6 +744,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3E5BD3171C6C45CE00266B16 /* StarPlayer@2x.png in Resources */,
+				3E5BD3161C6C45CE00266B16 /* Party@2x.png in Resources */,
 				3E4169491C385F1000B193AF /* 1x.png in Resources */,
 				3E5952641C39DBC900C88C71 /* Friends@2x.png in Resources */,
 				3E59528B1C39EB6100C88C71 /* Turntable@3x.png in Resources */,
@@ -739,6 +756,7 @@
 				3EBE976B1C53E4290079B54A /* cross.png in Resources */,
 				3E43B8CF1C376F9F002F97A7 /* Logo.png in Resources */,
 				3E4169571C399C4D00B193AF /* Images-3.xcassets in Resources */,
+				3EB8845E1C6C647700CCDCCE /* Leave Party@2x.png in Resources */,
 				3EBE97661C53CEDA0079B54A /* Send Invites Button.png in Resources */,
 				3E24F9FF1C5B51690091B9D9 /* Send@2x.png in Resources */,
 				3E438AEA1C5738EF0055C97A /* Turntable@2x.png in Resources */,
@@ -750,6 +768,7 @@
 				3E33EFDC1C5B56340011B9B5 /* No Friend Requests i5@2x.png in Resources */,
 				3E33EFDA1C5B56340011B9B5 /* Accept@2x.png in Resources */,
 				3E438AE91C5738EF0055C97A /* Star@2x.png in Resources */,
+				3E5BD3151C6C45CE00266B16 /* Home Copy@2x.png in Resources */,
 				3E5952831C39DDA800C88C71 /* Settings@3x.png in Resources */,
 				3E7BB8E21C5B4A350005B834 /* Change Song@2x.png in Resources */,
 				3E59526B1C39DBC900C88C71 /* Star@3x.png in Resources */,
@@ -769,6 +788,7 @@
 				3E59527C1C39DDA800C88C71 /* Create@2x.png in Resources */,
 				3E59526A1C39DBC900C88C71 /* Star@2x.png in Resources */,
 				3E5952821C39DDA800C88C71 /* Settings@2x.png in Resources */,
+				3EB8845D1C6C647700CCDCCE /* Add More@2x.png in Resources */,
 				3E1BDA5F1C37111D00EE3B84 /* LaunchScreen.xib in Resources */,
 				3E438AE61C5738EF0055C97A /* Create@2x.png in Resources */,
 				3E5952651C39DBC900C88C71 /* Friends@3x.png in Resources */,
