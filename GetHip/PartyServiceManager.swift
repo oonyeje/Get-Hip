@@ -42,7 +42,7 @@ class PartyServiceManager: NSObject {
     
     //peer variables
     var foundPeers: [String] = []
-    var invitedFriends: [String] = []
+    var invitedFriends: [FriendData] = []
     var role: PeerType! = nil
     
     var connectingPeersDictionary = NSMutableDictionary()
@@ -133,7 +133,7 @@ class PartyServiceManager: NSObject {
     //Host Methods
     func initializeSession(){
         self.session = MCSession(peer: self.myPeerID, securityIdentity: nil, encryptionPreference: MCEncryptionPreference.Required)
-        println("Started Browsing for peers")
+        println("Initialized Peer-To-Peer Connection")
     }
     
     func setSong(media: MPMediaItem!){
@@ -180,6 +180,7 @@ extension PartyServiceManager: MCNearbyServiceBrowserDelegate{
         if(peerID.displayName != self.myPeerID.displayName) {
             NSLog("%@", "foundPeer: \(peerID)")
             self.foundPeers.append(peerID.displayName)
+            self.serviceBrowser.invitePeer(peerID, toSession: self.session, withContext: nil, timeout: NSTimeInterval(10.00))
             
         }
         
@@ -199,6 +200,7 @@ extension PartyServiceManager: MCNearbyServiceAdvertiserDelegate{
     
     func advertiser(advertiser: MCNearbyServiceAdvertiser!, didReceiveInvitationFromPeer peerID: MCPeerID!, withContext context: NSData!, invitationHandler: ((Bool, MCSession!) -> Void)!) {
         NSLog("%@", "invitingPeer: \(peerID)")
+        invitationHandler(true, self.session)
     }
 }
 

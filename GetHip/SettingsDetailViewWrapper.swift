@@ -219,20 +219,12 @@ class ProfileDetailViewController: UIViewController, UINavigationControllerDeleg
         
         // Do any additional setup after loading the view.
     }
-    
+
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
     
-    //MARK: -Image Picker Delegate
-    func imagePickerController(picker: UIImagePickerController, didFinishPickingImage image: UIImage!, editingInfo: [NSObject : AnyObject]!) {
-        
-    }
-    
-    func imagePickerControllerDidCancel(picker: UIImagePickerController) {
-        dismissViewControllerAnimated(true, completion: nil)
-    }
     
     /*
     // MARK: - Navigation
@@ -244,4 +236,15 @@ class ProfileDetailViewController: UIViewController, UINavigationControllerDeleg
     }
     */
     
+}
+
+extension ProfileDetailViewController: UIImagePickerControllerDelegate{
+    //MARK: -Image Picker Delegate
+    func imagePickerController(picker: UIImagePickerController, didFinishPickingImage image: UIImage!, editingInfo: [NSObject : AnyObject]!) {
+        
+    }
+    
+    func imagePickerControllerDidCancel(picker: UIImagePickerController) {
+        dismissViewControllerAnimated(true, completion: nil)
+    }
 }

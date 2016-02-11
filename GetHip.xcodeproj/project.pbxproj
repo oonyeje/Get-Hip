@@ -55,6 +55,8 @@
 		3E43B8C91C37639C002F97A7 /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3E1BDA751C3713F900EE3B84 /* FBSDKCoreKit.framework */; };
 		3E43B8CA1C37639C002F97A7 /* FBSDKLoginKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3E43B8C51C375E73002F97A7 /* FBSDKLoginKit.framework */; };
 		3E43B8CF1C376F9F002F97A7 /* Logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 3E43B8CE1C376F9F002F97A7 /* Logo.png */; };
+		3E5485B31C69A7DA00E7D5AB /* LoadingPartyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5485B21C69A7DA00E7D5AB /* LoadingPartyViewController.swift */; };
+		3E5485B51C69CE2F00E7D5AB /* InvitedCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5485B41C69CE2F00E7D5AB /* InvitedCollectionViewCell.swift */; };
 		3E5952631C39DBC900C88C71 /* Friends.png in Resources */ = {isa = PBXBuildFile; fileRef = 3E59525A1C39DBC900C88C71 /* Friends.png */; };
 		3E5952641C39DBC900C88C71 /* Friends@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3E59525B1C39DBC900C88C71 /* Friends@2x.png */; };
 		3E5952651C39DBC900C88C71 /* Friends@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3E59525C1C39DBC900C88C71 /* Friends@3x.png */; };
@@ -80,6 +82,7 @@
 		3E5952891C39EB6100C88C71 /* Turntable.png in Resources */ = {isa = PBXBuildFile; fileRef = 3E5952861C39EB6100C88C71 /* Turntable.png */; };
 		3E59528A1C39EB6100C88C71 /* Turntable@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3E5952871C39EB6100C88C71 /* Turntable@2x.png */; };
 		3E59528B1C39EB6100C88C71 /* Turntable@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3E5952881C39EB6100C88C71 /* Turntable@3x.png */; };
+		3E5BD3111C6C424300266B16 /* CurrentlyPlayingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5BD3101C6C424300266B16 /* CurrentlyPlayingViewController.swift */; };
 		3E627FC31C55978E005C0372 /* PartySessionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E627FC21C55978E005C0372 /* PartySessionManager.swift */; };
 		3E627FE61C55AE35005C0372 /* NSInputStream+URLInitialization.m in Sources */ = {isa = PBXBuildFile; fileRef = 3E627FC81C55AE35005C0372 /* NSInputStream+URLInitialization.m */; };
 		3E627FE71C55AE35005C0372 /* NSMutableArray+QueueMethods.m in Sources */ = {isa = PBXBuildFile; fileRef = 3E627FCA1C55AE35005C0372 /* NSMutableArray+QueueMethods.m */; };
@@ -179,6 +182,8 @@
 		3E43B8C41C375E73002F97A7 /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Bolts.framework; path = ../../FacebookSDK/Bolts.framework; sourceTree = "<group>"; };
 		3E43B8C51C375E73002F97A7 /* FBSDKLoginKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKLoginKit.framework; path = ../../FacebookSDK/FBSDKLoginKit.framework; sourceTree = "<group>"; };
 		3E43B8CE1C376F9F002F97A7 /* Logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Logo.png; path = "../../../Dropbox/gethip/Screens/6 Login/Assets/Logo.png"; sourceTree = "<group>"; };
+		3E5485B21C69A7DA00E7D5AB /* LoadingPartyViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadingPartyViewController.swift; sourceTree = "<group>"; };
+		3E5485B41C69CE2F00E7D5AB /* InvitedCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InvitedCollectionViewCell.swift; sourceTree = "<group>"; };
 		3E59525A1C39DBC900C88C71 /* Friends.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Friends.png; path = "../Get Hip/Get Hip/Assets/Friends.png"; sourceTree = "<group>"; };
 		3E59525B1C39DBC900C88C71 /* Friends@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Friends@2x.png"; path = "../Get Hip/Get Hip/Assets/Friends@2x.png"; sourceTree = "<group>"; };
 		3E59525C1C39DBC900C88C71 /* Friends@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Friends@3x.png"; path = "../Get Hip/Get Hip/Assets/Friends@3x.png"; sourceTree = "<group>"; };
@@ -204,6 +209,7 @@
 		3E5952861C39EB6100C88C71 /* Turntable.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Turntable.png; path = "../Get Hip/Get Hip/Assets/Turntable.png"; sourceTree = "<group>"; };
 		3E5952871C39EB6100C88C71 /* Turntable@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Turntable@2x.png"; path = "../Get Hip/Get Hip/Assets/Turntable@2x.png"; sourceTree = "<group>"; };
 		3E5952881C39EB6100C88C71 /* Turntable@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Turntable@3x.png"; path = "../Get Hip/Get Hip/Assets/Turntable@3x.png"; sourceTree = "<group>"; };
+		3E5BD3101C6C424300266B16 /* CurrentlyPlayingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CurrentlyPlayingViewController.swift; sourceTree = "<group>"; };
 		3E627FC21C55978E005C0372 /* PartySessionManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PartySessionManager.swift; sourceTree = "<group>"; };
 		3E627FC71C55AE35005C0372 /* NSInputStream+URLInitialization.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSInputStream+URLInitialization.h"; sourceTree = "<group>"; };
 		3E627FC81C55AE35005C0372 /* NSInputStream+URLInitialization.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSInputStream+URLInitialization.m"; sourceTree = "<group>"; };
@@ -320,6 +326,8 @@
 				3E34125A1C54C73A006226E0 /* PartySession.swift */,
 				3E627FC21C55978E005C0372 /* PartySessionManager.swift */,
 				3E101F071C52E65300C895CA /* PartyServiceManager.swift */,
+				3E5BD30F1C6C41F300266B16 /* CurrentlyPlaying */,
+				3E5485B11C69A77B00E7D5AB /* LoadingParty */,
 				3E3412551C54C2BC006226E0 /* SelectSong */,
 				3EBE976D1C53E5CF0079B54A /* InviteFriends */,
 			);
@@ -472,6 +480,15 @@
 			name = IPhone6;
 			sourceTree = "<group>";
 		};
+		3E5485B11C69A77B00E7D5AB /* LoadingParty */ = {
+			isa = PBXGroup;
+			children = (
+				3E5485B21C69A7DA00E7D5AB /* LoadingPartyViewController.swift */,
+				3E5485B41C69CE2F00E7D5AB /* InvitedCollectionViewCell.swift */,
+			);
+			name = LoadingParty;
+			sourceTree = "<group>";
+		};
 		3E5952591C39DB2800C88C71 /* CreateJoinOrReturnToPartyScreen */ = {
 			isa = PBXGroup;
 			children = (
@@ -501,6 +518,14 @@
 				3E5952621C39DBC900C88C71 /* Star@3x.png */,
 			);
 			name = CreateJoinOrReturnToPartyScreen;
+			sourceTree = "<group>";
+		};
+		3E5BD30F1C6C41F300266B16 /* CurrentlyPlaying */ = {
+			isa = PBXGroup;
+			children = (
+				3E5BD3101C6C424300266B16 /* CurrentlyPlayingViewController.swift */,
+			);
+			name = CurrentlyPlaying;
 			sourceTree = "<group>";
 		};
 		3E627FC01C5543FB005C0372 /* User Authentication */ = {
@@ -769,6 +794,7 @@
 				3E627FEA1C55AE35005C0372 /* TDAudioFileStream.m in Sources */,
 				3E627FC31C55978E005C0372 /* PartySessionManager.swift in Sources */,
 				3E627FE61C55AE35005C0372 /* NSInputStream+URLInitialization.m in Sources */,
+				3E5485B51C69CE2F00E7D5AB /* InvitedCollectionViewCell.swift in Sources */,
 				3E3412571C54C31F006226E0 /* SongSelectionViewController.swift in Sources */,
 				3E627FE81C55AE35005C0372 /* TDAudioMetaInfo.m in Sources */,
 				3E34125B1C54C73A006226E0 /* PartySession.swift in Sources */,
@@ -782,6 +808,7 @@
 				3E1AAD141C3BD92600809367 /* FriendsListViewController.swift in Sources */,
 				3E326BCE1C51C77600F785CF /* SettingsCellWrapper.swift in Sources */,
 				3E627FF31C55AE35005C0372 /* TDAudioPlayerConstants.m in Sources */,
+				3E5485B31C69A7DA00E7D5AB /* LoadingPartyViewController.swift in Sources */,
 				3E3B14DC1C5BBB3B001C437F /* PendingRequestViewController.swift in Sources */,
 				3E379EF61C3E646000F7BCCD /* ParseNetDebug.m in Sources */,
 				3E627FED1C55AE35005C0372 /* TDAudioQueueBufferManager.m in Sources */,
@@ -800,6 +827,7 @@
 				3E1BDA521C37111D00EE3B84 /* AppDelegate.swift in Sources */,
 				3E627FF11C55AE35005C0372 /* TDAudioInputStreamer.m in Sources */,
 				3E4169551C398A5B00B193AF /* SignUpViewController.swift in Sources */,
+				3E5BD3111C6C424300266B16 /* CurrentlyPlayingViewController.swift in Sources */,
 				3E627FEE1C55AE35005C0372 /* TDAudioQueueController.m in Sources */,
 				3E627FE71C55AE35005C0372 /* NSMutableArray+QueueMethods.m in Sources */,
 				3E3B14DE1C5BCC9B001C437F /* FriendRequestViewController.swift in Sources */,
@@ -940,6 +968,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "$PROJECT_NAME/Bridging-Header.h";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -964,6 +993,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "$PROJECT_NAME/Bridging-Header.h";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};

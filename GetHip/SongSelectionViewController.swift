@@ -27,22 +27,24 @@ class SongSelectionViewController: UIViewController, UITableViewDelegate, UITabl
         let songFilterAction = UIAlertAction(title: "Songs", style: .Default, handler: {
             (alert: UIAlertAction!) -> Void in
             self.filter = "Songs"
-            cell.filterBtn.titleLabel?.text = self.filter
             self.table.reloadData()
+            cell.filterBtn.titleLabel?.text = self.filter
+
         })
         
         let albumFilterAction = UIAlertAction(title: "Albums", style: .Default, handler: {
             (alert: UIAlertAction!) -> Void in
             self.filter = "Albums"
-            cell.filterBtn.titleLabel?.text = self.filter
             self.table.reloadData()
+            cell.filterBtn.titleLabel?.text = self.filter
         })
         
         let artistFilterAction = UIAlertAction(title: "Artists", style: .Default, handler: {
             (alert: UIAlertAction!) -> Void in
             self.filter = "Artists"
-            cell.filterBtn.titleLabel?.text = self.filter
             self.table.reloadData()
+            cell.filterBtn.titleLabel?.text = self.filter
+
         })
         
         switch self.filter {
@@ -81,6 +83,10 @@ class SongSelectionViewController: UIViewController, UITableViewDelegate, UITabl
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    func setData(prty:PartyServiceManager){
+        self.party = prty
     }
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
@@ -156,6 +162,8 @@ class SongSelectionViewController: UIViewController, UITableViewDelegate, UITabl
                 var songs = songsQuery.items
                 var rowItem: MPMediaItem = songs[indexPath.row - 1] as! MPMediaItem
                 self.party.setSong(rowItem)
+                self.performSegueWithIdentifier("LoadingPartySegue", sender: nil)
+                
             }
         }
         
@@ -254,14 +262,17 @@ class SongSelectionViewController: UIViewController, UITableViewDelegate, UITabl
         
     }
 
-    /*
+    
     // MARK: - Navigation
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
+    
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+        if(segue.identifier == "LoadingPartySegue"){
+            let vc: LoadingPartyViewController = (segue.destinationViewController as? LoadingPartyViewController)!
+            vc.setData(self.party)
+            
+        }
     }
-    */
+    
 
 }

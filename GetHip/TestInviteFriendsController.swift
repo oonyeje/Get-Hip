@@ -135,7 +135,9 @@ class TestInviteFriendsController: UIViewController, UITableViewDelegate, UITabl
                 invited.append(self.frnds[i])
             }
         }
-        
+        self.partyData.invitedFriends = invited
+        let vc: SongSelectionViewController = (segue.destinationViewController as? SongSelectionViewController)!
+        vc.setData(self.partyData)
         println(invited.count)
     }
     

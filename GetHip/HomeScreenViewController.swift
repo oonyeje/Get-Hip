@@ -38,6 +38,16 @@ class HomeScreenViewController: UIViewController {
         
         self.partyData.setPeerID((self.userData[0].displayName))
         self.partyData.setAdvertiser()
+        
+        //initialize browser to find nearby friends
+        self.partyData.setBrowser()
+        
+        //initialize session
+        self.partyData.initializeSession()
+        
+        //start peer-to-peer transcieveing
+        self.partyData.startListening()
+        self.partyData.startBrowser()
     }
     
     func loadID(notification: NSNotification){
@@ -75,11 +85,6 @@ class HomeScreenViewController: UIViewController {
             //initialize host role
             self.partyData.setRole(PeerType(rawValue: 0)!)
             
-            //initialize browser to find nearby friends
-            self.partyData.setBrowser()
-            
-            //initialize session
-            self.partyData.initializeSession()
             
             vc.setData(self.userData, frndData: self.friendData, party: self.partyData)
         }
