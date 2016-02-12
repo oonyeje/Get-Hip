@@ -33,19 +33,21 @@ class FriendDataSource{
                     let userName = object.objectForKey("OtherUser")!.objectForKey("username") as! String
                     let requestStatus = object.objectForKey("RequestStatus")! as! String
                     
-                    /* let pimage:PFFile = object["profilePicture"] as! PFFile
-
-                    pimage.getDataInBackgroundWithBlock({
-                        (imageData, error) -> Void in
                     
-                        if !(error != nil) {
-                            image = UIImage(data: imageData!)!
-                        }
-                    })*/
-                
-                        var newFriend: FriendData = FriendData(display: userName, status: requestStatus)
-                        //print(userName)
-                        self.dataSource.append(newFriend)
+                    var newFriend: FriendData = FriendData(display: userName, status: requestStatus)
+                    
+                    var img = object.objectForKey("OtherUser")!.objectForKey("profilePicture")! as? PFFile
+                    
+                    dispatch_async(dispatch_get_main_queue(), {
+                        img!.getDataInBackgroundWithBlock({
+                            (imgData, error) -> Void in
+                            
+                            var downloadedImg = UIImage(data: imgData!)
+                            newFriend.profileImg.image = downloadedImg
+                        })
+                    })
+                    //print(userName)
+                    self.dataSource.append(newFriend)
                     
                     
                 }
@@ -64,8 +66,20 @@ class FriendDataSource{
                             
                                 let userName = object.objectForKey("OtherUser")!.objectForKey("username") as! String
                                 let requestStatus = object.objectForKey("RequestStatus")! as! String
-                                
                                 var newFriend: FriendData = FriendData(display: userName, status: requestStatus)
+                                
+                                var img = object.objectForKey("OtherUser")!.objectForKey("profilePicture")! as? PFFile
+                                
+                                dispatch_async(dispatch_get_main_queue(), {
+                                    img!.getDataInBackgroundWithBlock({
+                                        (imgData, error) -> Void in
+                                        
+                                        var downloadedImg = UIImage(data: imgData!)
+                                        newFriend.profileImg.image = downloadedImg
+                                    })
+                                })
+                                
+                                
                                 //print(userName)
                                 self.dataSource.append(newFriend)
                                 

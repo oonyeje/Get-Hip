@@ -198,19 +198,20 @@ class ProfileDetailViewController: UIViewController, UINavigationControllerDeleg
     }
     
     
-    func setData(){
-        self.profileImg = nil
+    func setData(proImage:UIImageView){
+        self.profileImg = proImage
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.img!.layer.cornerRadius = self.img!.frame.size.width/2
+
         if self.profileImg == nil{
             self.img!.backgroundColor = UIColor.grayColor()
         }
         else{
-            self.img = self.profileImg
+            self.img.image = self.profileImg.image!
         }
+        self.img.layer.cornerRadius = self.img!.frame.size.width/2
         
         self.ChngPhtoBtn!.layer.borderWidth = 1
         self.ChngPhtoBtn!.layer.cornerRadius = 5

@@ -133,7 +133,7 @@ class PendingRequestViewController: UITableViewController {
                 cell!.proImg.backgroundColor = UIColor.grayColor()
             }
             else{
-                
+                cell!.proImg.image = pending?.profileImg.image!
             }
             
             //rounds uiimage and configures UIImageView

@@ -19,15 +19,17 @@ class CurrentlyPlayingViewController: UIViewController {
     
     //Host buttons
     @IBOutlet var volCtrl: UISlider!
-    @IBOutlet var ppButton: UIButton!
-    @IBAction func endParty(sender: AnyObject){
+    @IBOutlet var ppfButton: UIButton!
+    @IBAction func playPauseFav(sender: UIButton){
     
     }
     
-    //Guest buttons
-    @IBOutlet var favButton: UIButton!
-    @IBAction func favoriteSong(sender: AnyObject){
     
+    //Guest buttons
+    
+    //Regular buttons
+    @IBAction func partyView(sender: UIButton){
+        self.performSegueWithIdentifier("InPartySegue", sender: nil)
     }
 
 
@@ -55,14 +57,18 @@ class CurrentlyPlayingViewController: UIViewController {
     }
     
 
-    /*
+    
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
+        
+        if(segue.identifier == "InPartySegue"){
+            
+        }
     }
-    */
+    
 
 }

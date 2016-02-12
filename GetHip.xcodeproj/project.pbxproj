@@ -21,6 +21,7 @@
 		3E1BDA6B1C37111D00EE3B84 /* GetHipTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E1BDA6A1C37111D00EE3B84 /* GetHipTests.swift */; };
 		3E1DE9A81C3837E800CA6CD4 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3E1DE9A71C3837E800CA6CD4 /* AudioToolbox.framework */; };
 		3E1DE9AE1C38395F00CA6CD4 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3E1DE9AD1C38395F00CA6CD4 /* SystemConfiguration.framework */; };
+		3E1EE6391C6D02EB00F5C5D7 /* InPartyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E1EE6381C6D02EB00F5C5D7 /* InPartyViewController.swift */; };
 		3E24F9FF1C5B51690091B9D9 /* Send@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3E24F9FE1C5B51690091B9D9 /* Send@2x.png */; };
 		3E326BCC1C51C20000F785CF /* SettingsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E326BCB1C51C20000F785CF /* SettingsTableViewController.swift */; };
 		3E326BCE1C51C77600F785CF /* SettingsCellWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E326BCD1C51C77600F785CF /* SettingsCellWrapper.swift */; };
@@ -152,6 +153,7 @@
 		3E1DE9A71C3837E800CA6CD4 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		3E1DE9AB1C3838A800CA6CD4 /* libsystem_network.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsystem_network.dylib; path = usr/lib/system/libsystem_network.dylib; sourceTree = SDKROOT; };
 		3E1DE9AD1C38395F00CA6CD4 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		3E1EE6381C6D02EB00F5C5D7 /* InPartyViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InPartyViewController.swift; sourceTree = "<group>"; };
 		3E24F9FE1C5B51690091B9D9 /* Send@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Send@2x.png"; path = "../../../Dropbox/Gethip/Screens/Friends + Invite Screens/i5/Friend Found/Send@2x.png"; sourceTree = "<group>"; };
 		3E326BCB1C51C20000F785CF /* SettingsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsTableViewController.swift; sourceTree = "<group>"; };
 		3E326BCD1C51C77600F785CF /* SettingsCellWrapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsCellWrapper.swift; sourceTree = "<group>"; };
@@ -333,6 +335,7 @@
 		3E101F041C52E50400C895CA /* PartySessionSource */ = {
 			isa = PBXGroup;
 			children = (
+				3E1EE6371C6D029800F5C5D7 /* InParty */,
 				3E34125A1C54C73A006226E0 /* PartySession.swift */,
 				3E627FC21C55978E005C0372 /* PartySessionManager.swift */,
 				3E101F071C52E65300C895CA /* PartyServiceManager.swift */,
@@ -434,6 +437,14 @@
 				3E1BDA751C3713F900EE3B84 /* FBSDKCoreKit.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		3E1EE6371C6D029800F5C5D7 /* InParty */ = {
+			isa = PBXGroup;
+			children = (
+				3E1EE6381C6D02EB00F5C5D7 /* InPartyViewController.swift */,
+			);
+			name = InParty;
 			sourceTree = "<group>";
 		};
 		3E3412551C54C2BC006226E0 /* SelectSong */ = {
@@ -812,6 +823,7 @@
 				3E101F081C52E65300C895CA /* PartyServiceManager.swift in Sources */,
 				3E330B1A1C38502F00276FE4 /* LoginViewController.swift in Sources */,
 				3E627FEA1C55AE35005C0372 /* TDAudioFileStream.m in Sources */,
+				3E1EE6391C6D02EB00F5C5D7 /* InPartyViewController.swift in Sources */,
 				3E627FC31C55978E005C0372 /* PartySessionManager.swift in Sources */,
 				3E627FE61C55AE35005C0372 /* NSInputStream+URLInitialization.m in Sources */,
 				3E5485B51C69CE2F00E7D5AB /* InvitedCollectionViewCell.swift in Sources */,

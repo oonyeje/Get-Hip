@@ -10,7 +10,7 @@ import Foundation
 
 class FriendData {
     var displayName: String!
-    var profileImg: UIImage!
+    var profileImg: UIImageView!
     var status: String!
     
     init(display: String, status: String){

@@ -32,7 +32,9 @@ class UserParseDataSource{
                     
                     usrName = object.objectForKey("username")! as! String
                     displayName = object.objectForKey("displayName") as! String
-
+                    
+                    
+                    
                     if displayName.isEmpty {
                         displayName = usrName
                     }
@@ -41,6 +43,18 @@ class UserParseDataSource{
                     
                     
                      usr = UserParseData(usrName: usrName, dispName: displayName, email: email)
+                    
+                    var img = object.objectForKey("profilePicture")! as? PFFile
+                    
+                    dispatch_async(dispatch_get_main_queue(), {
+                        img!.getDataInBackgroundWithBlock({
+                            (imgData, error) -> Void in
+                            
+                            var downloadedImg = UIImage(data: imgData!)
+                            usr.profileImg = UIImageView(image: downloadedImg)
+                        })
+                    })
+                    
                     self.user.append(usr)
                     //print(userName)
                     

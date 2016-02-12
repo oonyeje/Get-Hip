@@ -84,7 +84,7 @@ class FriendsListViewController: UIViewController, UITableViewDelegate, UITableV
                 cell!.proImage.backgroundColor = UIColor.grayColor()
             }
             else{
-                
+                cell!.proImage.image = friend?.profileImg!.image!
             }
             
             //rounds uiimage and configures UIImageView
@@ -143,11 +143,14 @@ class FriendsListViewController: UIViewController, UITableViewDelegate, UITableV
         if segue.identifier == "FriendRequestSegue" {
            var frndNames: [String] = []
             println(self.friends.count)
-            for i in 0...self.friends.count-1{
-                var frends: FriendData! = self.friends[i] as! FriendData
-                println(frends.displayName!)
-                frndNames.append(frends.displayName!)
+            if (self.friends.count != 0){
+                for i in 0...self.friends.count-1{
+                    var frends: FriendData! = self.friends[i] as! FriendData
+                    println(frends.displayName!)
+                    frndNames.append(frends.displayName!)
+                }
             }
+            
             
             /*for name in self.friends{
                 //bad instruction here, fix later

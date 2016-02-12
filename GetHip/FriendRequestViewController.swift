@@ -59,8 +59,9 @@ class FriendRequestViewController: UIViewController{
                             
                             println(friendRequest.objectId!)
                             var params = NSMutableDictionary()
-                            params.setObject(friendRequest.objectId! as String!, forKey: "friendRequest")
+                            params.setObject((object!.objectForKey("username") as! String!), forKey: "otherUser")
                             
+                            PFCloud.callFunctionInBackground("alertPotentialFriend", withParameters: params as [NSObject : AnyObject])
                             //var params = NSMutableDictionary()
                             //params.s
                             //var param = ["friendRequest" : friendRequest.objectId!]
@@ -148,6 +149,19 @@ extension FriendRequestViewController: UITextFieldDelegate{
                     (object: PFObject?, error: NSError?) -> Void in
                     if(error == nil){
                         self.foundName.text = object?.objectForKey("username") as? String
+                        
+                        //download profile imge
+                        var img = object!.objectForKey("profilePicture")! as? PFFile
+                        
+                        dispatch_async(dispatch_get_main_queue(), {
+                            img!.getDataInBackgroundWithBlock({
+                                (imgData, error) -> Void in
+                                
+                                var downloadedImg = UIImage(data: imgData!)
+                                self.displayImage.image = downloadedImg
+                            })
+                        })
+                        
                         self.sendRequest.enabled = true
                     }else{
                         self.foundName.text = "No Friend Found :("

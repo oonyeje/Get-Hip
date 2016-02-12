@@ -210,7 +210,7 @@ class SettingsTableViewController: UIViewController, UITableViewDataSource, UITa
                 
                 if self.user.count > 0 {
                     let vc: ProfileDetailViewController = (segue.destinationViewController as? ProfileDetailViewController)!
-                    vc.setData()
+                    vc.setData((self.user[0] as? UserParseData)!.profileImg)
                     println("img")
                 }
                 
