@@ -18,7 +18,7 @@ class SettingsTableViewController: UIViewController, UITableViewDataSource, UITa
     
     @IBAction func dismissSettingsView(sender: UIBarButtonItem) {
         
-        self.parentViewController?.navigationController?.popViewControllerAnimated(true)
+        self.dismissViewControllerAnimated(true, completion: nil)
     }
     
     

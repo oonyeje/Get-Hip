@@ -41,6 +41,10 @@ class SignInController: UIViewController, UINavigationControllerDelegate, UIImag
         })
     }
     
+    @IBAction func cancelSignUp(){
+        self.parentViewController?.dismissViewControllerAnimated(true, completion: nil)
+    }
+    
     @IBAction func chngePhoto(sender: UIButton){
         let captureMenu = UIAlertController(title: nil, message:nil, preferredStyle: .ActionSheet)
         

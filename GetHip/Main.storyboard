@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14A389" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="CzG-yI-Fm4">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14A389" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="j0X-k4-h6H">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
     </dependencies>
@@ -74,8 +74,8 @@
                         <outlet property="signIn" destination="ALE-x0-k9I" id="mOR-kB-ZID"/>
                         <outlet property="signUpButton" destination="lST-pS-LgB" id="Foa-6z-LBJ"/>
                         <outlet property="userEmailField" destination="gFr-9c-756" id="xPA-UK-gem"/>
-                        <segue destination="i3K-xv-zw1" kind="show" identifier="LoginToHomeSegue" id="5pn-ck-WiI"/>
-                        <segue destination="dsv-bM-qgc" kind="show" identifier="signUpSegue" id="gK7-EH-zMe"/>
+                        <segue destination="i3K-xv-zw1" kind="presentation" identifier="LoginToHomeSegue" id="5pn-ck-WiI"/>
+                        <segue destination="CzG-yI-Fm4" kind="show" identifier="signUpSegue" id="5eZ-Bl-cuD"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6qe-4m-7Cy" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -145,7 +145,11 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <navigationItem key="navigationItem" title="Account Creation" id="wal-Nl-HBB">
-                        <barButtonItem key="backBarButtonItem" title="Cancel" id="K3n-PS-AzS"/>
+                        <barButtonItem key="leftBarButtonItem" title="Cancel" id="bK9-iV-F0i">
+                            <connections>
+                                <action selector="cancelSignUp" destination="dsv-bM-qgc" id="vNK-AW-hKE"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
@@ -157,7 +161,7 @@
                         <outlet property="profilePic" destination="sAc-4h-398" id="rlt-kj-GBV"/>
                         <outlet property="saveBtn" destination="8lW-PH-WAb" id="7lt-lh-9gs"/>
                         <outlet property="userField" destination="wbB-YU-CFd" id="rQn-dc-zWM"/>
-                        <segue destination="i3K-xv-zw1" kind="show" identifier="SignedUpSegue" id="4Cw-Wg-nXy"/>
+                        <segue destination="i3K-xv-zw1" kind="modal" identifier="SignedUpSegue" id="4Cw-Wg-nXy"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="L2S-Q5-7iA" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -339,12 +343,12 @@
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <connections>
-                        <segue destination="j0X-k4-h6H" kind="relationship" relationship="rootViewController" id="Xce-i2-SEV"/>
+                        <segue destination="dsv-bM-qgc" kind="relationship" relationship="rootViewController" id="NSw-6O-EkM"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="mbC-CF-JRB" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-743" y="1027"/>
+            <point key="canvasLocation" x="205" y="1027"/>
         </scene>
         <!--Friends List View Controller-->
         <scene sceneID="f64-9e-nxp">
@@ -417,6 +421,10 @@
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="Wv2-hP-rqT" id="2kw-Pm-2Dx"/>
+                                    <outlet property="delegate" destination="Wv2-hP-rqT" id="JDZ-lQ-eQZ"/>
+                                </connections>
                             </tableView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -1449,7 +1457,6 @@
         <image name="Turntable@3x.png" width="434" height="434"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="5pn-ck-WiI"/>
-        <segue reference="5Ml-AJ-rNB"/>
+        <segue reference="4Cw-Wg-nXy"/>
     </inferredMetricsTieBreakers>
 </document>

@@ -18,7 +18,7 @@ class FriendsListViewController: UIViewController, UITableViewDelegate, UITableV
     
     @IBAction func dismissFriendView(sender: UIBarButtonItem) {
         
-        self.parentViewController?.navigationController?.popViewControllerAnimated(true)
+        self.dismissViewControllerAnimated(true, completion: nil)
         self.navigationController?.navigationBarHidden = false
 
     }
