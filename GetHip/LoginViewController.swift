@@ -6,6 +6,7 @@
 //  Copyright (c) 2016 Kroleo. All rights reserved.
 //
 
+//DEPRECATED WILL DELETE WHEN PROJECT COMPLETED
 import UIKit
 
 class LoginViewController: PFLogInViewController{

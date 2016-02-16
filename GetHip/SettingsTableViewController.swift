@@ -11,7 +11,7 @@ import UIKit
 class SettingsTableViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
    // var manager = UserParseDataSource()
     var user = []
-    
+    var party: PartyServiceManager!
     
     @IBOutlet weak var logOutBtn: UIButton!
     @IBOutlet weak var table: UITableView!
@@ -23,6 +23,7 @@ class SettingsTableViewController: UIViewController, UITableViewDataSource, UITa
     
     
     @IBAction func logOutUser(sender: UIButton) {
+        self.party.stopAllServices()
         PFUser.logOut()
         
         if PFUser.currentUser() == nil {
@@ -33,8 +34,9 @@ class SettingsTableViewController: UIViewController, UITableViewDataSource, UITa
         
     }
     
-    func setData(usr:[UserParseData]){
+    func setData(usr:[UserParseData], prty: PartyServiceManager){
         self.user = usr
+        self.party = prty
     }
     
     override func viewDidLoad() {

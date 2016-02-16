@@ -43,7 +43,7 @@ class FriendDataSource{
                             (imgData, error) -> Void in
                             
                             var downloadedImg = UIImage(data: imgData!)
-                            newFriend.profileImg.image = downloadedImg
+                            newFriend.profileImg = UIImageView(image: downloadedImg)
                         })
                     })
                     //print(userName)
@@ -75,7 +75,7 @@ class FriendDataSource{
                                         (imgData, error) -> Void in
                                         
                                         var downloadedImg = UIImage(data: imgData!)
-                                        newFriend.profileImg.image = downloadedImg
+                                        newFriend.profileImg = UIImageView(image: downloadedImg)
                                     })
                                 })
                                 

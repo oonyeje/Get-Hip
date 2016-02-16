@@ -66,7 +66,8 @@ class CurrentlyPlayingViewController: UIViewController {
         // Pass the selected object to the new view controller.
         
         if(segue.identifier == "InPartySegue"){
-            
+            let vc: InPartyViewController = (segue.destinationViewController as? InPartyViewController)!
+            vc.setData(self.party)
         }
     }
     

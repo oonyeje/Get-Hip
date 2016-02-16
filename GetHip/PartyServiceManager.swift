@@ -20,8 +20,10 @@ protocol PartyServiceManagerDelegate {
 }
 
 enum PeerType : Int {
-    case Host = 0
-    case Guest = 1
+    case Host_Creator = 0
+    case Guest_Creator = 1
+    case Host_Invited = 2
+    case Guest_Invited = 3
 }
 
 enum HostSignalType: String {
@@ -115,6 +117,17 @@ class PartyServiceManager: NSObject {
         println("Stopped Browsing for peers")
     }
     
+    //Stop all services
+    func stopAllServices(){
+        stopBrowsing()
+        stopListening()
+        self.serviceBrowser.delegate = self
+        self.serviceAdvertiser.delegate = self
+        self.serviceBrowser = nil
+        self.serviceAdvertiser = nil
+        self.session = nil
+    }
+    
     //Audio Streaming methods
     func openOutputStream() -> NSMutableArray{
         
@@ -200,6 +213,7 @@ extension PartyServiceManager: MCNearbyServiceAdvertiserDelegate{
     
     func advertiser(advertiser: MCNearbyServiceAdvertiser!, didReceiveInvitationFromPeer peerID: MCPeerID!, withContext context: NSData!, invitationHandler: ((Bool, MCSession!) -> Void)!) {
         NSLog("%@", "invitingPeer: \(peerID)")
+        self.setRole(PeerType(rawValue: 3)!)
         invitationHandler(true, self.session)
     }
 }

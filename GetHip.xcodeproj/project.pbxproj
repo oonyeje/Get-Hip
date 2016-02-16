@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3E0B78B91C6E3756001DF21E /* Pause-52.png in Resources */ = {isa = PBXBuildFile; fileRef = 3E0B78B71C6E3756001DF21E /* Pause-52.png */; };
+		3E0B78BA1C6E3756001DF21E /* Play-52.png in Resources */ = {isa = PBXBuildFile; fileRef = 3E0B78B81C6E3756001DF21E /* Play-52.png */; };
 		3E101F061C52E5FD00C895CA /* MultipeerConnectivity.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3E101F051C52E5FD00C895CA /* MultipeerConnectivity.framework */; };
 		3E101F081C52E65300C895CA /* PartyServiceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E101F071C52E65300C895CA /* PartyServiceManager.swift */; };
 		3E101F0A1C52F14A00C895CA /* InviteFriendsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E101F091C52F14A00C895CA /* InviteFriendsView.swift */; };
@@ -102,6 +104,7 @@
 		3E627FF11C55AE35005C0372 /* TDAudioInputStreamer.m in Sources */ = {isa = PBXBuildFile; fileRef = 3E627FE11C55AE35005C0372 /* TDAudioInputStreamer.m */; };
 		3E627FF21C55AE35005C0372 /* TDAudioOutputStreamer.m in Sources */ = {isa = PBXBuildFile; fileRef = 3E627FE31C55AE35005C0372 /* TDAudioOutputStreamer.m */; };
 		3E627FF31C55AE35005C0372 /* TDAudioPlayerConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 3E627FE51C55AE35005C0372 /* TDAudioPlayerConstants.m */; };
+		3E6738F51C6E9C7700B47C3E /* LoginController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E6738F41C6E9C7700B47C3E /* LoginController.swift */; };
 		3E76CF261C38258600193B58 /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3E76CF231C38258600193B58 /* Parse.framework */; };
 		3E76CF271C38258600193B58 /* ParseFacebookUtilsV4.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3E76CF241C38258600193B58 /* ParseFacebookUtilsV4.framework */; };
 		3E76CF281C38258600193B58 /* ParseUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3E76CF251C38258600193B58 /* ParseUI.framework */; };
@@ -119,6 +122,7 @@
 		3EBE97731C5413240079B54A /* TestInviteFriendsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EBE97721C5413240079B54A /* TestInviteFriendsCell.swift */; };
 		3EDA82E11C473E900081ED53 /* FriendData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EDA82E01C473E900081ED53 /* FriendData.swift */; };
 		3EDA82E31C4741C70081ED53 /* FriendDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EDA82E21C4741C70081ED53 /* FriendDataSource.swift */; };
+		3EF36C761C71694C00CD0DC0 /* SignInController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EF36C751C71694C00CD0DC0 /* SignInController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -132,6 +136,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		3E0B78B71C6E3756001DF21E /* Pause-52.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Pause-52.png"; path = "../../../Dropbox/Gethip/Screens/Song Playing/5 Play Screen/Assets/Pause-52.png"; sourceTree = "<group>"; };
+		3E0B78B81C6E3756001DF21E /* Play-52.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Play-52.png"; path = "../../../Dropbox/Gethip/Screens/Song Playing/5 Play Screen/Assets/Play-52.png"; sourceTree = "<group>"; };
 		3E101F051C52E5FD00C895CA /* MultipeerConnectivity.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MultipeerConnectivity.framework; path = System/Library/Frameworks/MultipeerConnectivity.framework; sourceTree = SDKROOT; };
 		3E101F071C52E65300C895CA /* PartyServiceManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PartyServiceManager.swift; sourceTree = "<group>"; };
 		3E101F091C52F14A00C895CA /* InviteFriendsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InviteFriendsView.swift; sourceTree = "<group>"; };
@@ -249,6 +255,7 @@
 		3E627FE31C55AE35005C0372 /* TDAudioOutputStreamer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TDAudioOutputStreamer.m; sourceTree = "<group>"; };
 		3E627FE41C55AE35005C0372 /* TDAudioPlayerConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TDAudioPlayerConstants.h; path = "../../../../Downloads/TDAudioPlayer-master/TDAudioPlayer/AudioPlayerLibrary/TDAudioPlayerConstants.h"; sourceTree = "<group>"; };
 		3E627FE51C55AE35005C0372 /* TDAudioPlayerConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TDAudioPlayerConstants.m; path = "../../../../Downloads/TDAudioPlayer-master/TDAudioPlayer/AudioPlayerLibrary/TDAudioPlayerConstants.m"; sourceTree = "<group>"; };
+		3E6738F41C6E9C7700B47C3E /* LoginController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginController.swift; sourceTree = "<group>"; };
 		3E76CF231C38258600193B58 /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Parse.framework; path = "../../Parse-iOS/Parse.framework"; sourceTree = "<group>"; };
 		3E76CF241C38258600193B58 /* ParseFacebookUtilsV4.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ParseFacebookUtilsV4.framework; path = "../../Parse-iOS/ParseFacebookUtilsV4.framework"; sourceTree = "<group>"; };
 		3E76CF251C38258600193B58 /* ParseUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ParseUI.framework; path = "../../Parse-iOS/ParseUI.framework"; sourceTree = "<group>"; };
@@ -268,6 +275,7 @@
 		3EBE97721C5413240079B54A /* TestInviteFriendsCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestInviteFriendsCell.swift; sourceTree = "<group>"; };
 		3EDA82E01C473E900081ED53 /* FriendData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FriendData.swift; sourceTree = "<group>"; };
 		3EDA82E21C4741C70081ED53 /* FriendDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FriendDataSource.swift; sourceTree = "<group>"; };
+		3EF36C751C71694C00CD0DC0 /* SignInController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignInController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -459,6 +467,8 @@
 		3E438AE01C57387B0055C97A /* iPhone5 */ = {
 			isa = PBXGroup;
 			children = (
+				3E0B78B71C6E3756001DF21E /* Pause-52.png */,
+				3E0B78B81C6E3756001DF21E /* Play-52.png */,
 				3EB8845B1C6C647700CCDCCE /* Add More@2x.png */,
 				3EB8845C1C6C647700CCDCCE /* Leave Party@2x.png */,
 				3E5BD3121C6C45CE00266B16 /* Home Copy@2x.png */,
@@ -560,6 +570,8 @@
 				3E330B191C38502F00276FE4 /* LoginViewController.swift */,
 				3E4169541C398A5B00B193AF /* SignUpViewController.swift */,
 				3E1BDA561C37111D00EE3B84 /* ViewController.swift */,
+				3E6738F41C6E9C7700B47C3E /* LoginController.swift */,
+				3EF36C751C71694C00CD0DC0 /* SignInController.swift */,
 			);
 			name = "User Authentication";
 			sourceTree = "<group>";
@@ -773,6 +785,7 @@
 				3E438AEA1C5738EF0055C97A /* Turntable@2x.png in Resources */,
 				3E5952801C39DDA800C88C71 /* Group@3x.png in Resources */,
 				3E5952631C39DBC900C88C71 /* Friends.png in Resources */,
+				3E0B78B91C6E3756001DF21E /* Pause-52.png in Resources */,
 				3E5952811C39DDA800C88C71 /* Settings.png in Resources */,
 				3E59527E1C39DDA800C88C71 /* Group.png in Resources */,
 				3E5952711C39DC1E00C88C71 /* Rectangle 10 + Change Photo + voice_presentation copy + voice_presentation copy 2 + voice_presentation + Music 2 + Music 2@3x.png in Resources */,
@@ -790,6 +803,7 @@
 				3EBE976A1C53E4290079B54A /* Blue Check.png in Resources */,
 				3E438AE71C5738EF0055C97A /* Friends@2x.png in Resources */,
 				3E59528A1C39EB6100C88C71 /* Turntable@2x.png in Resources */,
+				3E0B78BA1C6E3756001DF21E /* Play-52.png in Resources */,
 				3E438ADE1C572DFD0055C97A /* Main.storyboard in Resources */,
 				3E438AE81C5738EF0055C97A /* Settings@2x.png in Resources */,
 				3E5952681C39DBC900C88C71 /* Settings@3x.png in Resources */,
@@ -829,6 +843,7 @@
 				3E5485B51C69CE2F00E7D5AB /* InvitedCollectionViewCell.swift in Sources */,
 				3E3412571C54C31F006226E0 /* SongSelectionViewController.swift in Sources */,
 				3E627FE81C55AE35005C0372 /* TDAudioMetaInfo.m in Sources */,
+				3E6738F51C6E9C7700B47C3E /* LoginController.swift in Sources */,
 				3E34125B1C54C73A006226E0 /* PartySession.swift in Sources */,
 				3E627FF01C55AE35005C0372 /* TDAudioStream.m in Sources */,
 				3E627FE91C55AE35005C0372 /* TDAudioPlayer.m in Sources */,
@@ -848,6 +863,7 @@
 				3E627FEF1C55AE35005C0372 /* TDAudioQueueFiller.m in Sources */,
 				3E1BDA551C37111D00EE3B84 /* GetHip.xcdatamodeld in Sources */,
 				3E326BCC1C51C20000F785CF /* SettingsTableViewController.swift in Sources */,
+				3EF36C761C71694C00CD0DC0 /* SignInController.swift in Sources */,
 				3EBE97731C5413240079B54A /* TestInviteFriendsCell.swift in Sources */,
 				3E101F0A1C52F14A00C895CA /* InviteFriendsView.swift in Sources */,
 				3E1B5E451C5274E700D1AB62 /* SettingsDetailViewWrapper.swift in Sources */,

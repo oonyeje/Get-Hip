@@ -93,7 +93,7 @@ class HomeScreenViewController: UIViewController {
             let nav: UINavigationController = (segue.destinationViewController as? UINavigationController)!
             
             let vc: SettingsTableViewController = (nav.viewControllers[0] as? SettingsTableViewController)!
-            vc.setData(self.userData)
+            vc.setData(self.userData, prty: self.partyData)
         }
         
         if segue.identifier == "FriendListSegue" {

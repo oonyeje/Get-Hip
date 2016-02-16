@@ -18,9 +18,7 @@ class TestInviteFriendsController: UIViewController, UITableViewDelegate, UITabl
     @IBOutlet weak var table: UITableView!
     
     @IBAction func cancelInvites(sender: UIBarButtonItem) {
-        self.partyData.stopBrowsing()
-        self.partyData.serviceBrowser = nil
-        println("Browser service deinitialized and browser deinitialized")
+        //println("Browser service deinitialized and browser deinitialized")
         self.parentViewController?.dismissViewControllerAnimated(true, completion: nil)
     }
     
@@ -98,7 +96,7 @@ class TestInviteFriendsController: UIViewController, UITableViewDelegate, UITabl
             cell!.proImage.backgroundColor = UIColor.grayColor()
         }
         else{
-            
+            cell!.proImage.image = friend.profileImg.image!
         }
         
         //rounds uiimage and configures UIImageView

@@ -72,7 +72,7 @@ class LoadingPartyViewController: UIViewController, UICollectionViewDataSource, 
             cell.friendImage.backgroundColor = UIColor.grayColor()
         }
         else{
-            
+            cell.friendImage.image = friend.profileImg.image!
         }
         
         //rounds uiimage and configures UIImageView

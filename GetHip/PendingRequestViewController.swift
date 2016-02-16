@@ -66,6 +66,11 @@ class PendingRequestViewController: UITableViewController {
                         })
                     })
                     
+                    var params = NSMutableDictionary()
+                    params.setObject(object!.objectForKey("OtherUser")!.objectForKey("username") as! String!, forKey: "otherUser")
+                    
+                    PFCloud.callFunctionInBackground("alertAcceptedFriend", withParameters: params as [NSObject : AnyObject])
+                    
                 }
             })
         })

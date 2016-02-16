@@ -61,9 +61,7 @@ class ViewController: UIViewController, PFLogInViewControllerDelegate, PFSignUpV
     }
     
     func presentLoggedInAlert() {
-        
-        
-        self.performSegueWithIdentifier("HomeScreenSegue", sender: nil)
+      self.performSegueWithIdentifier("HomeScreenSegue", sender: nil)
         
     }
     
