@@ -121,8 +121,9 @@ class PartyServiceManager: NSObject {
     func stopAllServices(){
         stopBrowsing()
         stopListening()
-        self.serviceBrowser.delegate = self
-        self.serviceAdvertiser.delegate = self
+        self.serviceBrowser.delegate = nil
+        self.serviceAdvertiser.delegate = nil
+        self.session.delegate = nil
         self.serviceBrowser = nil
         self.serviceAdvertiser = nil
         self.session = nil

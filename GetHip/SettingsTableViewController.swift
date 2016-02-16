@@ -19,6 +19,7 @@ class SettingsTableViewController: UIViewController, UITableViewDataSource, UITa
     @IBAction func dismissSettingsView(sender: UIBarButtonItem) {
         
         self.dismissViewControllerAnimated(true, completion: nil)
+        self.party = nil
     }
     
     
