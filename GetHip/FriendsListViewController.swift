@@ -67,6 +67,7 @@ class FriendsListViewController: UIViewController, UITableViewDelegate, UITableV
         if( indexPath.row == 0){
             let cell = self.table.dequeueReusableCellWithIdentifier("RequestCell", forIndexPath: indexPath) as? FriendRequestCell
             
+            self.table.rowHeight = cell!.bounds.size.height
             //sets count for current number of request
             cell?.requestNumber.text = String(self.request.count)
             return cell!
@@ -79,6 +80,7 @@ class FriendsListViewController: UIViewController, UITableViewDelegate, UITableV
             
             //sets display name of friend (print for debugging purposes)
             cell!.friendName.text = friend!.displayName
+            self.table.rowHeight = cell!.bounds.size.height
             //println(friend!.displayName)
             
             //sets profile image of current cell
@@ -115,6 +117,20 @@ class FriendsListViewController: UIViewController, UITableViewDelegate, UITableV
         }
         
     }
+    
+    /*func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        println(indexPath.row)
+        if indexPath.row == 0{
+            let cell = self.table.dequeueReusableCellWithIdentifier("RequestCell", forIndexPath: indexPath) as? FriendRequestCell
+            
+            return cell?.bounds.size.height as CGFloat!
+        }else{
+            let cell = self.table.dequeueReusableCellWithIdentifier("FriendCell", forIndexPath: indexPath) as? FriendsCell
+            
+            return cell?.bounds.size.height as CGFloat!
+
+        }
+    }*/
     
     override func setEditing(editing: Bool, animated: Bool) {
         super.setEditing(editing, animated: animated)

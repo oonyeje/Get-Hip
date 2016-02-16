@@ -353,20 +353,20 @@
         <!--Friends List View Controller-->
         <scene sceneID="f64-9e-nxp">
             <objects>
-                <viewController id="Wv2-hP-rqT" customClass="FriendsListViewController" customModule="GetHip" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController automaticallyAdjustsScrollViewInsets="NO" id="Wv2-hP-rqT" customClass="FriendsListViewController" customModule="GetHip" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="8ym-uq-Pb7"/>
                         <viewControllerLayoutGuide type="bottom" id="cK5-oC-1To"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="jS0-Hf-zMc">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <rect key="frame" x="0.0" y="64" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="Bxz-d2-wT5">
                                 <rect key="frame" x="0.0" y="64" width="320" height="504"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <searchBar key="tableHeaderView" contentMode="redraw" id="pFw-ta-NIX">
-                                    <rect key="frame" x="0.0" y="262" width="320" height="44"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <textInputTraits key="textInputTraits"/>
                                     <connections>
@@ -484,7 +484,7 @@
         <!--Home Screen View Controller-->
         <scene sceneID="74v-iN-Rpu">
             <objects>
-                <viewController id="i3K-xv-zw1" customClass="HomeScreenViewController" customModule="GetHip" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="HomeVC" id="i3K-xv-zw1" customClass="HomeScreenViewController" customModule="GetHip" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="TfY-s2-B0B"/>
                         <viewControllerLayoutGuide type="bottom" id="nqn-B0-8f9"/>
@@ -1153,7 +1153,7 @@
         <!--Song Selection View Controller-->
         <scene sceneID="IkJ-pX-wAP">
             <objects>
-                <viewController id="VGZ-6j-3c9" customClass="SongSelectionViewController" customModule="GetHip" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController automaticallyAdjustsScrollViewInsets="NO" id="VGZ-6j-3c9" customClass="SongSelectionViewController" customModule="GetHip" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="AfP-pS-mzX"/>
                         <viewControllerLayoutGuide type="bottom" id="Zss-AJ-MHl"/>

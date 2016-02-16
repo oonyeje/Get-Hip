@@ -44,13 +44,17 @@ class LoginController: UIViewController, PFLogInViewControllerDelegate {
         // Do any additional setup after loading the view.
         //check if user already signed in
         if(PFUser.currentUser() != nil){
+            
             presentLoggedInAlert()
+        
         }
         
         self.signIn.layer.borderWidth = 1
         self.signIn.layer.cornerRadius = 5
         self.signIn.layer.borderColor = UIColor.whiteColor().CGColor
-        self.navigationController?.navigationBarHidden = true
+        //self.navigationController?.navigationBarHidden = true
+            
+        
         
     }
 
@@ -60,7 +64,8 @@ class LoginController: UIViewController, PFLogInViewControllerDelegate {
     }
     
     func presentLoggedInAlert() {
-        self.performSegueWithIdentifier("LoginToHomeSegue", sender: self)
+        var story = UIStoryboard(name: "Main", bundle: nil)
+        var homeVC: HomeScreenViewController = story.instantiateViewControllerWithIdentifier("HomeVC") as! HomeScreenViewController!
         
     }    /*
     // MARK: - Navigation
