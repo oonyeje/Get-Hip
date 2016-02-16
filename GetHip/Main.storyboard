@@ -74,8 +74,8 @@
                         <outlet property="signIn" destination="ALE-x0-k9I" id="mOR-kB-ZID"/>
                         <outlet property="signUpButton" destination="lST-pS-LgB" id="Foa-6z-LBJ"/>
                         <outlet property="userEmailField" destination="gFr-9c-756" id="xPA-UK-gem"/>
-                        <segue destination="kZ0-PQ-f7W" kind="show" identifier="LoginToHomeSegue" id="7ie-yW-8jM"/>
-                        <segue destination="6Yk-7p-Ylr" kind="show" identifier="signUpSegue" id="Lte-65-p9s"/>
+                        <segue destination="i3K-xv-zw1" kind="show" identifier="LoginToHomeSegue" id="5pn-ck-WiI"/>
+                        <segue destination="dsv-bM-qgc" kind="show" identifier="signUpSegue" id="gK7-EH-zMe"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6qe-4m-7Cy" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -163,23 +163,6 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="L2S-Q5-7iA" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="671" y="1027"/>
-        </scene>
-        <!--Navigation Controller-->
-        <scene sceneID="xtu-tQ-Tcf">
-            <objects>
-                <navigationController id="6Yk-7p-Ylr" sceneMemberID="viewController">
-                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="fzT-rL-U19">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </navigationBar>
-                    <connections>
-                        <segue destination="dsv-bM-qgc" kind="relationship" relationship="rootViewController" id="T0z-62-dtc"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="RJI-Lv-OTf" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="205" y="1365"/>
         </scene>
         <!--Login View Controller-->
         <scene sceneID="VdH-cE-Gd7">
@@ -321,23 +304,6 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="eVC-XV-G1v" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="41" y="-831"/>
-        </scene>
-        <!--Navigation Controller-->
-        <scene sceneID="0Ep-TB-6TC">
-            <objects>
-                <navigationController id="kZ0-PQ-f7W" sceneMemberID="viewController">
-                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="hFF-LE-Tsc">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </navigationBar>
-                    <connections>
-                        <segue destination="i3K-xv-zw1" kind="relationship" relationship="rootViewController" id="Vuv-dQ-1xi"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="tIK-cA-5MW" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="186" y="717"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="IwM-WG-Tkx">
@@ -1483,7 +1449,7 @@
         <image name="Turntable@3x.png" width="434" height="434"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="Xce-i2-SEV"/>
-        <segue reference="dYP-IJ-p2K"/>
+        <segue reference="5pn-ck-WiI"/>
+        <segue reference="5Ml-AJ-rNB"/>
     </inferredMetricsTieBreakers>
 </document>

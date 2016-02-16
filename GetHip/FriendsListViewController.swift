@@ -18,7 +18,9 @@ class FriendsListViewController: UIViewController, UITableViewDelegate, UITableV
     
     @IBAction func dismissFriendView(sender: UIBarButtonItem) {
         
-        self.parentViewController?.dismissViewControllerAnimated(true, completion: nil)
+        self.parentViewController?.navigationController?.popViewControllerAnimated(true)
+        self.navigationController?.navigationBarHidden = false
+
     }
     @IBAction func addFriend(sender: UIBarButtonItem){
         self.performSegueWithIdentifier("FriendRequestSegue", sender: nil)
@@ -33,6 +35,7 @@ class FriendsListViewController: UIViewController, UITableViewDelegate, UITableV
         self.table.delegate = self
         self.table.dataSource = self
         self.title = "Friends"
+        self.navigationController?.navigationBarHidden = false
         //self.navigationItem.rightBarButtonItem = self.editButtonItem()
         //self.friends = manager.getFriends()
         

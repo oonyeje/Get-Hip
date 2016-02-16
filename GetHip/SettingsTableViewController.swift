@@ -18,7 +18,7 @@ class SettingsTableViewController: UIViewController, UITableViewDataSource, UITa
     
     @IBAction func dismissSettingsView(sender: UIBarButtonItem) {
         
-        self.parentViewController?.dismissViewControllerAnimated(true, completion: nil)
+        self.parentViewController?.navigationController?.popViewControllerAnimated(true)
     }
     
     
@@ -48,7 +48,7 @@ class SettingsTableViewController: UIViewController, UITableViewDataSource, UITa
         self.logOutBtn.layer.borderColor = UIColor.blackColor().CGColor
         self.table.dataSource = self
         self.table.delegate = self
-        
+        self.navigationController?.navigationBarHidden = false
         //NSNotificationCenter.defaultCenter().addObserver(self, selector: "refreshTable:", name: "refreshSettingsView", object: nil)
         
         self.table.reloadData()
