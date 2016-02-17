@@ -10,8 +10,10 @@ import UIKit
 import MediaPlayer
 
 class SongSelectionViewController: UIViewController, UITableViewDelegate, UITableViewDataSource  {
-    var party: PartyServiceManager! = nil
-    
+    var party: PartyServiceManager!
+    var usr: [UserParseData] = []
+    var frnds: [FriendData] = []
+    var requestData: [FriendData] = []
     
     @IBOutlet weak var table: UITableView!
 
@@ -85,8 +87,11 @@ class SongSelectionViewController: UIViewController, UITableViewDelegate, UITabl
         // Dispose of any resources that can be recreated.
     }
     
-    func setData(prty:PartyServiceManager){
+    func setData(prty:PartyServiceManager, user: [UserParseData], friends: [FriendData], request: [FriendData]){
         self.party = prty
+        self.usr = user
+        self.frnds = friends
+        self.requestData = request
     }
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
@@ -269,7 +274,7 @@ class SongSelectionViewController: UIViewController, UITableViewDelegate, UITabl
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if(segue.identifier == "LoadingPartySegue"){
             let vc: LoadingPartyViewController = (segue.destinationViewController as? LoadingPartyViewController)!
-            vc.setData(self.party)
+            vc.setData(self.party, user: self.usr, friends: self.frnds, request: self.requestData)
             
         }
     }

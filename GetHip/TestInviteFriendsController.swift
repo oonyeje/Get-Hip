@@ -12,6 +12,7 @@ import MultipeerConnectivity
 class TestInviteFriendsController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     var usr: [UserParseData] = []
     var frnds: [FriendData] = []
+    var requestData: [FriendData] = []
     var isFriendSelected: [Bool] = []
     var partyData: PartyServiceManager! = nil
     
@@ -41,10 +42,11 @@ class TestInviteFriendsController: UIViewController, UITableViewDelegate, UITabl
     }
     
     
-    func setData(usrDat: [UserParseData], frndData: [FriendData], party: PartyServiceManager){
+    func setData(usrDat: [UserParseData], frndData: [FriendData], party: PartyServiceManager, request: [FriendData]){
         self.usr = usrDat
         self.frnds = frndData
         self.partyData = party
+        self.requestData = request
         
         for i in 0..<self.frnds.count{
             self.isFriendSelected.append(false)
@@ -137,7 +139,7 @@ class TestInviteFriendsController: UIViewController, UITableViewDelegate, UITabl
         }
         self.partyData.invitedFriends = invited
         let vc: SongSelectionViewController = (segue.destinationViewController as? SongSelectionViewController)!
-        vc.setData(self.partyData)
+        vc.setData(self.partyData, user: self.usr, friends: self.frnds, request: self.requestData)
         println(invited.count)
     }
     

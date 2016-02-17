@@ -60,6 +60,7 @@
 		3E43B8C91C37639C002F97A7 /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3E1BDA751C3713F900EE3B84 /* FBSDKCoreKit.framework */; };
 		3E43B8CA1C37639C002F97A7 /* FBSDKLoginKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3E43B8C51C375E73002F97A7 /* FBSDKLoginKit.framework */; };
 		3E43B8CF1C376F9F002F97A7 /* Logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 3E43B8CE1C376F9F002F97A7 /* Logo.png */; };
+		3E50E0401C74B97300EB9EA9 /* BackToHomeScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E50E03F1C74B97300EB9EA9 /* BackToHomeScreenViewController.swift */; };
 		3E5485B31C69A7DA00E7D5AB /* LoadingPartyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5485B21C69A7DA00E7D5AB /* LoadingPartyViewController.swift */; };
 		3E5485B51C69CE2F00E7D5AB /* InvitedCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5485B41C69CE2F00E7D5AB /* InvitedCollectionViewCell.swift */; };
 		3E5952631C39DBC900C88C71 /* Friends.png in Resources */ = {isa = PBXBuildFile; fileRef = 3E59525A1C39DBC900C88C71 /* Friends.png */; };
@@ -199,6 +200,7 @@
 		3E43B8C41C375E73002F97A7 /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Bolts.framework; path = ../../FacebookSDK/Bolts.framework; sourceTree = "<group>"; };
 		3E43B8C51C375E73002F97A7 /* FBSDKLoginKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKLoginKit.framework; path = ../../FacebookSDK/FBSDKLoginKit.framework; sourceTree = "<group>"; };
 		3E43B8CE1C376F9F002F97A7 /* Logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Logo.png; path = "../../../Dropbox/gethip/Screens/6 Login/Assets/Logo.png"; sourceTree = "<group>"; };
+		3E50E03F1C74B97300EB9EA9 /* BackToHomeScreenViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BackToHomeScreenViewController.swift; sourceTree = "<group>"; };
 		3E5485B21C69A7DA00E7D5AB /* LoadingPartyViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadingPartyViewController.swift; sourceTree = "<group>"; };
 		3E5485B41C69CE2F00E7D5AB /* InvitedCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InvitedCollectionViewCell.swift; sourceTree = "<group>"; };
 		3E59525A1C39DBC900C88C71 /* Friends.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Friends.png; path = "../Get Hip/Get Hip/Assets/Friends.png"; sourceTree = "<group>"; };
@@ -455,6 +457,7 @@
 			isa = PBXGroup;
 			children = (
 				3E1EE6381C6D02EB00F5C5D7 /* InPartyViewController.swift */,
+				3E50E03F1C74B97300EB9EA9 /* BackToHomeScreenViewController.swift */,
 			);
 			name = InParty;
 			sourceTree = "<group>";
@@ -853,6 +856,7 @@
 				3E627FE81C55AE35005C0372 /* TDAudioMetaInfo.m in Sources */,
 				3E6738F51C6E9C7700B47C3E /* LoginController.swift in Sources */,
 				3E34125B1C54C73A006226E0 /* PartySession.swift in Sources */,
+				3E50E0401C74B97300EB9EA9 /* BackToHomeScreenViewController.swift in Sources */,
 				3E627FF01C55AE35005C0372 /* TDAudioStream.m in Sources */,
 				3E627FE91C55AE35005C0372 /* TDAudioPlayer.m in Sources */,
 				3EDA82E31C4741C70081ED53 /* FriendDataSource.swift in Sources */,

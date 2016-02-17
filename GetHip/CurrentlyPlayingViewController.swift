@@ -10,6 +10,13 @@ import UIKit
 import MediaPlayer
 
 class CurrentlyPlayingViewController: UIViewController {
+    //persistant data
+    var party: PartyServiceManager!
+    var usr: [UserParseData] = []
+    var frnds: [FriendData] = []
+    var requestData: [FriendData] = []
+    
+    //controller data
     @IBOutlet var songImg: UIImageView!
     @IBOutlet var titleLabel: UILabel!
     @IBOutlet var artistAndAlbumLabel: UILabel!
@@ -27,18 +34,8 @@ class CurrentlyPlayingViewController: UIViewController {
     
     //Guest buttons
     
-    //Regular buttons
-    @IBAction func partyView(sender: UIButton){
-        self.performSegueWithIdentifier("InPartySegue", sender: self)
-    }
     
-    @IBAction func backToHome(sender: UIButton){
-        self.performSegueWithIdentifier("BackToHomeScreenSegue", sender: self)
-    }
 
-
-    
-    var party: PartyServiceManager!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -56,8 +53,11 @@ class CurrentlyPlayingViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    func setData(prty: PartyServiceManager){
+    func setData(prty:PartyServiceManager, user: [UserParseData], friends: [FriendData], request: [FriendData]){
         self.party = prty
+        self.usr = user
+        self.frnds = friends
+        self.requestData = request
     }
     
 
@@ -77,9 +77,8 @@ class CurrentlyPlayingViewController: UIViewController {
         }
         
         if segue.identifier == "BackToHomeScreenSegue" {
-            let vc: HomeScreenViewController = (segue.destinationViewController as? HomeScreenViewController)!
-            vc.comingFromParty = true
-            vc.partyData = self.party
+            let vc: BackToHomeScreenViewController = (segue.destinationViewController as? BackToHomeScreenViewController)!
+            vc.setData(self.party, user: self.usr, friends: self.frnds, request: self.requestData)
         }
     }
     

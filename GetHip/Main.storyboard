@@ -1027,7 +1027,9 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
-                    <navigationItem key="navigationItem" id="Agu-kd-wvl"/>
+                    <navigationItem key="navigationItem" id="Agu-kd-wvl">
+                        <barButtonItem key="leftBarButtonItem" title="Close" id="9LU-py-b7m"/>
+                    </navigationItem>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                     <connections>
@@ -1057,6 +1059,45 @@
             </objects>
             <point key="canvasLocation" x="4301" y="-630"/>
         </scene>
+        <!--Back To Home Screen View Controller-->
+        <scene sceneID="gCm-Fo-tYn">
+            <objects>
+                <viewController id="Voh-zF-gkm" customClass="BackToHomeScreenViewController" customModule="GetHip" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="Mgc-0w-XIy"/>
+                        <viewControllerLayoutGuide type="bottom" id="nZn-3W-l13"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="3oq-w0-Q09">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uly-3t-3t6">
+                                <rect key="frame" x="271" y="44" width="30" height="29"/>
+                                <state key="normal" image="Settings.png">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <segue destination="0Tt-tN-iza" kind="show" identifier="FromPartySettingsSegue" id="WxI-P3-JZ9"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="78r-X0-7he">
+                                <rect key="frame" x="19" y="44" width="56" height="32"/>
+                                <state key="normal" image="Friends.png">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <segue destination="hDZ-CA-Hsj" kind="show" identifier="FromPartyFriendsSegue" id="wiM-xb-lpR"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="khD-ct-hT7" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3869" y="-1391"/>
+        </scene>
         <!--Currently Playing View Controller-->
         <scene sceneID="GJX-js-Rhq">
             <objects>
@@ -1072,23 +1113,13 @@
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="HKj-kH-yf5">
                                 <rect key="frame" x="0.0" y="65" width="320" height="320"/>
                             </imageView>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="V0r-OV-CXi">
-                                <rect key="frame" x="226" y="16" width="81" height="41"/>
-                                <state key="normal" image="Party.png">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="partyView:" destination="5Fd-vs-lX1" eventType="touchUpInside" id="Npy-DJ-Lfa"/>
-                                </connections>
-                            </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ubi-iW-9FF">
-                                <rect key="frame" x="13" y="22" width="34" height="34"/>
+                                <rect key="frame" x="13" y="23" width="34" height="34"/>
                                 <state key="normal" image="Home Copy.png">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <action selector="backToHome:" destination="5Fd-vs-lX1" eventType="touchUpInside" id="fuE-mc-aza"/>
-                                    <segue destination="i3K-xv-zw1" kind="presentation" identifier="BackToHomeScreenSegue" id="Ank-g9-HFe"/>
+                                    <segue destination="Voh-zF-gkm" kind="presentation" identifier="BackToHomeScreenSegue" id="avk-9c-Kgu"/>
                                 </connections>
                             </button>
                             <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="wy0-d1-PlB">
@@ -1153,6 +1184,15 @@
                                     <action selector="playPauseFav:" destination="5Fd-vs-lX1" eventType="touchUpInside" id="AgY-Dl-2AA"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="V0r-OV-CXi">
+                                <rect key="frame" x="226" y="16" width="81" height="41"/>
+                                <state key="normal" image="Party.png">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <segue destination="enX-CI-fki" kind="show" identifier="InPartySegue" id="OD2-Xh-xf2"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
@@ -1166,7 +1206,6 @@
                         <outlet property="songImg" destination="HKj-kH-yf5" id="UAh-IG-J3y"/>
                         <outlet property="titleLabel" destination="tHQ-qY-ZrL" id="RE7-2e-ghS"/>
                         <outlet property="volCtrl" destination="AA9-Xx-q9o" id="3yD-gc-O6r"/>
-                        <segue destination="enX-CI-fki" kind="show" identifier="InPartySegue" id="fAI-IV-wRT"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qk5-ei-kCM" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1467,6 +1506,7 @@
         <image name="Cancel.png" width="28" height="28"/>
         <image name="Change Song.png" width="152" height="24"/>
         <image name="Create@3x.png" width="471" height="93"/>
+        <image name="Friends.png" width="73" height="42"/>
         <image name="Friends@3x.png" width="219" height="126"/>
         <image name="Home Copy.png" width="34" height="34"/>
         <image name="Lower.png" width="7" height="10"/>
@@ -1476,12 +1516,15 @@
         <image name="Raise.png" width="14" height="13"/>
         <image name="Send Invites Button.png" width="375" height="46"/>
         <image name="Send.png" width="152" height="24"/>
+        <image name="Settings.png" width="39" height="38"/>
         <image name="Settings@3x.png" width="116" height="113"/>
         <image name="Star@3x.png" width="172" height="166"/>
         <image name="Tap Circle.png" width="28" height="27"/>
         <image name="Turntable@3x.png" width="434" height="434"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="Ank-g9-HFe"/>
+        <segue reference="WxI-P3-JZ9"/>
+        <segue reference="5pn-ck-WiI"/>
+        <segue reference="wiM-xb-lpR"/>
     </inferredMetricsTieBreakers>
 </document>

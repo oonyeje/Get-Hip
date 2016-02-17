@@ -14,8 +14,7 @@ class HomeScreenViewController: UIViewController {
     var friendData: [FriendData] = []
     var requestData: [FriendData] = []
     var userData: [UserParseData] = []
-    var partyData = PartyServiceManager()
-    var comingFromParty: Bool!
+    let partyData = PartyServiceManager()
     
     @IBOutlet weak var CreateAPartyBtn: UIButton!
     
@@ -87,7 +86,7 @@ class HomeScreenViewController: UIViewController {
             self.partyData.setRole(PeerType(rawValue: 0)!)
             
             
-            vc.setData(self.userData, frndData: self.friendData, party: self.partyData)
+            vc.setData(self.userData, frndData: self.friendData, party: self.partyData, request: self.requestData)
         }
         
         if segue.identifier == "SettingsSegue" {

@@ -26,7 +26,7 @@ class LoginController: UIViewController, PFLogInViewControllerDelegate, UITextFi
             if(user != nil){
                 self.performSegueWithIdentifier("LoginToHomeSegue", sender: self)
             }else{
-                var alert = UIAlertController(title: "Invalid Login", message: "Your friend request was sent successfully!", preferredStyle: .Alert)
+                var alert = UIAlertController(title: "Invalid Login", message: "Your username/email or password is incorrect!", preferredStyle: .Alert)
                 alert.addAction(UIAlertAction(title: "OK", style: .Default, handler:{(action: UIAlertAction!) in alert.dismissViewControllerAnimated(true, completion: nil)}))
                 
                 self.presentViewController(alert, animated: true, completion: nil)
@@ -69,17 +69,16 @@ class LoginController: UIViewController, PFLogInViewControllerDelegate, UITextFi
         
     }
     // MARK: - Navigation
-
+/*
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         
         if segue.identifier == "LoginToHomeSegue" {
-            let vc: HomeScreenViewController = (segue.destinationViewController as? HomeScreenViewController)!
-            vc.comingFromParty = false
+            
         }
     }
     
-    
+  */
     func textFieldShouldReturn(textField: UITextField) -> Bool {
         self.view.endEditing(true)
         return false

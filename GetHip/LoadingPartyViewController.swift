@@ -10,8 +10,13 @@ import UIKit
 import MediaPlayer
 
 class LoadingPartyViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate{
+    //persistant data
     var party: PartyServiceManager!
-    
+    var usr: [UserParseData] = []
+    var frnds: [FriendData] = []
+    var requestData: [FriendData] = []
+
+    //controller data
     @IBOutlet var songImg: UIImageView!
     @IBOutlet var invitedFriends: UICollectionView!
     @IBOutlet var songLabel: UILabel!
@@ -59,8 +64,11 @@ class LoadingPartyViewController: UIViewController, UICollectionViewDataSource, 
         }
     }
     
-    func setData(prty: PartyServiceManager){
+    func setData(prty:PartyServiceManager, user: [UserParseData], friends: [FriendData], request: [FriendData]){
         self.party = prty
+        self.usr = user
+        self.frnds = friends
+        self.requestData = request
     }
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
@@ -101,7 +109,7 @@ class LoadingPartyViewController: UIViewController, UICollectionViewDataSource, 
         // Pass the selected object to the new view controller.
         if(segue.identifier == "CurrentlyPlayingSegue"){
             let vc: CurrentlyPlayingViewController = (segue.destinationViewController as? CurrentlyPlayingViewController)!
-            vc.setData(self.party)
+            vc.setData(self.party, user: self.usr, friends: self.frnds, request: self.requestData)
         }
     }
     
