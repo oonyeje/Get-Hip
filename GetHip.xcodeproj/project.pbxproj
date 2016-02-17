@@ -14,6 +14,8 @@
 		3E101F0A1C52F14A00C895CA /* InviteFriendsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E101F091C52F14A00C895CA /* InviteFriendsView.swift */; };
 		3E18D4931C51F6230012F7DF /* UserParseData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E18D4921C51F6230012F7DF /* UserParseData.swift */; };
 		3E18D4951C51FAC60012F7DF /* UserParseDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E18D4941C51FAC60012F7DF /* UserParseDataSource.swift */; };
+		3E191D7B1C742EA5008D5763 /* Lower@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3E191D791C742EA5008D5763 /* Lower@2x.png */; };
+		3E191D7C1C742EA5008D5763 /* Raise@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3E191D7A1C742EA5008D5763 /* Raise@2x.png */; };
 		3E1AAD141C3BD92600809367 /* FriendsListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E1AAD131C3BD92600809367 /* FriendsListViewController.swift */; };
 		3E1B5E451C5274E700D1AB62 /* SettingsDetailViewWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E1B5E441C5274E700D1AB62 /* SettingsDetailViewWrapper.swift */; };
 		3E1BDA521C37111D00EE3B84 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E1BDA511C37111D00EE3B84 /* AppDelegate.swift */; };
@@ -143,6 +145,8 @@
 		3E101F091C52F14A00C895CA /* InviteFriendsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InviteFriendsView.swift; sourceTree = "<group>"; };
 		3E18D4921C51F6230012F7DF /* UserParseData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserParseData.swift; sourceTree = "<group>"; };
 		3E18D4941C51FAC60012F7DF /* UserParseDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserParseDataSource.swift; sourceTree = "<group>"; };
+		3E191D791C742EA5008D5763 /* Lower@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Lower@2x.png"; path = "../../../Dropbox/Gethip/For final/i5 Volume/Lower@2x.png"; sourceTree = "<group>"; };
+		3E191D7A1C742EA5008D5763 /* Raise@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Raise@2x.png"; path = "../../../Dropbox/Gethip/For final/i5 Volume/Raise@2x.png"; sourceTree = "<group>"; };
 		3E1AAD131C3BD92600809367 /* FriendsListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FriendsListViewController.swift; sourceTree = "<group>"; };
 		3E1B5E441C5274E700D1AB62 /* SettingsDetailViewWrapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsDetailViewWrapper.swift; sourceTree = "<group>"; };
 		3E1BDA4C1C37111D00EE3B84 /* GetHip.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GetHip.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -467,6 +471,8 @@
 		3E438AE01C57387B0055C97A /* iPhone5 */ = {
 			isa = PBXGroup;
 			children = (
+				3E191D791C742EA5008D5763 /* Lower@2x.png */,
+				3E191D7A1C742EA5008D5763 /* Raise@2x.png */,
 				3E0B78B71C6E3756001DF21E /* Pause-52.png */,
 				3E0B78B81C6E3756001DF21E /* Play-52.png */,
 				3EB8845B1C6C647700CCDCCE /* Add More@2x.png */,
@@ -794,6 +800,7 @@
 				3E438AE91C5738EF0055C97A /* Star@2x.png in Resources */,
 				3E5BD3151C6C45CE00266B16 /* Home Copy@2x.png in Resources */,
 				3E5952831C39DDA800C88C71 /* Settings@3x.png in Resources */,
+				3E191D7B1C742EA5008D5763 /* Lower@2x.png in Resources */,
 				3E7BB8E21C5B4A350005B834 /* Change Song@2x.png in Resources */,
 				3E59526B1C39DBC900C88C71 /* Star@3x.png in Resources */,
 				3E59527B1C39DDA800C88C71 /* Create.png in Resources */,
@@ -803,6 +810,7 @@
 				3EBE976A1C53E4290079B54A /* Blue Check.png in Resources */,
 				3E438AE71C5738EF0055C97A /* Friends@2x.png in Resources */,
 				3E59528A1C39EB6100C88C71 /* Turntable@2x.png in Resources */,
+				3E191D7C1C742EA5008D5763 /* Raise@2x.png in Resources */,
 				3E0B78BA1C6E3756001DF21E /* Play-52.png in Resources */,
 				3E438ADE1C572DFD0055C97A /* Main.storyboard in Resources */,
 				3E438AE81C5738EF0055C97A /* Settings@2x.png in Resources */,

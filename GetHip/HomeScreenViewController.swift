@@ -14,7 +14,8 @@ class HomeScreenViewController: UIViewController {
     var friendData: [FriendData] = []
     var requestData: [FriendData] = []
     var userData: [UserParseData] = []
-    let partyData = PartyServiceManager()
+    var partyData = PartyServiceManager()
+    var comingFromParty: Bool!
     
     @IBOutlet weak var CreateAPartyBtn: UIButton!
     

@@ -29,7 +29,11 @@ class CurrentlyPlayingViewController: UIViewController {
     
     //Regular buttons
     @IBAction func partyView(sender: UIButton){
-        self.performSegueWithIdentifier("InPartySegue", sender: nil)
+        self.performSegueWithIdentifier("InPartySegue", sender: self)
+    }
+    
+    @IBAction func backToHome(sender: UIButton){
+        self.performSegueWithIdentifier("BackToHomeScreenSegue", sender: self)
     }
 
 
@@ -66,8 +70,16 @@ class CurrentlyPlayingViewController: UIViewController {
         // Pass the selected object to the new view controller.
         
         if(segue.identifier == "InPartySegue"){
-            let vc: InPartyViewController = (segue.destinationViewController as? InPartyViewController)!
+            let nav: UINavigationController = (segue.destinationViewController as? UINavigationController)!
+            
+            let vc: InPartyViewController = (nav.viewControllers[0] as? InPartyViewController)!
             vc.setData(self.party)
+        }
+        
+        if segue.identifier == "BackToHomeScreenSegue" {
+            let vc: HomeScreenViewController = (segue.destinationViewController as? HomeScreenViewController)!
+            vc.comingFromParty = true
+            vc.partyData = self.party
         }
     }
     

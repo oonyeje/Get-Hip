@@ -8,7 +8,7 @@
 
 import UIKit
 
-class LoginController: UIViewController, PFLogInViewControllerDelegate {
+class LoginController: UIViewController, PFLogInViewControllerDelegate, UITextFieldDelegate {
     @IBOutlet var userEmailField: UITextField!
     @IBOutlet var password: UITextField!
     @IBOutlet var signIn: UIButton!
@@ -48,7 +48,8 @@ class LoginController: UIViewController, PFLogInViewControllerDelegate {
             presentLoggedInAlert()
         
         }
-        
+        self.userEmailField.delegate = self
+        self.password.delegate = self
         self.signIn.layer.borderWidth = 1
         self.signIn.layer.cornerRadius = 5
         self.signIn.layer.borderColor = UIColor.whiteColor().CGColor
@@ -64,17 +65,24 @@ class LoginController: UIViewController, PFLogInViewControllerDelegate {
     }
     
     func presentLoggedInAlert() {
-        var story = UIStoryboard(name: "Main", bundle: nil)
-        var homeVC: HomeScreenViewController = story.instantiateViewControllerWithIdentifier("HomeVC") as! HomeScreenViewController!
+        self.performSegueWithIdentifier("LoginToHomeSegue", sender: self)
         
-    }    /*
+    }
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+        
+        if segue.identifier == "LoginToHomeSegue" {
+            let vc: HomeScreenViewController = (segue.destinationViewController as? HomeScreenViewController)!
+            vc.comingFromParty = false
+        }
     }
-    */
+    
+    
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        self.view.endEditing(true)
+        return false
+    }
 
 }

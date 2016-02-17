@@ -67,6 +67,7 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <navigationItem key="navigationItem" id="JtB-YG-RXM"/>
+                    <nil key="simulatedTopBarMetrics"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                     <connections>
                         <outlet property="forgotPassBtn" destination="BFX-Ad-idn" id="neV-au-ZVa"/>
@@ -1037,7 +1038,24 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="YYE-fc-I8V" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4341" y="-630"/>
+            <point key="canvasLocation" x="4753" y="-630"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="O41-dS-y1y">
+            <objects>
+                <navigationController id="enX-CI-fki" sceneMemberID="viewController">
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="7KM-K7-LWL">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="TaI-jj-ubR" kind="relationship" relationship="rootViewController" id="Zpz-yM-jtA"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="AUg-No-oN9" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="4301" y="-630"/>
         </scene>
         <!--Currently Playing View Controller-->
         <scene sceneID="GJX-js-Rhq">
@@ -1060,7 +1078,7 @@
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <segue destination="TaI-jj-ubR" kind="show" identifier="InPartySegue" id="Nob-LL-SKW"/>
+                                    <action selector="partyView:" destination="5Fd-vs-lX1" eventType="touchUpInside" id="Npy-DJ-Lfa"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ubi-iW-9FF">
@@ -1068,6 +1086,10 @@
                                 <state key="normal" image="Home Copy.png">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="backToHome:" destination="5Fd-vs-lX1" eventType="touchUpInside" id="fuE-mc-aza"/>
+                                    <segue destination="i3K-xv-zw1" kind="presentation" identifier="BackToHomeScreenSegue" id="Ank-g9-HFe"/>
+                                </connections>
                             </button>
                             <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="wy0-d1-PlB">
                                 <rect key="frame" x="0.0" y="383" width="320" height="2"/>
@@ -1118,7 +1140,7 @@
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <slider opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="AA9-Xx-q9o">
+                            <slider opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" minimumValueImage="Lower.png" maximumValueImage="Raise.png" translatesAutoresizingMaskIntoConstraints="NO" id="AA9-Xx-q9o">
                                 <rect key="frame" x="26" y="465" width="268" height="31"/>
                             </slider>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sFb-YR-QlX">
@@ -1144,6 +1166,7 @@
                         <outlet property="songImg" destination="HKj-kH-yf5" id="UAh-IG-J3y"/>
                         <outlet property="titleLabel" destination="tHQ-qY-ZrL" id="RE7-2e-ghS"/>
                         <outlet property="volCtrl" destination="AA9-Xx-q9o" id="3yD-gc-O6r"/>
+                        <segue destination="enX-CI-fki" kind="show" identifier="InPartySegue" id="fAI-IV-wRT"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qk5-ei-kCM" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1446,9 +1469,11 @@
         <image name="Create@3x.png" width="471" height="93"/>
         <image name="Friends@3x.png" width="219" height="126"/>
         <image name="Home Copy.png" width="34" height="34"/>
+        <image name="Lower.png" width="7" height="10"/>
         <image name="No Friend Requests i5.png" width="320" height="568"/>
         <image name="Party.png" width="81" height="41"/>
         <image name="Pause-52.png" width="52" height="52"/>
+        <image name="Raise.png" width="14" height="13"/>
         <image name="Send Invites Button.png" width="375" height="46"/>
         <image name="Send.png" width="152" height="24"/>
         <image name="Settings@3x.png" width="116" height="113"/>
@@ -1457,6 +1482,6 @@
         <image name="Turntable@3x.png" width="434" height="434"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="dYP-IJ-p2K"/>
+        <segue reference="Ank-g9-HFe"/>
     </inferredMetricsTieBreakers>
 </document>
