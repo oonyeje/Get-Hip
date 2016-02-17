@@ -14,6 +14,11 @@ class InPartyViewController: UIViewController, UICollectionViewDataSource, UICol
     @IBOutlet var AddMore: UIButton!
     @IBOutlet var leaveOrEnd: UIButton!
     
+    @IBAction func dismissFriendView(sender: UIBarButtonItem) {
+        
+        self.dismissViewControllerAnimated(true, completion: nil)
+    }
+    
     //Only visible for host
     @IBAction func inviteMore(sender: UIButton!){
     
