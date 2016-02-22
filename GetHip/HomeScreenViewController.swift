@@ -39,20 +39,22 @@ class HomeScreenViewController: UIViewController {
         self.partyData.setPeerID((self.userData[0].displayName))
         self.partyData.setAdvertiser()
         
-        //initialize browser to find nearby friends
-        self.partyData.setBrowser()
-        
-        //initialize session
-        self.partyData.initializeSession()
-        
-        //start peer-to-peer transcieveing
+        //start peer-to-peer advertising
         self.partyData.startListening()
-        self.partyData.startBrowser()
     }
     
     func loadID(notification: NSNotification){
         self.performSegueWithIdentifier("InviteFriendsSegue", sender: nil)
     }
+    
+    
+    @IBAction func testGuest(sender: UIButton){
+        var storyboard = UIStoryboard(name: "Main", bundle: nil)
+        var vc: InvitedToPartyViewController = storyboard.instantiateViewControllerWithIdentifier("InvitedToPartyVC") as! InvitedToPartyViewController!
+        vc.setData(self.partyData, user: self.userData, friends: self.friendData, request: self.requestData)
+        self.presentViewController(vc, animated: true, completion: nil)
+    }
+    
     
     
     override func viewDidLoad() {
@@ -86,6 +88,7 @@ class HomeScreenViewController: UIViewController {
             self.partyData.setRole(PeerType(rawValue: 0)!)
             
             
+            
             vc.setData(self.userData, frndData: self.friendData, party: self.partyData, request: self.requestData)
         }
         
@@ -100,7 +103,7 @@ class HomeScreenViewController: UIViewController {
             let nav: UINavigationController = (segue.destinationViewController as? UINavigationController)!
             
             let vc: FriendsListViewController = (nav.viewControllers[0] as? FriendsListViewController)!
-            vc.setData(self.friendData, requst: self.requestData)
+            vc.setData(self.friendData, requst: self.requestData, party: self.partyData)
         }
     }
     

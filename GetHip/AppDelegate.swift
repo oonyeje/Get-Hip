@@ -36,9 +36,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate , CLLocationManagerDelegat
         // Override point for customization after application launch.
         Parse.setApplicationId("OUFlGeqCzg03ZbstGcbskj7UNwp53Y0yad9Fi6I0", clientKey: "xaw0kbAFnBi3zLhT1uSnzrzju56m7CnQJ8hJHW1K")
         PFFacebookUtils.initializeFacebookWithApplicationLaunchOptions(launchOptions);
-        /*
+        
         let paths = NSSearchPathForDirectoriesInDomains(NSSearchPathDirectory.DocumentDirectory, NSSearchPathDomainMask.UserDomainMask, true)
-        print(paths[0])*/
+        print(paths[0])
         
         startSignificantChangeUpdates()
         return true

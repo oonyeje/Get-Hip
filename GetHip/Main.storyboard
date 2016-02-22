@@ -191,6 +191,109 @@
             </objects>
             <point key="canvasLocation" x="1123" y="2058"/>
         </scene>
+        <!--View Controller-->
+        <scene sceneID="PXH-Ng-lFX">
+            <objects>
+                <viewController id="jhT-5c-UMD" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="bQJ-lX-fQH"/>
+                        <viewControllerLayoutGuide type="bottom" id="RR8-vy-khf"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="dtk-1e-2Le">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="Joining.png" translatesAutoresizingMaskIntoConstraints="NO" id="Y89-Ji-uFg">
+                                <rect key="frame" x="75" y="241" width="172" height="121"/>
+                            </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Lgn-oo-e39">
+                                <rect key="frame" x="0.0" y="528" width="320" height="41"/>
+                                <state key="normal" image="CancelInvited.png">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
+                    <connections>
+                        <segue destination="5Fd-vs-lX1" kind="show" identifier="EnteringPartySegue" id="OpG-wQ-NAH"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="yAM-8H-aOk" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3513" y="439"/>
+        </scene>
+        <!--InvitedToPartyVC-->
+        <scene sceneID="9Gl-h8-nid">
+            <objects>
+                <viewController storyboardIdentifier="InvitedToPartyVC" title="InvitedToPartyVC" id="rKy-U8-mLw" customClass="InvitedToPartyViewController" customModule="GetHip" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="wOj-xh-eMD"/>
+                        <viewControllerLayoutGuide type="bottom" id="zE5-jq-uIg"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="m9v-WE-T3h">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="so3-St-AQ6">
+                                <rect key="frame" x="99" y="254" width="122" height="122"/>
+                            </imageView>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" text="You have been invited by User to join a Party!" textAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="SM0-PN-2rz">
+                                <rect key="frame" x="47" y="157" width="226" height="89"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="21"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qlt-XA-jzm">
+                                <rect key="frame" x="271" y="44" width="30" height="29"/>
+                                <state key="normal" image="Settings.png">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <segue destination="0Tt-tN-iza" kind="show" identifier="InvitedToPartySettingsSegue" id="hDN-yC-fGj"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Jjq-Kv-sXj">
+                                <rect key="frame" x="195" y="376" width="32" height="32"/>
+                                <state key="normal" image="Accept.png">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="acceptInvite:" destination="rKy-U8-mLw" eventType="touchUpInside" id="tPy-Ie-5jB"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oaw-5r-mEb">
+                                <rect key="frame" x="92" y="376" width="32" height="32"/>
+                                <state key="normal" image="Decline.png">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="declineInvite:" destination="rKy-U8-mLw" eventType="touchUpInside" id="kre-cK-cAQ"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qb8-ab-JiN">
+                                <rect key="frame" x="19" y="44" width="56" height="32"/>
+                                <state key="normal" image="Friends.png">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <segue destination="hDZ-CA-Hsj" kind="show" identifier="InvitedToPartyFriendsSegue" id="41S-h6-flP"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
+                    <connections>
+                        <outlet property="img" destination="so3-St-AQ6" id="T0w-OK-mUA"/>
+                        <segue destination="jhT-5c-UMD" kind="show" identifier="JoiningPartySegue" id="U4V-ga-nL4"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="wuc-cq-5dv" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3189" y="1425"/>
+        </scene>
         <!--Friend Request View Controller-->
         <scene sceneID="cB3-Zf-GpF">
             <objects>
@@ -520,6 +623,9 @@
                                 <state key="normal" image="Star@3x.png">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="testGuest:" destination="i3K-xv-zw1" eventType="touchUpInside" id="YpK-nZ-p8K"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NHH-gh-nMz" userLabel="Friends">
                                 <rect key="frame" x="19" y="44" width="56" height="32"/>
@@ -1093,6 +1199,15 @@
                                     <segue destination="hDZ-CA-Hsj" kind="show" identifier="FromPartyFriendsSegue" id="wiM-xb-lpR"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EDf-Bs-Vg5">
+                                <rect key="frame" x="74" y="206" width="173" height="155"/>
+                                <state key="normal" image="Rectangle 10 + Change Photo + voice_presentation copy + voice_presentation copy 2 + voice_presentation + Music 2 + Music 2.png">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="backToParty:" destination="Voh-zF-gkm" eventType="touchUpInside" id="loj-oe-a9k"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
@@ -1508,16 +1623,20 @@
         <image name="Accept.png" width="28" height="28"/>
         <image name="Add More.png" width="152" height="36"/>
         <image name="Cancel.png" width="28" height="28"/>
+        <image name="CancelInvited.png" width="320" height="41"/>
         <image name="Change Song.png" width="152" height="24"/>
         <image name="Create@3x.png" width="471" height="93"/>
+        <image name="Decline.png" width="32" height="32"/>
         <image name="Friends.png" width="73" height="42"/>
         <image name="Friends@3x.png" width="219" height="126"/>
         <image name="Home Copy.png" width="34" height="34"/>
+        <image name="Joining.png" width="171" height="121"/>
         <image name="Lower.png" width="7" height="10"/>
         <image name="No Friend Requests i5.png" width="320" height="568"/>
         <image name="Party.png" width="81" height="41"/>
         <image name="Pause-52.png" width="52" height="52"/>
         <image name="Raise.png" width="14" height="13"/>
+        <image name="Rectangle 10 + Change Photo + voice_presentation copy + voice_presentation copy 2 + voice_presentation + Music 2 + Music 2.png" width="203" height="153"/>
         <image name="Send Invites Button.png" width="375" height="46"/>
         <image name="Send.png" width="152" height="24"/>
         <image name="Settings.png" width="39" height="38"/>
@@ -1527,8 +1646,9 @@
         <image name="Turntable@3x.png" width="434" height="434"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="WxI-P3-JZ9"/>
+        <segue reference="hDN-yC-fGj"/>
+        <segue reference="41S-h6-flP"/>
+        <segue reference="OpG-wQ-NAH"/>
         <segue reference="5pn-ck-WiI"/>
-        <segue reference="wiM-xb-lpR"/>
     </inferredMetricsTieBreakers>
 </document>

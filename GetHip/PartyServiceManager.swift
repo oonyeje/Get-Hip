@@ -12,9 +12,13 @@ import MediaPlayer
 
 
 protocol PartyServiceManagerDelegate {
-    func didConnectToPeer(serviceManager: PartyServiceManager, didConnectToPeer peerIDName: String )
+    func foundPeer()
     
-    func foundAPeer(serviceManager: PartyServiceManager, foundPeer: String)
+    func lostPeer()
+    
+    func invitationWasRecieved(fromPeer: String)
+    
+    func connectedWithPeer(peerID: MCPeerID)
     
     
 }
@@ -40,12 +44,13 @@ class PartyServiceManager: NSObject {
     var myPeerID: MCPeerID! = nil
     var serviceBrowser: MCNearbyServiceBrowser! = nil
     var session: MCSession! = nil
-   // var delegate: PartyServiceManagerDelegate?
+    var delegate: PartyServiceManagerDelegate?
     
     //peer variables
-    var foundPeers: [String] = []
+    var foundPeers: [MCPeerID] = [MCPeerID]()
     var invitedFriends: [FriendData] = []
     var role: PeerType! = nil
+    var currentHost: String!
     
     var connectingPeersDictionary = NSMutableDictionary()
     var disconnectedPeersDictionary = NSMutableDictionary()
@@ -81,6 +86,17 @@ class PartyServiceManager: NSObject {
     func setRole(peerRole: PeerType){
         self.role = peerRole
         println("Role set to %@", self.role.rawValue)
+    }
+    
+    func chooseNextHost(){
+        var numPeers = self.connectedPeers().count
+        var nextHostIndex = Int(arc4random_uniform(UInt32(numPeers)))
+    
+        if (self.connectedPeers()[nextHostIndex].displayName == self.currentHost){
+            chooseNextHost()
+        }else{
+            self.currentHost = self.connectedPeers()[nextHostIndex].displayName
+        }
     }
     
     //Listening methods
@@ -147,6 +163,7 @@ class PartyServiceManager: NSObject {
     //Host Methods
     func initializeSession(){
         self.session = MCSession(peer: self.myPeerID, securityIdentity: nil, encryptionPreference: MCEncryptionPreference.Required)
+        self.session.delegate = self
         println("Initialized Peer-To-Peer Connection")
     }
     
@@ -193,8 +210,9 @@ extension PartyServiceManager: MCNearbyServiceBrowserDelegate{
         
         if(peerID.displayName != self.myPeerID.displayName) {
             NSLog("%@", "foundPeer: \(peerID)")
-            self.foundPeers.append(peerID.displayName)
-            self.serviceBrowser.invitePeer(peerID, toSession: self.session, withContext: nil, timeout: NSTimeInterval(10.00))
+            self.foundPeers.append(peerID)
+            self.delegate?.foundPeer()
+            //self.serviceBrowser.invitePeer(peerID, toSession: self.session, withContext: nil, timeout: NSTimeInterval(10.00))
             
         }
         
@@ -203,6 +221,15 @@ extension PartyServiceManager: MCNearbyServiceBrowserDelegate{
     
     func browser(browser: MCNearbyServiceBrowser!, lostPeer peerID: MCPeerID!) {
         NSLog("%@", "lostPeer: \(peerID)")
+        
+        for(index, aPeer) in enumerate(foundPeers) {
+            if aPeer == peerID{
+                foundPeers.removeAtIndex(index)
+                break
+            }
+        }
+        
+        delegate?.lostPeer()
     }
 }
 

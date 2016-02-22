@@ -12,7 +12,7 @@ class PendingRequestViewController: UITableViewController {
     @IBOutlet var table:UITableView!
     
     var requests = []
-    
+    var party: PartyServiceManager!
     
     @IBAction func didAcceptFriend(sender: AnyObject?){
         var path:NSIndexPath = self.table.indexPathForCell(sender?.superview!!.superview as! PendingFriendCell)!
@@ -105,8 +105,9 @@ class PendingRequestViewController: UITableViewController {
         // Dispose of any resources that can be recreated.
     }
 
-    func setData(data: [FriendData]){
+    func setData(data: [FriendData], party: PartyServiceManager){
         self.requests = data
+        self.party = party
     }
     
     // MARK: - Table view data source

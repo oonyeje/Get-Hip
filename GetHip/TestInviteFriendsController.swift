@@ -9,17 +9,21 @@
 import UIKit
 import MultipeerConnectivity
 
-class TestInviteFriendsController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class TestInviteFriendsController: UIViewController, UITableViewDelegate, UITableViewDataSource, PartyServiceManagerDelegate {
     var usr: [UserParseData] = []
     var frnds: [FriendData] = []
     var requestData: [FriendData] = []
     var isFriendSelected: [Bool] = []
+    var isInvitable: [Bool] = []
     var partyData: PartyServiceManager! = nil
     
     @IBOutlet weak var table: UITableView!
     
     @IBAction func cancelInvites(sender: UIBarButtonItem) {
         //println("Browser service deinitialized and browser deinitialized")
+        self.partyData.stopBrowsing()
+        self.partyData.serviceBrowser = nil
+        
         self.parentViewController?.dismissViewControllerAnimated(true, completion: nil)
     }
     
@@ -50,14 +54,36 @@ class TestInviteFriendsController: UIViewController, UITableViewDelegate, UITabl
         
         for i in 0..<self.frnds.count{
             self.isFriendSelected.append(false)
+            self.isInvitable.append(false)
         }
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         self.table.dataSource = self
         self.table.delegate = self
+        self.partyData.delegate = self
+        //start browsing for peers
+        self.partyData.setBrowser()
+        self.partyData.startBrowser()
+        self.partyData.initializeSession()
         self.navigationController?.navigationBarHidden = false
+        
+        for foundPeer in self.partyData.foundPeers {
+            for friend in self.frnds {
+                if foundPeer.displayName == friend.displayName {
+                    for(index, aFriend) in enumerate(self.frnds) {
+                        if aFriend.displayName == friend.displayName {
+                            self.isInvitable[index] = true
+                            break
+                        }
+                    }
+                }
+            }
+        }
+        
+        
 
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
@@ -107,10 +133,14 @@ class TestInviteFriendsController: UIViewController, UITableViewDelegate, UITabl
         //cell!.proImage.layer.borderWidth = 3.0
         //cell!.proImage.clipsToBounds = true
         cell!.proImage.layer.cornerRadius = cell!.proImage.frame.size.width/2
-        cell!.alpha = 0.5
         //cell!.proImage.layer.borderColor = UIColor.whiteColor().CGColor
         //cell!.proImage.layer.masksToBounds = true
         cell!.rdioButton.layer.cornerRadius = cell!.rdioButton.frame.size.width/2
+        
+        //for testing purposes - MPCBrowsing
+        if(self.isInvitable[indexPath.row] == true){
+            cell!.proImage.alpha = 0.5
+        }
         
         return cell!
     }
@@ -130,6 +160,7 @@ class TestInviteFriendsController: UIViewController, UITableViewDelegate, UITabl
         
     }
     
+    //Navigation preperation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         var invited: [FriendData] = []
         for var i = 0; i < self.isFriendSelected.count; i++ {
@@ -188,4 +219,22 @@ class TestInviteFriendsController: UIViewController, UITableViewDelegate, UITabl
     // Pass the selected object to the new view controller.
     }
     */
+}
+
+extension TestInviteFriendsController: PartyServiceManagerDelegate {
+    func foundPeer() {
+        self.table.reloadData()
+    }
+    
+    func lostPeer() {
+        self.table.reloadData()
+    }
+    
+    func invitationWasRecieved(fromPeer: String) {
+        
+    }
+    
+    func connectedWithPeer(peerID: MCPeerID) {
+        
+    }
 }

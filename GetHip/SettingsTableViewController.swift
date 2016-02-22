@@ -24,7 +24,10 @@ class SettingsTableViewController: UIViewController, UITableViewDataSource, UITa
     
     
     @IBAction func logOutUser(sender: UIButton) {
-        self.party.stopAllServices()
+        self.party.stopListening()
+        self.party.serviceAdvertiser = nil
+        
+        
         PFUser.logOut()
         
         if PFUser.currentUser() == nil {

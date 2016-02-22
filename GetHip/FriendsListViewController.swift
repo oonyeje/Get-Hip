@@ -12,6 +12,7 @@ class FriendsListViewController: UIViewController, UITableViewDelegate, UITableV
     //var manager = FriendDataSource()
     var friends = []
     var request = []
+    var party: PartyServiceManager!
     
     @IBOutlet weak var table: UITableView!
     
@@ -26,9 +27,10 @@ class FriendsListViewController: UIViewController, UITableViewDelegate, UITableV
         self.performSegueWithIdentifier("FriendRequestSegue", sender: nil)
     }
     
-    func setData(frnds:[FriendData], requst: [FriendData]){
+    func setData(frnds:[FriendData], requst: [FriendData], party: PartyServiceManager){
         self.friends = frnds
         self.request = requst
+        self.party = party
     }
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -155,7 +157,7 @@ class FriendsListViewController: UIViewController, UITableViewDelegate, UITableV
         if segue.identifier == "PendingRequestSegue" {
             
             let vc: PendingRequestViewController = (segue.destinationViewController as? PendingRequestViewController)!
-            vc.setData(self.request as! [FriendData])
+            vc.setData(self.request as! [FriendData], party: self.party)
             
         }
         
@@ -171,14 +173,8 @@ class FriendsListViewController: UIViewController, UITableViewDelegate, UITableV
             }
             
             
-            /*for name in self.friends{
-                //bad instruction here, fix later
-                println(name.displayName as String!)
-                frndNames.append(name.displayName!)
-            }*/
-            
             let vc: FriendRequestViewController = (segue.destinationViewController as? FriendRequestViewController)!
-            vc.setData(frndNames)
+            vc.setData(frndNames, party: self.party)
         }
     }
 

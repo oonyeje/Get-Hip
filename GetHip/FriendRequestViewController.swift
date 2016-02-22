@@ -11,6 +11,7 @@ import UIKit
 class FriendRequestViewController: UIViewController{
     var searchedUsername: String!
     var frnds: [String]!
+    var party: PartyServiceManager!
     
     @IBOutlet var displayImage: UIImageView!
     @IBOutlet var foundName: UILabel!
@@ -93,8 +94,9 @@ class FriendRequestViewController: UIViewController{
         
     }
     
-    func setData(friends: [String]){
+    func setData(friends: [String], party: PartyServiceManager){
         self.frnds = friends
+        self.party = party
     }
     
     override func viewDidLoad() {
