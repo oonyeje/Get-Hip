@@ -84,12 +84,9 @@ class LoadingPartyViewController: UIViewController, UICollectionViewDataSource, 
         }
         
         //rounds uiimage and configures UIImageView
-        //cell!.proImage.layer.borderWidth = 3.0
-        //cell!.proImage.clipsToBounds = true
         cell.friendImage.layer.cornerRadius = cell.friendImage.frame.size.width/2
+        cell.friendImage.clipsToBounds = true
         cell.alpha = 0.5
-        //cell!.proImage.layer.borderColor = UIColor.whiteColor().CGColor
-        //cell!.proImage.layer.masksToBounds = true
         
         return cell
 

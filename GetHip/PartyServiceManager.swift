@@ -90,7 +90,7 @@ class PartyServiceManager: NSObject {
     
     func chooseNextHost(){
         var numPeers = self.connectedPeers().count
-        var nextHostIndex = Int(arc4random_uniform(UInt32(numPeers)))
+        var nextHostIndex: Int = Int(arc4random_uniform(UInt32(numPeers)))
     
         if (self.connectedPeers()[nextHostIndex].displayName == self.currentHost){
             chooseNextHost()

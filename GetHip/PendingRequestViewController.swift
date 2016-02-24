@@ -143,10 +143,8 @@ class PendingRequestViewController: UITableViewController {
             }
             
             //rounds uiimage and configures UIImageView
-            //cell!.proImage.layer.borderWidth = 3.0
-            //cell!.proImage.clipsToBounds = true
             cell!.proImg.layer.cornerRadius = cell!.proImg.frame.size.width/2
-            
+            cell!.proImg.clipsToBounds = true
             //cell!.proImage.layer.borderColor = UIColor.whiteColor().CGColor
             //cell!.proImage.layer.masksToBounds = true
             

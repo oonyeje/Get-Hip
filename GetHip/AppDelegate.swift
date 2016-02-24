@@ -41,6 +41,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate , CLLocationManagerDelegat
         print(paths[0])
         
         startSignificantChangeUpdates()
+        
+        //check if user logged in on app startup
+        if(PFUser.currentUser() != nil){
+            
+            var storyboard = UIStoryboard(name: "Main", bundle: nil)
+            
+            var initialViewController = storyboard.instantiateViewControllerWithIdentifier("HomeVC") as! HomeScreenViewController
+            self.window?.rootViewController = initialViewController
+            self.window?.makeKeyAndVisible()
+            
+        }
+        
         return true
     }
     

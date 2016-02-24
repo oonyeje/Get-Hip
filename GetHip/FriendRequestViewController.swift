@@ -103,6 +103,8 @@ class FriendRequestViewController: UIViewController{
         super.viewDidLoad()
         searchBar.delegate = self
         self.displayImage.layer.cornerRadius = self.displayImage.frame.size.width/2
+        self.displayImage.clipsToBounds = true
+        
         self.sendRequest.enabled = false
         self.sendRequest.tintColor = UIColor.grayColor()
         

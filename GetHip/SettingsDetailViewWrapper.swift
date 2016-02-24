@@ -212,6 +212,7 @@ class ProfileDetailViewController: UIViewController, UINavigationControllerDeleg
             self.img.image = self.profileImg.image!
         }
         self.img.layer.cornerRadius = self.img!.frame.size.width/2
+        self.img.clipsToBounds = true
         
         self.ChngPhtoBtn!.layer.borderWidth = 1
         self.ChngPhtoBtn!.layer.cornerRadius = 5

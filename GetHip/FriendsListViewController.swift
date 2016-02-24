@@ -32,12 +32,14 @@ class FriendsListViewController: UIViewController, UITableViewDelegate, UITableV
         self.request = requst
         self.party = party
     }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.table.delegate = self
         self.table.dataSource = self
         self.title = "Friends"
         self.navigationController?.navigationBarHidden = false
+        
         //self.navigationItem.rightBarButtonItem = self.editButtonItem()
         //self.friends = manager.getFriends()
         
@@ -46,6 +48,7 @@ class FriendsListViewController: UIViewController, UITableViewDelegate, UITableV
         
         
     }
+    
     
     /*func refreshTable(notification: NSNotification){
         self.friends = manager.getFriends()
@@ -96,9 +99,8 @@ class FriendsListViewController: UIViewController, UITableViewDelegate, UITableV
             
             //rounds uiimage and configures UIImageView
             //cell!.proImage.layer.borderWidth = 3.0
-            //cell!.proImage.clipsToBounds = true
             cell!.proImage.layer.cornerRadius = cell!.proImage.frame.size.width/2
-            
+            cell!.proImage.clipsToBounds = true
             //cell!.proImage.layer.borderColor = UIColor.whiteColor().CGColor
             //cell!.proImage.layer.masksToBounds = true
             

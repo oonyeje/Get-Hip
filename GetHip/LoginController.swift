@@ -38,16 +38,20 @@ class LoginController: UIViewController, PFLogInViewControllerDelegate, UITextFi
     @IBAction func signUpBtnPressed(sender: UIButton){
         self.performSegueWithIdentifier("signUpSegue", sender: self)
     }
+    
+
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
         //check if user already signed in
-        if(PFUser.currentUser() != nil){
+        /*if(PFUser.currentUser() != nil){
             
             presentLoggedInAlert()
+            
+        }*/
         
-        }
         self.userEmailField.delegate = self
         self.password.delegate = self
         self.signIn.layer.borderWidth = 1

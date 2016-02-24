@@ -9,12 +9,13 @@
 import UIKit
 
 class HomeScreenViewController: UIViewController {
-    var usrDataManager = UserParseDataSource()
-    var frndDataManager = FriendDataSource()
+    var usrDataManager: UserParseDataSource!
+    var frndDataManager: FriendDataSource!
     var friendData: [FriendData] = []
     var requestData: [FriendData] = []
     var userData: [UserParseData] = []
     let partyData = PartyServiceManager()
+    var firstTime: Bool = true
     
     @IBOutlet weak var CreateAPartyBtn: UIButton!
     
@@ -34,13 +35,18 @@ class HomeScreenViewController: UIViewController {
     }
     
     func refreshUserData(notification:NSNotification){
+        
         self.userData = self.usrDataManager.getUser()
         
-        self.partyData.setPeerID((self.userData[0].displayName))
-        self.partyData.setAdvertiser()
+        if(self.firstTime == true){
+            self.partyData.setPeerID((self.userData[0].displayName))
+            self.partyData.setAdvertiser()
+            
+            //start peer-to-peer advertising
+            self.partyData.startListening()
+            self.firstTime = false
+        }
         
-        //start peer-to-peer advertising
-        self.partyData.startListening()
     }
     
     func loadID(notification: NSNotification){
@@ -70,7 +76,21 @@ class HomeScreenViewController: UIViewController {
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "refreshFriendData:", name: "refreshTableView", object: nil)
         
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "refreshUserData:", name: "refreshSettingsView", object: nil)    }
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "refreshUserData:", name: "refreshSettingsView", object: nil)
+    
+        
+        
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        self.userData = []
+        self.friendData = []
+        dispatch_async(dispatch_get_main_queue(), {
+            self.usrDataManager = UserParseDataSource()
+            self.frndDataManager = FriendDataSource()
+        })
+        
+    }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

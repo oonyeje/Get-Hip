@@ -53,6 +53,7 @@ class SettingsTableViewController: UIViewController, UITableViewDataSource, UITa
         self.table.dataSource = self
         self.table.delegate = self
         self.navigationController?.navigationBarHidden = false
+        self.table.tableFooterView = UIView(frame: CGRectZero)
         //NSNotificationCenter.defaultCenter().addObserver(self, selector: "refreshTable:", name: "refreshSettingsView", object: nil)
         
         self.table.reloadData()

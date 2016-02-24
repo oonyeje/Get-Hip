@@ -1646,9 +1646,9 @@
         <image name="Turntable@3x.png" width="434" height="434"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="hDN-yC-fGj"/>
-        <segue reference="41S-h6-flP"/>
-        <segue reference="OpG-wQ-NAH"/>
+        <segue reference="hjX-RT-64R"/>
         <segue reference="5pn-ck-WiI"/>
+        <segue reference="bZG-mB-VR5"/>
+        <segue reference="OpG-wQ-NAH"/>
     </inferredMetricsTieBreakers>
 </document>

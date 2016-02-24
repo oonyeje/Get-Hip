@@ -131,11 +131,10 @@ class TestInviteFriendsController: UIViewController, UITableViewDelegate, UITabl
         
         //rounds uiimage and configures UIImageView
         //cell!.proImage.layer.borderWidth = 3.0
-        //cell!.proImage.clipsToBounds = true
         cell!.proImage.layer.cornerRadius = cell!.proImage.frame.size.width/2
-        //cell!.proImage.layer.borderColor = UIColor.whiteColor().CGColor
-        //cell!.proImage.layer.masksToBounds = true
+        cell!.proImage.clipsToBounds = true
         cell!.rdioButton.layer.cornerRadius = cell!.rdioButton.frame.size.width/2
+        cell!.rdioButton.clipsToBounds = true
         
         //for testing purposes - MPCBrowsing
         if(self.isInvitable[indexPath.row] == true){
