@@ -20,25 +20,67 @@ class SignInController: UIViewController, UINavigationControllerDelegate, UIImag
 
     
     @IBAction func saveNewProfile(sender: UIButton){
-        var user = PFUser()
-        var img:PFFile = PFFile(data: UIImagePNGRepresentation(self.profilePic.image))!
-        user.username = userField.text!
-        user.password = passField.text!
-        user.email = emailField.text!
-        user.setObject(nameField.text!, forKey: "displayName")
-        user.setObject(img, forKey: "profilePicture")
-        
-        //sign up new user
-        user.signUpInBackgroundWithBlock({
-            (succeeded: Bool, error: NSError?) -> Void in
-            
-            if error == nil {
-                self.performSegueWithIdentifier("SignedUpSegue", sender: self)
-            }
-            else{
+        if(self.nameField.hasText() == false
+            || self.userField.hasText() == false
+            || self.emailField.hasText() == false
+            || self.passField.hasText() == false
+            || self.profilePic.image == nil){
                 
+                let alert = UIAlertController(title: "Invalid Registration", message: "We're missing some information from you, before we can start the party!", preferredStyle: .Alert)
+                alert.addAction(UIAlertAction(title: "OK", style: .Default, handler:{(action: UIAlertAction!) in alert.dismissViewControllerAnimated(true, completion: nil)}))
+                
+                self.presentViewController(alert, animated: true, completion: nil)
+                
+        }else{
+            if(!(contains(self.userField.text!, "@") || contains(self.nameField.text!, "@"))){
+            
+                let predicate: NSPredicate = NSPredicate(format: "((username = %@) OR (email = %@))", argumentArray: [self.nameField.text!,self.emailField.text!])
+                var userQuery: PFQuery = PFQuery(className: "_User", predicate: predicate)
+                
+                dispatch_async(dispatch_get_main_queue(), {
+                    userQuery.getFirstObjectInBackgroundWithBlock({
+                        (object, error) -> Void in
+                        
+                        if(object != nil && error == nil){
+                            let alert = UIAlertController(title: "User Info Taken", message: "Sorry this information is already registered to another user. Please try again.", preferredStyle: .Alert)
+                            alert.addAction(UIAlertAction(title: "OK", style: .Default, handler:{(action: UIAlertAction!) in alert.dismissViewControllerAnimated(true, completion: nil)}))
+                            
+                            self.presentViewController(alert, animated: true, completion: nil)
+                        }else{
+                            var user = PFUser()
+                            var img:PFFile = PFFile(data: UIImagePNGRepresentation(self.profilePic.image))!
+                            user.username = self.userField.text!
+                            user.password = self.passField.text!
+                            user.email = self.emailField.text!
+                            user.setObject(self.nameField.text!, forKey: "displayName")
+                            user.setObject(img, forKey: "profilePicture")
+                            
+                            //sign up new user
+                            user.signUpInBackgroundWithBlock({
+                                (succeeded: Bool, error: NSError?) -> Void in
+                                
+                                if error == nil {
+                                    self.performSegueWithIdentifier("SignedUpSegue", sender: self)
+                                }
+                                else{
+                                    
+                                }
+                            })
+                            
+                        }
+                    })
+                })
+
+            
+            }else{
+                let alert = UIAlertController(title: "Illegal Characters", message: "The username or email you entered contains illegal characters such as: '@'", preferredStyle: .Alert)
+                alert.addAction(UIAlertAction(title: "OK", style: .Default, handler:{(action: UIAlertAction!) in alert.dismissViewControllerAnimated(true, completion: nil)}))
+                
+                self.presentViewController(alert, animated: true, completion: nil)
             }
-        })
+            
+        }
+        
     }
     
     @IBAction func cancelSignUp(){

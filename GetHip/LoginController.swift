@@ -18,20 +18,45 @@ class LoginController: UIViewController, PFLogInViewControllerDelegate, UITextFi
 
     
     @IBAction func loginBtnPressed(sender: UIButton){
-        //check if user logging in with email, implement later
-        
-        PFUser.logInWithUsernameInBackground(userEmailField.text!, password: password.text!, block: {
-            (user, error) -> Void in
+        //check if user logging in with email
+        if(contains(self.userEmailField.text!, "@")){
+            let predicate: NSPredicate = NSPredicate(format: "(email = %@)", argumentArray: [self.userEmailField.text!])
+            var userQuery: PFQuery = PFQuery(className: "_User", predicate: predicate)
             
-            if(user != nil){
-                self.performSegueWithIdentifier("LoginToHomeSegue", sender: self)
-            }else{
-                var alert = UIAlertController(title: "Invalid Login", message: "Your username/email or password is incorrect!", preferredStyle: .Alert)
-                alert.addAction(UIAlertAction(title: "OK", style: .Default, handler:{(action: UIAlertAction!) in alert.dismissViewControllerAnimated(true, completion: nil)}))
+            //log in user through email look up in db
+            dispatch_async(dispatch_get_main_queue(), {
+                userQuery.getFirstObjectInBackgroundWithBlock({
+                    (object, error) -> Void in
+                    
+                    if(object != nil && error == nil){
+                        PFUser.logInWithUsernameInBackground(object!.objectForKey("username") as! String, password: self.password.text!, block: {
+                            (user, error) -> Void in
+                            
+                            if(user != nil){
+                                self.performSegueWithIdentifier("LoginToHomeSegue", sender: self)
+                            }else{
+                                var alert = UIAlertController(title: "Invalid Login", message: "Your username/email or password is incorrect!", preferredStyle: .Alert)
+                                alert.addAction(UIAlertAction(title: "OK", style: .Default, handler:{(action: UIAlertAction!) in alert.dismissViewControllerAnimated(true, completion: nil)}))
+                                
+                                self.presentViewController(alert, animated: true, completion: nil)
+                            }
+                        })                    }
+                })
+            })
+        }else{
+            PFUser.logInWithUsernameInBackground(userEmailField.text!, password: password.text!, block: {
+                (user, error) -> Void in
                 
-                self.presentViewController(alert, animated: true, completion: nil)
-            }
-        })
+                if(user != nil){
+                    self.performSegueWithIdentifier("LoginToHomeSegue", sender: self)
+                }else{
+                    var alert = UIAlertController(title: "Invalid Login", message: "Your username/email or password is incorrect!", preferredStyle: .Alert)
+                    alert.addAction(UIAlertAction(title: "OK", style: .Default, handler:{(action: UIAlertAction!) in alert.dismissViewControllerAnimated(true, completion: nil)}))
+                    
+                    self.presentViewController(alert, animated: true, completion: nil)
+                }
+            })
+        }
         
     }
     

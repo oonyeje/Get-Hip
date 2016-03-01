@@ -14,7 +14,6 @@ class SongSelectionViewController: UIViewController, UITableViewDelegate, UITabl
     var usr: [UserParseData] = []
     var frnds: [FriendData] = []
     var requestData: [FriendData] = []
-    
     @IBOutlet weak var table: UITableView!
 
     
@@ -67,7 +66,7 @@ class SongSelectionViewController: UIViewController, UITableViewDelegate, UITabl
         self.presentViewController(filterMenu, animated: true, completion: nil)
     }
     
-    private var filter: String! = "Songs"
+    var filter: String! = "Songs"
     
     @IBAction func cancelInvites(sender: UIBarButtonItem) {
         
@@ -108,14 +107,15 @@ class SongSelectionViewController: UIViewController, UITableViewDelegate, UITabl
         switch self.filter{
             
         //return number of rows for albums
-        case "albums":
+        case "Albums":
             var albumsQuery = MPMediaQuery.albumsQuery()
             var albums = albumsQuery.collections
             return albums.count + 1
         
         //return number of rows for artists
-        case "artists":
+        case "Artists":
             var artistsQuery = MPMediaQuery.artistsQuery()
+            //artistsQuery
             var artists = artistsQuery.items
             return artists.count + 1
             
@@ -138,7 +138,7 @@ class SongSelectionViewController: UIViewController, UITableViewDelegate, UITabl
             switch self.filter{
                 
                 //return albums cell
-            case "albums":
+            case "Albums":
                 let cell = self.table.dequeueReusableCellWithIdentifier("AlbumCell", forIndexPath: indexPath) as? AlbumCell
                 
                 
@@ -149,7 +149,7 @@ class SongSelectionViewController: UIViewController, UITableViewDelegate, UITabl
                 
                 
                 //return artists cell
-            case "artists":
+            case "Artists":
                 let cell = self.table.dequeueReusableCellWithIdentifier("ArtistCell", forIndexPath: indexPath) as? ArtistCell
                 
                 
@@ -186,7 +186,7 @@ class SongSelectionViewController: UIViewController, UITableViewDelegate, UITabl
             switch self.filter{
                 
                 //return albums cell
-            case "albums":
+            case "Albums":
                 let cell = self.table.dequeueReusableCellWithIdentifier("AlbumCell", forIndexPath: indexPath) as? AlbumCell
                 
                 
@@ -212,7 +212,7 @@ class SongSelectionViewController: UIViewController, UITableViewDelegate, UITabl
                 return cell!
                 
                 //return artists cell
-            case "artists":
+            case "Artists":
                 let cell = self.table.dequeueReusableCellWithIdentifier("ArtistCell", forIndexPath: indexPath) as? ArtistCell
                 
                 
