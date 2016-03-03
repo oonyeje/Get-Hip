@@ -8,8 +8,9 @@
 
 import UIKit
 import MediaPlayer
+import MultipeerConnectivity
 
-class LoadingPartyViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate{
+class LoadingPartyViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, PartyServiceManagerDelegate{
     //persistant data
     var party: PartyServiceManager!
     var usr: [UserParseData] = []
@@ -22,7 +23,7 @@ class LoadingPartyViewController: UIViewController, UICollectionViewDataSource, 
     @IBOutlet var songLabel: UILabel!
     @IBOutlet var timerLabel: UILabel!
     var timer = NSTimer()
-    var counter = 30
+    var counter = 60
     
     @IBAction func cancelInvites(sender: UIButton){
         self.dismissViewControllerAnimated(true, completion: nil)
@@ -47,6 +48,7 @@ class LoadingPartyViewController: UIViewController, UICollectionViewDataSource, 
         self.songLabel.text = (self.party.currentSong.valueForProperty(MPMediaItemPropertyTitle) as? String!)! + " by " + (self.party.currentSong.valueForProperty(MPMediaItemPropertyArtist) as? String!)!
         
         //sets up timer label and starts countdown to next screen
+        //NSNotificationCenter.defaultCenter().addObserver(self, selector: "updateThumbnail:", name: "peerConnected", object: nil)
         self.timerLabel.text = String(counter)
         self.timer = NSTimer.scheduledTimerWithTimeInterval(1, target: self, selector: Selector("updateCounter"), userInfo: nil, repeats: true)
     }
@@ -56,9 +58,13 @@ class LoadingPartyViewController: UIViewController, UICollectionViewDataSource, 
         // Dispose of any resources that can be recreated.
     }
     
+    func updateThumbnil(notification: NSNotification){
+        
+    }
+    
     func updateCounter(){
         self.timerLabel.text = String(counter--)
-        if(self.counter == -2){
+        if(self.counter == -1){
             self.timer.invalidate()
             self.performSegueWithIdentifier("CurrentlyPlayingSegue", sender: nil)
         }
@@ -111,4 +117,52 @@ class LoadingPartyViewController: UIViewController, UICollectionViewDataSource, 
     }
     
 
+}
+
+extension LoadingPartyViewController: PartyServiceManagerDelegate {
+    
+    func foundPeer() {
+        
+    }
+    
+    func lostPeer() {
+        
+    }
+    
+    func invitationWasRecieved(peerID: MCPeerID, invitationHandler: ((Bool, MCSession!) -> Void)!) {
+        
+    }
+    
+    func connectedWithPeer(peerID: MCPeerID) {
+        println(self.party.myPeerID.displayName + " connected to " + peerID.displayName)
+        var i = 0
+        for(index, aFriend) in enumerate(self.party.invitedFriends) {
+            if aFriend.displayName == peerID.displayName {
+                i = index
+                break
+            }
+        }
+        
+        let cell: InvitedCollectionViewCell = self.invitedFriends.dequeueReusableCellWithReuseIdentifier("InvitedCollectionCell", forIndexPath: NSIndexPath(index: i)) as! InvitedCollectionViewCell
+        
+        cell.alpha = 1.0
+        
+        
+    }
+    
+    func didRecieveInstruction(dictionary: Dictionary<String, AnyObject>){
+        //extract data from dictionary
+        println("mark 3")
+        let data = dictionary["data"] as? NSData
+        let fromPeer = dictionary["fromPeer"] as! MCPeerID
+        
+        //convert data to dictionary object with instruction
+        let dataDictionary = NSKeyedUnarchiver.unarchiveObjectWithData(data!) as! Dictionary<String, String>
+        
+        //check if this is an instruction being sent
+        if let instruction = dataDictionary["instruction"] {
+            println(instruction)
+        }
+    }
+    
 }

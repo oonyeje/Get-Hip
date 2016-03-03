@@ -8,13 +8,17 @@
 
 import UIKit
 import MediaPlayer
+import AVFoundation
 
-class CurrentlyPlayingViewController: UIViewController {
+class CurrentlyPlayingViewController: UIViewController{
     //persistant data
     var party: PartyServiceManager!
     var usr: [UserParseData] = []
     var frnds: [FriendData] = []
     var requestData: [FriendData] = []
+    var audioPlayer: AVPlayer!
+    var playing = true
+    var timer = NSTimer()
     
     //controller data
     @IBOutlet var songImg: UIImageView!
@@ -27,8 +31,22 @@ class CurrentlyPlayingViewController: UIViewController {
     //Host buttons
     @IBOutlet var volCtrl: UISlider!
     @IBOutlet var ppfButton: UIButton!
-    @IBAction func playPauseFav(sender: UIButton){
     
+    @IBAction func volChng(sender: UISlider){
+        self.audioPlayer.volume = sender.value
+    }
+    @IBAction func playPauseFav(sender: UIButton){
+        if(playing == true){
+            self.audioPlayer.pause()
+            self.playing = false
+            self.ppfButton.setBackgroundImage(UIImage(named: "Play-52.png"), forState: UIControlState.Normal)
+            
+        }else{
+            self.audioPlayer.play()
+            self.playing = true
+            self.ppfButton.setBackgroundImage(UIImage(named: "Pause-52.png"), forState: UIControlState.Normal)
+            
+        }
     }
     
     
@@ -39,15 +57,29 @@ class CurrentlyPlayingViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        self.audioPlayer = AVPlayer(URL: self.party.currentSong.valueForProperty(MPMediaItemPropertyAssetURL) as! NSURL)
+        
         // Do any additional setup after loading the view.
         self.songImg.image = self.party.currentSong.valueForProperty(MPMediaItemPropertyArtwork).imageWithSize(songImg.frame.size)
         self.titleLabel.text = (self.party.currentSong.valueForProperty(MPMediaItemPropertyTitle) as? String!)!
         self.artistAndAlbumLabel.text = (self.party.currentSong.valueForProperty(MPMediaItemPropertyArtist) as? String!)! + " - " + (self.party.currentSong.valueForProperty(MPMediaItemPropertyAlbumTitle) as? String!)!
-        
+        self.audioPlayer.volume = self.volCtrl.value
+        self.maxLabel.text = String(stringInterpolationSegment: self.audioPlayer.currentItem.duration.value)
+        self.audioPlayer.play()
+        self.timer = NSTimer.scheduledTimerWithTimeInterval(1, target: self, selector: Selector("updateLabels"), userInfo: nil, repeats: true)
 
     }
 
+    func updateLabels(){
+        var timeLeft = self.audioPlayer.currentItem.duration.value - self.audioPlayer.currentTime().value
+        var interval = timeLeft
+        var seconds = interval%60
+        println(seconds)
+        var minutes = (interval/60)%60
+        println(minutes)
+        //self.maxLabel.text
+        //self.minLabel.text
+    }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.

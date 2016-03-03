@@ -47,14 +47,23 @@ class LoginController: UIViewController, PFLogInViewControllerDelegate, UITextFi
             PFUser.logInWithUsernameInBackground(userEmailField.text!, password: password.text!, block: {
                 (user, error) -> Void in
                 
-                if(user != nil){
-                    self.performSegueWithIdentifier("LoginToHomeSegue", sender: self)
+                if(error == nil){
+                    if(user != nil){
+                        self.performSegueWithIdentifier("LoginToHomeSegue", sender: self)
+                    }else{
+                        
+                        var alert = UIAlertController(title: "Invalid Login", message: "Your username/email or password is incorrect!", preferredStyle: .Alert)
+                        alert.addAction(UIAlertAction(title: "OK", style: .Default, handler:{(action: UIAlertAction!) in alert.dismissViewControllerAnimated(true, completion: nil)}))
+                        
+                        self.presentViewController(alert, animated: true, completion: nil)
+                    }
                 }else{
-                    var alert = UIAlertController(title: "Invalid Login", message: "Your username/email or password is incorrect!", preferredStyle: .Alert)
+                    let alert = UIAlertController(title: "Network Error", message: error?.description, preferredStyle: .Alert)
                     alert.addAction(UIAlertAction(title: "OK", style: .Default, handler:{(action: UIAlertAction!) in alert.dismissViewControllerAnimated(true, completion: nil)}))
                     
                     self.presentViewController(alert, animated: true, completion: nil)
                 }
+                
             })
         }
         

@@ -276,6 +276,17 @@ class SongSelectionViewController: UIViewController, UITableViewDelegate, UITabl
             let vc: LoadingPartyViewController = (segue.destinationViewController as? LoadingPartyViewController)!
             vc.setData(self.party, user: self.usr, friends: self.frnds, request: self.requestData)
             
+            for i_peer in self.party.invitedFriends{
+                for peer in self.party.foundPeers {
+                    if (peer.displayName == i_peer.displayName){
+                        self.party.serviceBrowser.invitePeer(peer, toSession: self.party.session, withContext: nil, timeout: 1000.0)
+                        
+                        break
+                    }
+                }
+                
+                
+            }
         }
     }
     

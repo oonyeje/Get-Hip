@@ -121,6 +121,7 @@
 		3E7D37D71C75D80F002E682F /* Lower@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3E7D37D61C75D80F002E682F /* Lower@2x.png */; };
 		3E7D37D91C75D882002E682F /* B2P Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3E7D37D81C75D882002E682F /* B2P Icon@2x.png */; };
 		3E7D37DB1C75D899002E682F /* B2P Button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3E7D37DA1C75D899002E682F /* B2P Button@2x.png */; };
+		3EB6B39B1C87B8AE006B674D /* JoiningPartyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EB6B39A1C87B8AE006B674D /* JoiningPartyViewController.swift */; };
 		3EB8845D1C6C647700CCDCCE /* Add More@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3EB8845B1C6C647700CCDCCE /* Add More@2x.png */; };
 		3EB8845E1C6C647700CCDCCE /* Leave Party@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3EB8845C1C6C647700CCDCCE /* Leave Party@2x.png */; };
 		3EBE97661C53CEDA0079B54A /* Send Invites Button.png in Resources */ = {isa = PBXBuildFile; fileRef = 3EBE97651C53CEDA0079B54A /* Send Invites Button.png */; };
@@ -284,6 +285,7 @@
 		3E7D37D61C75D80F002E682F /* Lower@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Lower@2x.png"; path = "../../../Dropbox/Gethip/For final/Volume/i5 Volume/Lower@2x.png"; sourceTree = "<group>"; };
 		3E7D37D81C75D882002E682F /* B2P Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "B2P Icon@2x.png"; path = "../../../Dropbox/Gethip/For final/Back To Party/i5/B2P Icon@2x.png"; sourceTree = "<group>"; };
 		3E7D37DA1C75D899002E682F /* B2P Button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "B2P Button@2x.png"; path = "../../../Dropbox/Gethip/For final/Back To Party/i5/B2P Button@2x.png"; sourceTree = "<group>"; };
+		3EB6B39A1C87B8AE006B674D /* JoiningPartyViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JoiningPartyViewController.swift; sourceTree = "<group>"; };
 		3EB8845B1C6C647700CCDCCE /* Add More@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Add More@2x.png"; path = "../../../Dropbox/Gethip/Screens/iPhone 5 Party Screens/Party Screen/Assets/Add More@2x.png"; sourceTree = "<group>"; };
 		3EB8845C1C6C647700CCDCCE /* Leave Party@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Leave Party@2x.png"; path = "../../../Dropbox/Gethip/Screens/iPhone 5 Party Screens/Party Screen/Assets/Leave Party@2x.png"; sourceTree = "<group>"; };
 		3EBE97651C53CEDA0079B54A /* Send Invites Button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Send Invites Button.png"; path = "../../../Dropbox/Gethip/Screens/Friends + Invite Screens/i6/Invite Friends/Send Invites Button.png"; sourceTree = "<group>"; };
@@ -698,6 +700,7 @@
 			isa = PBXGroup;
 			children = (
 				3E6D43881C7831B100CA805F /* InvitedToPartyViewController.swift */,
+				3EB6B39A1C87B8AE006B674D /* JoiningPartyViewController.swift */,
 			);
 			name = InvitedToParty;
 			sourceTree = "<group>";
@@ -773,7 +776,12 @@
 				TargetAttributes = {
 					3E1BDA4B1C37111D00EE3B84 = {
 						CreatedOnToolsVersion = 6.3.2;
-						DevelopmentTeam = 24WJ762CQL;
+						DevelopmentTeam = VYHHTUJ5PS;
+						SystemCapabilities = {
+							com.apple.BackgroundModes = {
+								enabled = 1;
+							};
+						};
 					};
 					3E1BDA631C37111D00EE3B84 = {
 						CreatedOnToolsVersion = 6.3.2;
@@ -898,6 +906,7 @@
 				3EDA82E31C4741C70081ED53 /* FriendDataSource.swift in Sources */,
 				3EDA82E11C473E900081ED53 /* FriendData.swift in Sources */,
 				3E627FF21C55AE35005C0372 /* TDAudioOutputStreamer.m in Sources */,
+				3EB6B39B1C87B8AE006B674D /* JoiningPartyViewController.swift in Sources */,
 				3E379F051C3F982900F7BCCD /* FriendsCell.swift in Sources */,
 				3E1BDA571C37111D00EE3B84 /* ViewController.swift in Sources */,
 				3E1AAD141C3BD92600809367 /* FriendsListViewController.swift in Sources */,
@@ -1056,6 +1065,7 @@
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = NO;
 				INFOPLIST_FILE = GetHip/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1081,6 +1091,7 @@
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = NO;
 				INFOPLIST_FILE = GetHip/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",

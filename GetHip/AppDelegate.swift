@@ -14,15 +14,16 @@ import CoreLocation
 class AppDelegate: UIResponder, UIApplicationDelegate , CLLocationManagerDelegate{
 
     var window: UIWindow?
-   // var locationStarted = false
-   var locationManager: CLLocationManager!
-   // var app = UIApplication.sharedApplication()
+    // var locationStarted = false
+    var locationManager: CLLocationManager!
+    var backgroundMode:UIBackgroundTaskIdentifier!
+    var app = UIApplication.sharedApplication()
     
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         let userNotificationTypes = UIUserNotificationType.Alert | UIUserNotificationType.Badge | UIUserNotificationType.Sound
-        let settings = UIUserNotificationSettings(forTypes: userNotificationTypes, categories: nil)
-        application.registerUserNotificationSettings(settings)
-        application.registerForRemoteNotifications()
+        //let settings = UIUserNotificationSettings(forTypes: userNotificationTypes, categories: nil)
+        //application.registerUserNotificationSettings(settings)
+        //application.registerForRemoteNotifications()
         
         //create new CLLocaationManager
         /*var locationStarted = false
@@ -76,7 +77,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate , CLLocationManagerDelegat
     
     
     func applicationDidEnterBackground(application: UIApplication) {
-      //  locationManager.startUpdatingLocation()
+        locationManager.startUpdatingLocation()
+        self.backgroundMode = self.app.beginBackgroundTaskWithExpirationHandler({
+            //called 3 secs before time expires
+            //kill session and advertiser
+            self.app.endBackgroundTask(self.backgroundMode)
+            self.backgroundMode = UIBackgroundTaskInvalid
+        })
     }
 
     func applicationWillEnterForeground(application: UIApplication) {
@@ -85,6 +92,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate , CLLocationManagerDelegat
 
     func applicationDidBecomeActive(application: UIApplication) {
         // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+        
+        //work on reinitializing session
+        self.backgroundMode = UIBackgroundTaskInvalid
         FBSDKAppEvents.activateApp()
     }
 

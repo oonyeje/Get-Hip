@@ -16,9 +16,11 @@ protocol PartyServiceManagerDelegate {
     
     func lostPeer()
     
-    func invitationWasRecieved(fromPeer: String)
+    func invitationWasRecieved(peerID: MCPeerID, invitationHandler: ((Bool, MCSession!) -> Void)!)
     
     func connectedWithPeer(peerID: MCPeerID)
+    
+    func didRecieveInstruction(dictionary: Dictionary<String, AnyObject>)
     
     
 }
@@ -52,30 +54,13 @@ class PartyServiceManager: NSObject {
     var role: PeerType! = nil
     var currentHost: String!
     
-    var connectingPeersDictionary = NSMutableDictionary()
+    var connectedPeersDictionary = NSMutableDictionary()
     var disconnectedPeersDictionary = NSMutableDictionary()
     
     //party variables
     var currentSong: MPMediaItem! = nil
     
-    /*init(){
-        
-        //self.serviceAdvertiser = MCNearbyServiceAdvertiser(peer: self.myPeerID, discoveryInfo: nil, serviceType: self.PartyServiceType)
-        //super.init()
-        //self.serviceAdvertiser.delegate = self
-        
-    }*/
     
-    /*deinit {
-        //stop all session services
-        self.serviceAdvertiser.stopAdvertisingPeer()
-        self.serviceBrowser.stopBrowsingForPeers()
-    }*/
-    
-    /*lazy var session: MCSession = {
-        let session = MCSession(peer: self.myPeerID, securityIdentity: nil, encryptionPreference: MCEncryptionPreference.Required)
-        
-    }()*/
     
     //Peer Initializer
     func setPeerID(dispName: String){
@@ -97,6 +82,30 @@ class PartyServiceManager: NSObject {
         }else{
             self.currentHost = self.connectedPeers()[nextHostIndex].displayName
         }
+    }
+    
+    func isPeerFound(peer: MCPeerID) -> Bool {
+        for i in 0..<self.foundPeers.count{
+            if(self.foundPeers[i].displayName == peer.displayName){
+                return true
+            }
+        }
+        return false;
+    }
+    
+    //Party Instruction Sender
+    func sendInstruction(dictionary: Dictionary<String, String>, toPeer: MCPeerID) -> Bool {
+        
+        let dataToSend = NSKeyedArchiver.archivedDataWithRootObject(dictionary)
+        let peersArray = NSArray(object: toPeer)
+        var error: NSError?
+        
+        if !(self.session.sendData(dataToSend, toPeers: peersArray as [AnyObject], withMode: MCSessionSendDataMode.Reliable, error: &error)){
+            println(error?.localizedDescription)
+            return false
+        }
+        
+        return true
     }
     
     //Listening methods
@@ -208,28 +217,36 @@ extension PartyServiceManager: MCNearbyServiceBrowserDelegate{
     
     func browser(browser: MCNearbyServiceBrowser!, foundPeer peerID: MCPeerID!, withDiscoveryInfo info: [NSObject : AnyObject]!) {
         
-        if(peerID.displayName != self.myPeerID.displayName) {
-            NSLog("%@", "foundPeer: \(peerID)")
-            self.foundPeers.append(peerID)
-            self.delegate?.foundPeer()
-            //self.serviceBrowser.invitePeer(peerID, toSession: self.session, withContext: nil, timeout: NSTimeInterval(10.00))
+        if(!isPeerFound(peerID)){
+            if(peerID.displayName != self.myPeerID.displayName) {
+                NSLog("%@", "foundPeer: \(peerID)")
+                self.foundPeers.append(peerID)
+                self.delegate?.foundPeer()
+                //self.serviceBrowser.invitePeer(peerID, toSession: self.session, withContext: nil, timeout: NSTimeInterval(60.00))
+                
+            }
+            
             
         }
         
-        //implement way of picking which friends from friend list are invited
+        
     }
     
     func browser(browser: MCNearbyServiceBrowser!, lostPeer peerID: MCPeerID!) {
         NSLog("%@", "lostPeer: \(peerID)")
         
-        for(index, aPeer) in enumerate(foundPeers) {
-            if aPeer == peerID{
-                foundPeers.removeAtIndex(index)
-                break
+        if(isPeerFound(peerID)){
+            for(index, aPeer) in enumerate(foundPeers) {
+                if aPeer == peerID{
+                    foundPeers.removeAtIndex(index)
+                    break
+                }
             }
+            
+            delegate?.lostPeer()
         }
         
-        delegate?.lostPeer()
+        
     }
 }
 
@@ -242,7 +259,7 @@ extension PartyServiceManager: MCNearbyServiceAdvertiserDelegate{
     func advertiser(advertiser: MCNearbyServiceAdvertiser!, didReceiveInvitationFromPeer peerID: MCPeerID!, withContext context: NSData!, invitationHandler: ((Bool, MCSession!) -> Void)!) {
         NSLog("%@", "invitingPeer: \(peerID)")
         self.setRole(PeerType(rawValue: 3)!)
-        invitationHandler(true, self.session)
+        delegate?.invitationWasRecieved(peerID, invitationHandler: invitationHandler)
     }
 }
 
@@ -250,10 +267,20 @@ extension PartyServiceManager: MCSessionDelegate{
     
     func session(session: MCSession!, peer peerID: MCPeerID!, didChangeState state: MCSessionState) {
         NSLog("%@", "peer \(peerID) didChangeState: \(state.stringValue())")
+        if(state == MCSessionState.Connected){
+            println(self.myPeerID.displayName + " connected to " + peerID.displayName)
+            println("mark 1")
+            self.delegate?.connectedWithPeer(peerID)
+            
+        }
     }
     
     func session(session: MCSession!, didReceiveData data: NSData!, fromPeer peerID: MCPeerID!) {
         NSLog("%@", "didRecieveData: \(data)")
+        
+        let dictionary: [String: AnyObject] = ["data": data, "fromPeer": peerID]
+        self.delegate?.didRecieveInstruction(dictionary)
+        
     }
     
     func session(session: MCSession!, didReceiveStream stream: NSInputStream!, withName streamName: String!, fromPeer peerID: MCPeerID!) {

@@ -7,8 +7,9 @@
 //
 
 import UIKit
+import MultipeerConnectivity
 
-class HomeScreenViewController: UIViewController {
+class HomeScreenViewController: UIViewController, PartyServiceManagerDelegate {
     var usrDataManager: UserParseDataSource!
     var frndDataManager: FriendDataSource!
     var friendData: [FriendData] = []
@@ -40,10 +41,13 @@ class HomeScreenViewController: UIViewController {
         
         if(self.firstTime == true){
             self.partyData.setPeerID((self.userData[0].displayName))
+            self.partyData.initializeSession()
+
             self.partyData.setAdvertiser()
             
             //start peer-to-peer advertising
             self.partyData.startListening()
+            self.partyData.delegate = self
             self.firstTime = false
         }
         
@@ -51,14 +55,6 @@ class HomeScreenViewController: UIViewController {
     
     func loadID(notification: NSNotification){
         self.performSegueWithIdentifier("InviteFriendsSegue", sender: nil)
-    }
-    
-    
-    @IBAction func testGuest(sender: UIButton){
-        var storyboard = UIStoryboard(name: "Main", bundle: nil)
-        var vc: InvitedToPartyViewController = storyboard.instantiateViewControllerWithIdentifier("InvitedToPartyVC") as! InvitedToPartyViewController!
-        vc.setData(self.partyData, user: self.userData, friends: self.friendData, request: self.requestData)
-        self.presentViewController(vc, animated: true, completion: nil)
     }
     
     
@@ -116,14 +112,14 @@ class HomeScreenViewController: UIViewController {
             let nav: UINavigationController = (segue.destinationViewController as? UINavigationController)!
             
             let vc: SettingsTableViewController = (nav.viewControllers[0] as? SettingsTableViewController)!
-            vc.setData(self.userData, prty: self.partyData)
+            vc.setData(self.userData, prty: self.partyData, frends: self.friendData, request: self.requestData)
         }
         
         if segue.identifier == "FriendListSegue" {
             let nav: UINavigationController = (segue.destinationViewController as? UINavigationController)!
             
             let vc: FriendsListViewController = (nav.viewControllers[0] as? FriendsListViewController)!
-            vc.setData(self.friendData, requst: self.requestData, party: self.partyData)
+            vc.setData(self.friendData, requst: self.requestData, party: self.partyData, user: self.userData)
         }
     }
     
@@ -138,3 +134,31 @@ class HomeScreenViewController: UIViewController {
     */
 
 }
+
+extension HomeScreenViewController: PartyServiceManagerDelegate {
+    func foundPeer() {
+        
+    }
+    
+    func lostPeer() {
+        
+    }
+    
+    func invitationWasRecieved(peerID: MCPeerID, invitationHandler: ((Bool, MCSession!) -> Void)!) {
+        var storyboard = UIStoryboard(name: "Main", bundle: nil)
+        var vc: InvitedToPartyViewController = storyboard.instantiateViewControllerWithIdentifier("InvitedToPartyVC") as! InvitedToPartyViewController!
+        vc.setData(self.partyData, user: self.userData, friends: self.friendData, request: self.requestData, invHand: invitationHandler, fromPeer: peerID)
+        self.presentViewController(vc, animated: true, completion: nil)
+    }
+    
+    func connectedWithPeer(peerID: MCPeerID) {
+        
+    }
+    
+    func didRecieveInstruction(dictionary: Dictionary<String, AnyObject>){
+    
+    }
+}
+
+
+

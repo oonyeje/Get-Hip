@@ -7,11 +7,13 @@
 //
 
 import UIKit
+import MultipeerConnectivity
 
-class FriendsListViewController: UIViewController, UITableViewDelegate, UITableViewDataSource/*PFQueryTableViewController*/ {
+class FriendsListViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, PartyServiceManagerDelegate {
     //var manager = FriendDataSource()
     var friends = []
     var request = []
+    var user: [UserParseData]!
     var party: PartyServiceManager!
     
     @IBOutlet weak var table: UITableView!
@@ -27,16 +29,18 @@ class FriendsListViewController: UIViewController, UITableViewDelegate, UITableV
         self.performSegueWithIdentifier("FriendRequestSegue", sender: nil)
     }
     
-    func setData(frnds:[FriendData], requst: [FriendData], party: PartyServiceManager){
+    func setData(frnds:[FriendData], requst: [FriendData], party: PartyServiceManager, user: [UserParseData]){
         self.friends = frnds
         self.request = requst
         self.party = party
+        self.user = user
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.table.delegate = self
         self.table.dataSource = self
+        self.party.delegate = self
         self.title = "Friends"
         self.navigationController?.navigationBarHidden = false
         
@@ -181,3 +185,29 @@ class FriendsListViewController: UIViewController, UITableViewDelegate, UITableV
     }
 
 }
+
+extension FriendsListViewController: PartyServiceManagerDelegate {
+    func foundPeer() {
+        
+    }
+    
+    func lostPeer() {
+        
+    }
+    
+    func invitationWasRecieved(peerID: MCPeerID, invitationHandler: ((Bool, MCSession!) -> Void)!) {
+        var storyboard = UIStoryboard(name: "Main", bundle: nil)
+        var vc: InvitedToPartyViewController = storyboard.instantiateViewControllerWithIdentifier("InvitedToPartyVC") as! InvitedToPartyViewController!
+        vc.setData(self.party, user: self.user, friends: (self.friends as! [FriendData]), request: (self.request as! [FriendData]), invHand: invitationHandler, fromPeer: peerID)
+        self.presentViewController(vc, animated: true, completion: nil)
+    }
+    
+    func connectedWithPeer(peerID: MCPeerID) {
+        
+    }
+    
+    func didRecieveInstruction(dictionary: Dictionary<String, AnyObject>){
+    
+    }
+}
+

@@ -15,6 +15,7 @@ class TestInviteFriendsController: UIViewController, UITableViewDelegate, UITabl
     var requestData: [FriendData] = []
     var isFriendSelected: [Bool] = []
     var isInvitable: [Bool] = []
+    var invitableCount = 0
     var partyData: PartyServiceManager! = nil
     
     @IBOutlet weak var table: UITableView!
@@ -29,6 +30,24 @@ class TestInviteFriendsController: UIViewController, UITableViewDelegate, UITabl
     
     @IBAction func sendInvites(sender: UIButton) {
         var numSelected = 0
+        var data = NSData()
+        for(index, bool) in enumerate(self.isFriendSelected) {
+            if bool == true {
+                
+                //search for foundpeer in array
+                /*for peer in self.partyData.foundPeers {
+                    if (peer.displayName == self.frnds[index].displayName){
+                        self.partyData.serviceBrowser.invitePeer(peer, toSession: self.partyData.session, withContext: data, timeout: 3600.0)
+                        
+                        break
+                    }
+                    
+                }*/
+            }
+            
+        }
+        
+        self.partyData.serviceBrowser.stopBrowsingForPeers()
         
         for booli in self.isFriendSelected {
             if booli == true {
@@ -64,24 +83,22 @@ class TestInviteFriendsController: UIViewController, UITableViewDelegate, UITabl
         self.table.dataSource = self
         self.table.delegate = self
         self.partyData.delegate = self
-        //start browsing for peers
-        self.partyData.setBrowser()
-        self.partyData.startBrowser()
-        self.partyData.initializeSession()
         self.navigationController?.navigationBarHidden = false
-        
+        /*
         for foundPeer in self.partyData.foundPeers {
             for friend in self.frnds {
                 if foundPeer.displayName == friend.displayName {
                     for(index, aFriend) in enumerate(self.frnds) {
                         if aFriend.displayName == friend.displayName {
                             self.isInvitable[index] = true
+                            self.invitableCount++
                             break
                         }
                     }
                 }
             }
         }
+        */
         
         
 
@@ -90,6 +107,12 @@ class TestInviteFriendsController: UIViewController, UITableViewDelegate, UITabl
         
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        //start browsing for peers
+        self.partyData.setBrowser()
+        self.partyData.startBrowser()
     }
     
     override func didReceiveMemoryWarning() {
@@ -108,12 +131,25 @@ class TestInviteFriendsController: UIViewController, UITableViewDelegate, UITabl
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete method implementation.
         // Return the number of rows in the section.
-        return self.frnds.count
+        
+        return self.invitableCount
+        //return self.frnds.count
     }
     
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let friend = self.frnds[indexPath.row]
+        
+        //iterate through the currently found peers and display only friends who are available
+        var friend: FriendData!
+        
+        for i in 0..<self.frnds.count {
+            if(self.isInvitable[i] == true){
+                friend = self.frnds[i]
+            }
+        }
+
+        
+        //friend = self.frnds[indexPath.row]
         let cell = self.table.dequeueReusableCellWithIdentifier("TestInviteCell", forIndexPath: indexPath) as? TestInviteFriendsCell
         
         //sets display name of friend (print for debugging purposes)
@@ -136,10 +172,11 @@ class TestInviteFriendsController: UIViewController, UITableViewDelegate, UITabl
         cell!.rdioButton.layer.cornerRadius = cell!.rdioButton.frame.size.width/2
         cell!.rdioButton.clipsToBounds = true
         
-        //for testing purposes - MPCBrowsing
+        /*for testing purposes - MPCBrowsing
         if(self.isInvitable[indexPath.row] == true){
             cell!.proImage.alpha = 0.5
         }
+        */
         
         return cell!
     }
@@ -221,19 +258,41 @@ class TestInviteFriendsController: UIViewController, UITableViewDelegate, UITabl
 }
 
 extension TestInviteFriendsController: PartyServiceManagerDelegate {
+    
     func foundPeer() {
+        for foundPeer in self.partyData.foundPeers {
+            for friend in self.frnds {
+                if foundPeer.displayName == friend.displayName {
+                    for(index, aFriend) in enumerate(self.frnds) {
+                        if aFriend.displayName == friend.displayName {
+                            self.isInvitable[index] = true
+                            self.invitableCount++
+                            
+                            break
+                        }
+                    }
+                }
+            }
+        }
         self.table.reloadData()
     }
     
     func lostPeer() {
+        self.invitableCount--
         self.table.reloadData()
     }
     
-    func invitationWasRecieved(fromPeer: String) {
+    func invitationWasRecieved(peerID: MCPeerID, invitationHandler: ((Bool, MCSession!) -> Void)!) {
         
     }
     
     func connectedWithPeer(peerID: MCPeerID) {
         
     }
+    
+    func didRecieveInstruction(dictionary: Dictionary<String, AnyObject>){
+        
+    }
+
+    
 }

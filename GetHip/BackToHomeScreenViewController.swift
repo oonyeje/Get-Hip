@@ -44,14 +44,14 @@ class BackToHomeScreenViewController: UIViewController {
             let nav: UINavigationController = (segue.destinationViewController as? UINavigationController)!
             
             let vc: SettingsTableViewController = (nav.viewControllers[0] as? SettingsTableViewController)!
-            vc.setData(self.userData, prty: self.partyData)
+            vc.setData(self.userData, prty: self.partyData, frends: self.friendData, request: self.requestData)
         }
         
         if segue.identifier == "FromPartyFriendsSegue" {
             let nav: UINavigationController = (segue.destinationViewController as? UINavigationController)!
             
             let vc: FriendsListViewController = (nav.viewControllers[0] as? FriendsListViewController)!
-            vc.setData(self.friendData, requst: self.requestData, party: self.partyData)
+            vc.setData(self.friendData, requst: self.requestData, party: self.partyData, user: self.userData)
         }
     }
 

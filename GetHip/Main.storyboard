@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14A389" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="j0X-k4-h6H">
     <dependencies>
+        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
     </dependencies>
     <scenes>
@@ -191,10 +192,10 @@
             </objects>
             <point key="canvasLocation" x="1123" y="2058"/>
         </scene>
-        <!--View Controller-->
+        <!--Joining Party View Controller-->
         <scene sceneID="PXH-Ng-lFX">
             <objects>
-                <viewController id="jhT-5c-UMD" sceneMemberID="viewController">
+                <viewController id="jhT-5c-UMD" customClass="JoiningPartyViewController" customModule="GetHip" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="bQJ-lX-fQH"/>
                         <viewControllerLayoutGuide type="bottom" id="RR8-vy-khf"/>
@@ -239,12 +240,6 @@
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="so3-St-AQ6">
                                 <rect key="frame" x="99" y="254" width="122" height="122"/>
                             </imageView>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" text="You have been invited by User to join a Party!" textAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="SM0-PN-2rz">
-                                <rect key="frame" x="47" y="157" width="226" height="89"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="21"/>
-                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                            </textView>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qlt-XA-jzm">
                                 <rect key="frame" x="271" y="44" width="30" height="29"/>
                                 <state key="normal" image="Settings.png">
@@ -281,12 +276,19 @@
                                     <segue destination="hDZ-CA-Hsj" kind="show" identifier="InvitedToPartyFriendsSegue" id="41S-h6-flP"/>
                                 </connections>
                             </button>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" text="You have been invited by User to join a Party!" textAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="SM0-PN-2rz">
+                                <rect key="frame" x="47" y="157" width="226" height="89"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="21"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                     <connections>
                         <outlet property="img" destination="so3-St-AQ6" id="T0w-OK-mUA"/>
+                        <outlet property="inviteTxt" destination="SM0-PN-2rz" id="7Ji-Uu-j84"/>
                         <segue destination="jhT-5c-UMD" kind="show" identifier="JoiningPartySegue" id="U4V-ga-nL4"/>
                     </connections>
                 </viewController>
@@ -623,9 +625,6 @@
                                 <state key="normal" image="Star@3x.png">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
-                                <connections>
-                                    <action selector="testGuest:" destination="i3K-xv-zw1" eventType="touchUpInside" id="YpK-nZ-p8K"/>
-                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NHH-gh-nMz" userLabel="Friends">
                                 <rect key="frame" x="19" y="44" width="56" height="32"/>
@@ -1292,17 +1291,10 @@
                             </label>
                             <slider opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" minimumValueImage="Lower.png" maximumValueImage="Raise.png" translatesAutoresizingMaskIntoConstraints="NO" id="AA9-Xx-q9o">
                                 <rect key="frame" x="26" y="465" width="268" height="31"/>
-                            </slider>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sFb-YR-QlX">
-                                <rect key="frame" x="138" y="505" width="44" height="43"/>
-                                <state key="normal" image="Pause-52.png">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
                                 <connections>
-                                    <action selector="favoriteSong:" destination="5Fd-vs-lX1" eventType="touchUpInside" id="I7l-Fn-CW4"/>
-                                    <action selector="playPauseFav:" destination="5Fd-vs-lX1" eventType="touchUpInside" id="AgY-Dl-2AA"/>
+                                    <action selector="volChng:" destination="5Fd-vs-lX1" eventType="valueChanged" id="hT1-f1-qOr"/>
                                 </connections>
-                            </button>
+                            </slider>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="V0r-OV-CXi">
                                 <rect key="frame" x="226" y="16" width="81" height="41"/>
                                 <state key="normal" image="Party.png">
@@ -1310,6 +1302,15 @@
                                 </state>
                                 <connections>
                                     <segue destination="enX-CI-fki" kind="show" identifier="InPartySegue" id="OD2-Xh-xf2"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sFb-YR-QlX">
+                                <rect key="frame" x="138" y="505" width="44" height="43"/>
+                                <state key="normal" backgroundImage="Pause-52.png">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="playPauseFav:" destination="5Fd-vs-lX1" eventType="touchUpInside" id="AgY-Dl-2AA"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -1646,9 +1647,9 @@
         <image name="Turntable@3x.png" width="434" height="434"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="WxI-P3-JZ9"/>
-        <segue reference="OpG-wQ-NAH"/>
-        <segue reference="wiM-xb-lpR"/>
         <segue reference="5pn-ck-WiI"/>
+        <segue reference="hDN-yC-fGj"/>
+        <segue reference="41S-h6-flP"/>
+        <segue reference="OpG-wQ-NAH"/>
     </inferredMetricsTieBreakers>
 </document>
