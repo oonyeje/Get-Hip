@@ -16,6 +16,7 @@ class InvitedToPartyViewController: UIViewController , PartyServiceManagerDelega
     var partyData: PartyServiceManager!
     var inviteHandle: ((Bool, MCSession!) -> Void)!
     private var fromPeer: MCPeerID!
+    var shouldEndInvite = false
     
     @IBOutlet var img: UIImageView!
     @IBOutlet var inviteTxt: UITextView!
@@ -61,6 +62,12 @@ class InvitedToPartyViewController: UIViewController , PartyServiceManagerDelega
         })
         
         
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        if(self.shouldEndInvite == true){
+            self.dismissViewControllerAnimated(true, completion: nil)
+        }
     }
     
     override func didReceiveMemoryWarning() {

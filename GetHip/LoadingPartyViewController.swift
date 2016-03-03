@@ -51,6 +51,7 @@ class LoadingPartyViewController: UIViewController, UICollectionViewDataSource, 
         //NSNotificationCenter.defaultCenter().addObserver(self, selector: "updateThumbnail:", name: "peerConnected", object: nil)
         self.timerLabel.text = String(counter)
         self.timer = NSTimer.scheduledTimerWithTimeInterval(1, target: self, selector: Selector("updateCounter"), userInfo: nil, repeats: true)
+        self.party.delegate = self
     }
 
     override func didReceiveMemoryWarning() {
@@ -111,6 +112,35 @@ class LoadingPartyViewController: UIViewController, UICollectionViewDataSource, 
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
         if(segue.identifier == "CurrentlyPlayingSegue"){
+            
+            //ends invitations with outstanding peers
+            for invited in self.party.invitedFriends {
+                var joinedPeer: MCPeerID? = self.party.connectedPeersDictionary[invited.displayName] as? MCPeerID
+                
+                if joinedPeer == nil {
+                    for aPeer in self.party.foundPeers {
+                        
+                        if aPeer.displayName == invited.displayName {
+                            self.party.session.cancelConnectPeer(aPeer)
+                            self.party.disconnectedPeersDictionary.setValue(aPeer, forKey: aPeer.displayName)
+                            break
+                        }
+                    }
+                }else{
+                    var dictionary: [String: String] = ["sender": self.party.myPeerID.displayName, "instruction": "start_Party"]
+                    self.party.sendInstruction(dictionary, toPeer: joinedPeer! )
+                }
+                
+            }
+            
+            
+            
+            
+            /*if !(self.session.sendData(dataToSend, toPeers: peersArray as [AnyObject], withMode: MCSessionSendDataMode.Reliable, error: &error)){
+                println(error?.localizedDescription)
+                return false
+            }*/
+            
             let vc: CurrentlyPlayingViewController = (segue.destinationViewController as? CurrentlyPlayingViewController)!
             vc.setData(self.party, user: self.usr, friends: self.frnds, request: self.requestData)
         }
@@ -134,35 +164,48 @@ extension LoadingPartyViewController: PartyServiceManagerDelegate {
     }
     
     func connectedWithPeer(peerID: MCPeerID) {
-        println(self.party.myPeerID.displayName + " connected to " + peerID.displayName)
-        var i = 0
-        for(index, aFriend) in enumerate(self.party.invitedFriends) {
-            if aFriend.displayName == peerID.displayName {
-                i = index
-                break
-            }
-        }
-        
-        let cell: InvitedCollectionViewCell = self.invitedFriends.dequeueReusableCellWithReuseIdentifier("InvitedCollectionCell", forIndexPath: NSIndexPath(index: i)) as! InvitedCollectionViewCell
-        
-        cell.alpha = 1.0
         
         
     }
     
     func didRecieveInstruction(dictionary: Dictionary<String, AnyObject>){
-        //extract data from dictionary
-        println("mark 3")
-        let data = dictionary["data"] as? NSData
-        let fromPeer = dictionary["fromPeer"] as! MCPeerID
+        let (instruction, fromPeer) = self.party.decodeInstruction(dictionary)
+            
+        if self.party.disconnectedPeersDictionary[fromPeer.displayName] != nil {
+            
+                var dictionary: [String: String] = ["sender": self.party.myPeerID.displayName, "instruction": "disconnect"]
+                self.party.sendInstruction(dictionary, toPeer: fromPeer)
+        }else{
         
-        //convert data to dictionary object with instruction
-        let dataDictionary = NSKeyedUnarchiver.unarchiveObjectWithData(data!) as! Dictionary<String, String>
-        
-        //check if this is an instruction being sent
-        if let instruction = dataDictionary["instruction"] {
-            println(instruction)
+            if (instruction == "joined_party") {
+                println(instruction)
+                
+                var i = 0
+                for(index, aFriend) in enumerate(self.party.invitedFriends) {
+                    if aFriend.displayName == fromPeer.displayName {
+                        i = index
+                        break
+                    }
+                }
+                self.party.connectedPeersDictionary.setValue(fromPeer, forKey: fromPeer.displayName)
+                //let cell: InvitedCollectionViewCell = self.invitedFriends.dequeueReusableCellWithReuseIdentifier("InvitedCollectionCell", forIndexPath: NSIndexPath(index: i)) as! InvitedCollectionViewCell
+                
+                //cell.alpha = 1.0
+                println(instruction)
+                
+                
+                //prepares party for the guest peers
+                
+                //sends music info incuding, title, artist, album, and image
+                var dictionary: [String: AnyObject] = ["sender": self.party.myPeerID.displayName, "instruction": "set_up_song", "songTitle": (self.party.currentSong.valueForProperty(MPMediaItemPropertyTitle) as? String!)!, "songArtistAndAlbum": (self.party.currentSong.valueForProperty(MPMediaItemPropertyArtist) as? String!)! + " - " + (self.party.currentSong.valueForProperty(MPMediaItemPropertyAlbumTitle) as? String!)!, "songImage": UIImagePNGRepresentation(self.party.currentSong.valueForProperty(MPMediaItemPropertyArtwork).imageWithSize(songImg.frame.size))]
+                
+                self.party.sendInstruction(dictionary, toPeer: fromPeer)
+
+            }
+
         }
+        
+        
     }
     
 }

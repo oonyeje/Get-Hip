@@ -57,8 +57,13 @@ class PartyServiceManager: NSObject {
     var connectedPeersDictionary = NSMutableDictionary()
     var disconnectedPeersDictionary = NSMutableDictionary()
     
-    //party variables
+    //party-creator variables
     var currentSong: MPMediaItem! = nil
+    
+    //party-guest variables
+    var currentSongTitle: String!
+    var currentSongArtistAlbum: String!
+    var currentSongIMG: UIImage!
     
     
     
@@ -94,7 +99,7 @@ class PartyServiceManager: NSObject {
     }
     
     //Party Instruction Sender
-    func sendInstruction(dictionary: Dictionary<String, String>, toPeer: MCPeerID) -> Bool {
+    func sendInstruction(dictionary: Dictionary<String, AnyObject>, toPeer: MCPeerID) -> Bool {
         
         let dataToSend = NSKeyedArchiver.archivedDataWithRootObject(dictionary)
         let peersArray = NSArray(object: toPeer)
@@ -106,6 +111,32 @@ class PartyServiceManager: NSObject {
         }
         
         return true
+    }
+    
+    func decodeInstruction(dictionary: Dictionary<String, AnyObject>) -> (String, MCPeerID) {
+        //extract data from dictionary
+        println("mark 3")
+        let data = dictionary["data"] as? NSData
+        let fromPeer = dictionary["fromPeer"] as! MCPeerID
+        
+        //convert data to dictionary object with instruction
+        let dataDictionary = NSKeyedUnarchiver.unarchiveObjectWithData(data!) as! Dictionary<String, AnyObject>
+        
+        //check if this is an instruction being sent
+        var instruction: String! = dataDictionary["instruction"] as! String
+        
+        if instruction != nil {
+            println(instruction)
+            if(instruction == "set_up_song"){
+                self.currentSongTitle = dataDictionary["songTitle"] as! String
+                self.currentSongArtistAlbum = dataDictionary["songArtistAndAlbum"] as! String
+                self.currentSongIMG = UIImage(data: (dataDictionary["songImage"] as! NSData))
+            }
+            return (instruction!, fromPeer)
+        }else{
+            return ("not_an_instruction", fromPeer)
+        }
+        
     }
     
     //Listening methods
@@ -273,6 +304,10 @@ extension PartyServiceManager: MCSessionDelegate{
             self.delegate?.connectedWithPeer(peerID)
             
         }
+        
+        if(state == MCSessionState.NotConnected){
+            NSLog("%@", "peer \(peerID) didChangeState: \(state.stringValue())")
+        }
     }
     
     func session(session: MCSession!, didReceiveData data: NSData!, fromPeer peerID: MCPeerID!) {
@@ -280,6 +315,7 @@ extension PartyServiceManager: MCSessionDelegate{
         
         let dictionary: [String: AnyObject] = ["data": data, "fromPeer": peerID]
         self.delegate?.didRecieveInstruction(dictionary)
+        
         
     }
     

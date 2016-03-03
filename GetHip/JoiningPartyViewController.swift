@@ -34,15 +34,22 @@ class JoiningPartyViewController: UIViewController ,PartyServiceManagerDelegate{
         self.user = user
     }
 
-    /*
+    
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
+        
+        if segue.identifier == "EnteringPartySegue"{
+            
+            let vc: CurrentlyPlayingViewController = (segue.destinationViewController as? CurrentlyPlayingViewController)!
+            
+            vc.setData(self.party, user: self.user, friends: self.friends as! [FriendData], request: self.request as! [FriendData])
+        }
     }
-    */
+    
 
 }
 
@@ -67,7 +74,23 @@ extension JoiningPartyViewController: PartyServiceManagerDelegate {
     }
     
     func didRecieveInstruction(dictionary: Dictionary<String, AnyObject>){
+        let (instruction, fromPeer) = self.party.decodeInstruction(dictionary)
         
+        if (instruction == "disconnect") {
+            self.party.session.disconnect()
+            
+            if let vc = self.parentViewController as? InvitedToPartyViewController{
+                vc.shouldEndInvite = true
+            }
+            
+            self.dismissViewControllerAnimated(true, completion: nil)
+        }
+        
+        if (instruction == "start_party"){
+            self.performSegueWithIdentifier("EnteringPartySegue", sender: self)
+        }
+        
+     
     }
     
 }

@@ -60,13 +60,24 @@ class CurrentlyPlayingViewController: UIViewController{
         self.audioPlayer = AVPlayer(URL: self.party.currentSong.valueForProperty(MPMediaItemPropertyAssetURL) as! NSURL)
         
         // Do any additional setup after loading the view.
-        self.songImg.image = self.party.currentSong.valueForProperty(MPMediaItemPropertyArtwork).imageWithSize(songImg.frame.size)
-        self.titleLabel.text = (self.party.currentSong.valueForProperty(MPMediaItemPropertyTitle) as? String!)!
-        self.artistAndAlbumLabel.text = (self.party.currentSong.valueForProperty(MPMediaItemPropertyArtist) as? String!)! + " - " + (self.party.currentSong.valueForProperty(MPMediaItemPropertyAlbumTitle) as? String!)!
-        self.audioPlayer.volume = self.volCtrl.value
-        self.maxLabel.text = String(stringInterpolationSegment: self.audioPlayer.currentItem.duration.value)
-        self.audioPlayer.play()
-        self.timer = NSTimer.scheduledTimerWithTimeInterval(1, target: self, selector: Selector("updateLabels"), userInfo: nil, repeats: true)
+        
+        if(self.party.role == PeerType.Host_Creator){
+            
+            self.songImg.image = self.party.currentSong.valueForProperty(MPMediaItemPropertyArtwork).imageWithSize(songImg.frame.size)
+            self.titleLabel.text = (self.party.currentSong.valueForProperty(MPMediaItemPropertyTitle) as? String!)!
+            self.artistAndAlbumLabel.text = (self.party.currentSong.valueForProperty(MPMediaItemPropertyArtist) as? String!)! + " - " + (self.party.currentSong.valueForProperty(MPMediaItemPropertyAlbumTitle) as? String!)!
+            self.audioPlayer.volume = self.volCtrl.value
+            self.maxLabel.text = String(stringInterpolationSegment: self.audioPlayer.currentItem.duration.value)
+            self.audioPlayer.play()
+            self.timer = NSTimer.scheduledTimerWithTimeInterval(1, target: self, selector: Selector("updateLabels"), userInfo: nil, repeats: true)
+        }else if (self.party.role == PeerType.Guest_Invited){
+            
+            self.songImg.image = self.party.currentSongIMG
+            self.titleLabel.text = (self.party.currentSongTitle)
+            self.artistAndAlbumLabel.text = (self.party.currentSongArtistAlbum)
+        }
+        
+        
 
     }
 
