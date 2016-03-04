@@ -18,7 +18,7 @@ class CurrentlyPlayingViewController: UIViewController, PartyServiceManagerDeleg
     var frnds: [FriendData] = []
     var requestData: [FriendData] = []
     var audioPlayer: AVPlayer!
-    var playing = false
+    var playing = true
     var timer = NSTimer()
     
     //controller data
@@ -37,17 +37,28 @@ class CurrentlyPlayingViewController: UIViewController, PartyServiceManagerDeleg
         self.audioPlayer.volume = sender.value
     }
     @IBAction func playPauseFav(sender: UIButton){
-        if(playing == true){
-            self.audioPlayer.pause()
-            self.playing = false
-            self.ppfButton.setBackgroundImage(UIImage(named: "Play-52.png"), forState: UIControlState.Normal)
-            
-        }else{
-            self.audioPlayer.play()
-            self.playing = true
-            self.ppfButton.setBackgroundImage(UIImage(named: "Pause-52.png"), forState: UIControlState.Normal)
-            
+        if (self.party.role == PeerType.Host_Creator){
+            if(playing == true){
+                self.audioPlayer.pause()
+                for peer in self.party.session.connectedPeers {
+                    var dictionary: [String: String] = ["sender": self.party.myPeerID.displayName, "instruction": "pause_stream"]
+                    self.party.sendInstruction(dictionary, toPeer: peer as! MCPeerID)
+                }
+                self.playing = false
+                self.ppfButton.setBackgroundImage(UIImage(named: "Play-52.png"), forState: UIControlState.Normal)
+                
+            }else{
+                self.audioPlayer.play()
+                self.playing = true
+                self.ppfButton.setBackgroundImage(UIImage(named: "Pause-52.png"), forState: UIControlState.Normal)
+                for peer in self.party.session.connectedPeers {
+                    var dictionary: [String: String] = ["sender": self.party.myPeerID.displayName, "instruction": "resume_stream"]
+                    self.party.sendInstruction(dictionary, toPeer: peer as! MCPeerID)
+                }
+                
+            }
         }
+        
     }
     
     
@@ -72,8 +83,11 @@ class CurrentlyPlayingViewController: UIViewController, PartyServiceManagerDeleg
             self.audioPlayer.volume = self.volCtrl.value
             self.maxLabel.text = String(stringInterpolationSegment: self.audioPlayer.currentItem.duration.value)
             self.party.delegate = self
-            //self.audioPlayer.play()
-            //self.timer = NSTimer.scheduledTimerWithTimeInterval(1, target: self, selector: Selector("updateLabels"), userInfo: nil, repeats: true)
+            for peer in self.party.session.connectedPeers {
+                self.party.outputStreamers[peer.displayName]?.start()
+            }
+            self.audioPlayer.play()
+            self.timer = NSTimer.scheduledTimerWithTimeInterval(1, target: self, selector: Selector("updateLabels"), userInfo: nil, repeats: true)
         }else if (self.party.role == PeerType.Guest_Invited){
             
             self.songImg.image = self.party.currentSongIMG
@@ -82,6 +96,7 @@ class CurrentlyPlayingViewController: UIViewController, PartyServiceManagerDeleg
             println(self.titleLabel.text)
             self.artistAndAlbumLabel.text = (self.party.currentSongArtistAlbum)
             self.party.delegate = self
+            self.ppfButton.hidden = true
                         
             
             
@@ -169,7 +184,11 @@ extension CurrentlyPlayingViewController: PartyServiceManagerDelegate {
             var dictionary: [String: String] = ["sender": self.party.myPeerID.displayName, "instruction": "disconnect"]
             self.party.sendInstruction(dictionary, toPeer: fromPeer)
         }else{
-            
+            if(instruction == "pause_stream"){
+                self.party.inputStreamer.pause()
+            }else if(instruction == "resume_stream"){
+                self.party.inputStreamer.resume()
+            }
         }
             
         

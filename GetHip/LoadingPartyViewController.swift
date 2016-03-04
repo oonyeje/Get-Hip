@@ -128,11 +128,14 @@ class LoadingPartyViewController: UIViewController, UICollectionViewDataSource, 
                         }
                     }
                 }else{
-                    var dictionary: [String: String] = ["sender": self.party.myPeerID.displayName, "instruction": "start_party"]
-                    self.party.sendInstruction(dictionary, toPeer: joinedPeer! )
                     
-                    //start streaming to connected peers
-                    self.party.outputStreamers[joinedPeer!.displayName]!.start()
+                        var dictionary: [String: String] = ["sender": self.party.myPeerID.displayName, "instruction": "start_party"]
+                        self.party.sendInstruction(dictionary, toPeer: joinedPeer! )
+                        
+                        //start streaming to connected peers
+                        //self.party.outputStreamers[joinedPeer!.displayName]!.start()
+                    
+                    
                     
                 }
                 
