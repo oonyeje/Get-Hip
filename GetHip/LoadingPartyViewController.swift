@@ -130,6 +130,10 @@ class LoadingPartyViewController: UIViewController, UICollectionViewDataSource, 
                 }else{
                     var dictionary: [String: String] = ["sender": self.party.myPeerID.displayName, "instruction": "start_party"]
                     self.party.sendInstruction(dictionary, toPeer: joinedPeer! )
+                    
+                    //start streaming to connected peers
+                    self.party.outputStreamers[joinedPeer!.displayName]!.start()
+                    
                 }
                 
             }
@@ -204,7 +208,12 @@ extension LoadingPartyViewController: PartyServiceManagerDelegate {
                 
                 //open stream with peer
                 let stream = self.party.outputStreamForPeer(fromPeer)
-                self.party.outputStreamer = TDAudioOutputStreamer(outputStream: stream)
+                self.party.outputStreamers[fromPeer.displayName] = TDAudioOutputStreamer(outputStream: stream)
+                self.party.outputStreamers[fromPeer.displayName]!.streamAudioFromURL((self.party.currentSong.valueForProperty(MPMediaItemPropertyAssetURL) as! NSURL))
+                
+                
+                
+                
                 
                 
                 /*

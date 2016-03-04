@@ -1056,6 +1056,7 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
+                    <nil key="simulatedTopBarMetrics"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                     <connections>
                         <outlet property="invitedFriends" destination="fnx-cI-MJO" id="9Ec-6U-lHi"/>
@@ -1452,9 +1453,7 @@
                     <connections>
                         <outlet property="searchDisplayController" destination="Le1-SR-p7g" id="B5Z-qo-0DN"/>
                         <outlet property="table" destination="iAI-5U-c8e" id="hcz-UQ-Mmg"/>
-                        <segue destination="C6s-vA-8F4" kind="popoverPresentation" identifier="LoadingPartySegue" popoverAnchorView="iAI-5U-c8e" id="zDR-tX-KYY">
-                            <popoverArrowDirection key="popoverArrowDirection" up="YES" down="YES" left="YES" right="YES"/>
-                        </segue>
+                        <segue destination="C6s-vA-8F4" kind="presentation" identifier="LoadingPartySegue" id="zDR-tX-KYY"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="f9E-Q6-Co1" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1650,6 +1649,6 @@
         <segue reference="5pn-ck-WiI"/>
         <segue reference="hDN-yC-fGj"/>
         <segue reference="41S-h6-flP"/>
-        <segue reference="OpG-wQ-NAH"/>
+        <segue reference="8uU-Fo-Lw5"/>
     </inferredMetricsTieBreakers>
 </document>

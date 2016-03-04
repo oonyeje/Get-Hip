@@ -59,13 +59,12 @@ class PartyServiceManager: NSObject {
     
     //party-creator variables
     var currentSong: MPMediaItem! = nil
-    var outputStreamer: TDAudioOutputStreamer!
+    var outputStreamers: Dictionary<String, TDAudioOutputStreamer> = Dictionary<String, TDAudioOutputStreamer>()
     
     //party-guest variables
     var currentSongTitle: String!
     var currentSongArtistAlbum: String!
     var currentSongIMG: UIImage!
-    var songStream: NSInputStream!
     var inputStreamer: TDAudioInputStreamer!
     
     
@@ -329,11 +328,9 @@ extension PartyServiceManager: MCSessionDelegate{
         NSLog("%@", "didRecieveStream: \(streamName) from peer: \(peerID)")
         
         if streamName == "music" {
-            self.songStream = stream
             self.inputStreamer = TDAudioInputStreamer(inputStream: stream)
-            self.songStream.delegate = self
-            self.songStream.scheduleInRunLoop(NSRunLoop.currentRunLoop(), forMode: NSDefaultRunLoopMode)
-            //self.songStream.open()
+           // self.songStream.scheduleInRunLoop(NSRunLoop.currentRunLoop(), forMode: NSDefaultRunLoopMode)
+            self.inputStreamer.start()
             
             
         }
@@ -350,17 +347,7 @@ extension PartyServiceManager: MCSessionDelegate{
     
 }
 
-extension PartyServiceManager: NSStreamDelegate {
-    func stream(aStream: NSStream, handleEvent eventCode: NSStreamEvent) {
-        if(eventCode == NSStreamEvent.HasBytesAvailable){
-            println("data available in stream")
-        }else if(eventCode == NSStreamEvent.EndEncountered) {
-            println("stream ended")
-        }else if(eventCode == NSStreamEvent.ErrorOccurred) {
-            println("stream error occured")
-        }
-    }
-}
+
 
 //state extensions
 

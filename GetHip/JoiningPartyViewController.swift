@@ -69,7 +69,7 @@ extension JoiningPartyViewController: PartyServiceManagerDelegate {
     
     func connectedWithPeer(peerID: MCPeerID) {
         println("mark 2")
-        var dictionary: [String: String] = ["sender": self.party.myPeerID.displayName, "instruction": "joined_party"]
+        var dictionary: Dictionary<String,String> = ["sender": self.party.myPeerID.displayName, "instruction": "joined_party"]
         self.party.sendInstruction(dictionary, toPeer: peerID)
     }
     

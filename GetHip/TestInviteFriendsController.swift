@@ -183,14 +183,24 @@ class TestInviteFriendsController: UIViewController, UITableViewDelegate, UITabl
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         let cell = table.cellForRowAtIndexPath(indexPath) as? TestInviteFriendsCell
+        //println(cell?.friendName.text)
+        //println(indexPath.row)
+        var index = 0
         
-        if self.isFriendSelected[indexPath.row] == false{
+        for(var i = 0; i < self.frnds.count; i++){
+            if(self.frnds[i].displayName == cell?.friendName.text){
+                index = i
+                break
+            }
+        }
+        
+        if self.isFriendSelected[index] == false{
             cell!.rdioButton.setBackgroundImage(UIImage(named: "Blue Check.png"), forState: UIControlState.Normal)
-            self.isFriendSelected[indexPath.row] = true
+            self.isFriendSelected[index] = true
         }
         else{
             cell!.rdioButton.setBackgroundImage(UIImage(named: "Tap Circle.png"), forState: UIControlState.Normal)
-            self.isFriendSelected[indexPath.row] = false
+            self.isFriendSelected[index] = false
         }
 
         
