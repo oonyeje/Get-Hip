@@ -121,17 +121,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate , CLLocationManagerDelegat
         
         var query = PFQuery(className: "_User")
         var currentUser = PFUser.currentUser()
-        
-        query.whereKey("username", equalTo: (currentUser?.username as String!))
-        
-        query.getFirstObjectInBackgroundWithBlock({
-            (object: PFObject?, error: NSError?) -> Void in
+        if(currentUser != nil){
+            query.whereKey("username", equalTo: (currentUser?.username as String!))
             
-            if(error == nil){
-                object?.setObject(geo, forKey: "location")
-                object?.saveInBackground()
-            }
-        })
+            query.getFirstObjectInBackgroundWithBlock({
+                (object: PFObject?, error: NSError?) -> Void in
+                
+                if(error == nil){
+                    object?.setObject(geo, forKey: "location")
+                    object?.saveInBackground()
+                }
+            })
+        }
+        
     }
     
     

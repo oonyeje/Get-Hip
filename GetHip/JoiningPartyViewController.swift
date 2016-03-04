@@ -87,6 +87,7 @@ extension JoiningPartyViewController: PartyServiceManagerDelegate {
         }
         
         if (instruction == "start_party"){
+            println("mark 4")
             self.performSegueWithIdentifier("EnteringPartySegue", sender: self)
         }
         

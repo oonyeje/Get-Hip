@@ -9,6 +9,7 @@
 import UIKit
 import MediaPlayer
 import MultipeerConnectivity
+import AVFoundation
 
 class LoadingPartyViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, PartyServiceManagerDelegate{
     //persistant data
@@ -127,7 +128,7 @@ class LoadingPartyViewController: UIViewController, UICollectionViewDataSource, 
                         }
                     }
                 }else{
-                    var dictionary: [String: String] = ["sender": self.party.myPeerID.displayName, "instruction": "start_Party"]
+                    var dictionary: [String: String] = ["sender": self.party.myPeerID.displayName, "instruction": "start_party"]
                     self.party.sendInstruction(dictionary, toPeer: joinedPeer! )
                 }
                 
@@ -200,6 +201,53 @@ extension LoadingPartyViewController: PartyServiceManagerDelegate {
                 var dictionary: [String: AnyObject] = ["sender": self.party.myPeerID.displayName, "instruction": "set_up_song", "songTitle": (self.party.currentSong.valueForProperty(MPMediaItemPropertyTitle) as? String!)!, "songArtistAndAlbum": (self.party.currentSong.valueForProperty(MPMediaItemPropertyArtist) as? String!)! + " - " + (self.party.currentSong.valueForProperty(MPMediaItemPropertyAlbumTitle) as? String!)!, "songImage": UIImagePNGRepresentation(self.party.currentSong.valueForProperty(MPMediaItemPropertyArtwork).imageWithSize(songImg.frame.size))]
                 
                 self.party.sendInstruction(dictionary, toPeer: fromPeer)
+                
+                //open stream with peer
+                let stream = self.party.outputStreamForPeer(fromPeer)
+                self.party.outputStreamer = TDAudioOutputStreamer(outputStream: stream)
+                
+                
+                /*
+                let asset: AVURLAsset? = AVURLAsset(URL: (self.party.currentSong.valueForProperty(MPMediaItemPropertyAssetURL) as! NSURL), options: nil)
+                
+                var error: NSError?
+                
+                let assetReader: AVAssetReader = AVAssetReader(asset: asset, error: &error)
+                
+                let assetOutput: AVAssetReaderTrackOutput = AVAssetReaderTrackOutput(track: asset!.tracks[0] as! AVAssetTrack, outputSettings: nil)
+                
+                if error != nil {
+                    
+                }else{
+                    //for peer in self.party.session.connectedPeers {
+                        assetReader.addOutput(assetOutput)
+                        assetReader.startReading()
+                        
+                        let sampleBuffer:CMSampleBuffer! = assetOutput.copyNextSampleBuffer()
+                        
+                        var audioBufferList = AudioBufferList(mNumberBuffers: 1, mBuffers: AudioBuffer(mNumberChannels: 0, mDataByteSize: 0, mData: nil))
+                        
+                        var blockBuffer: Unmanaged<CMBlockBuffer>? = nil
+                        
+                        CMSampleBufferGetAudioBufferListWithRetainedBlockBuffer(sampleBuffer, nil, &audioBufferList, Int(sizeof(audioBufferList.dynamicType)), nil, nil, UInt32(kCMSampleBufferFlag_AudioBufferList_Assure16ByteAlignment), &blockBuffer)
+                        
+                        let stream = self.party.outputStreamForPeer(fromPeer) //self.party.session.startStreamWithName("music", toPeer: peer as! MCPeerID, error: &error)
+                        
+                        if error != nil {
+                            print("Error stream: \(error?.localizedDescription)")
+                        }
+                        
+                        for (var i: UInt32 = 0; i < audioBufferList.mNumberBuffers; i++){
+                            var audioBuffer = AudioBuffer(mNumberChannels: audioBufferList.mBuffers.mNumberChannels, mDataByteSize: audioBufferList.mBuffers.mDataByteSize, mData: audioBufferList.mBuffers.mData)
+                            stream.write(UnsafeMutablePointer<UInt8>(audioBuffer.mData), maxLength: Int(audioBuffer.mDataByteSize))
+                        }
+                    //}
+                    
+                    //CFRelease(blockBuffer)
+                    //CFRelease(sampleBuffer)
+                    
+                }*/
+
 
             }
 

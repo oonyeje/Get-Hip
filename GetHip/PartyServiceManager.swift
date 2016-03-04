@@ -59,11 +59,14 @@ class PartyServiceManager: NSObject {
     
     //party-creator variables
     var currentSong: MPMediaItem! = nil
+    var outputStreamer: TDAudioOutputStreamer!
     
     //party-guest variables
     var currentSongTitle: String!
     var currentSongArtistAlbum: String!
     var currentSongIMG: UIImage!
+    var songStream: NSInputStream!
+    var inputStreamer: TDAudioInputStreamer!
     
     
     
@@ -130,6 +133,7 @@ class PartyServiceManager: NSObject {
             if(instruction == "set_up_song"){
                 self.currentSongTitle = dataDictionary["songTitle"] as! String
                 self.currentSongArtistAlbum = dataDictionary["songArtistAndAlbum"] as! String
+                println(self.currentSongTitle)
                 self.currentSongIMG = UIImage(data: (dataDictionary["songImage"] as! NSData))
             }
             return (instruction!, fromPeer)
@@ -197,7 +201,9 @@ class PartyServiceManager: NSObject {
     }
     
     func outputStreamForPeer(peer: MCPeerID) -> NSOutputStream {
+        println("attempted to start stream with" + peer.displayName)
        return session.startStreamWithName("music", toPeer: peer, error: nil)
+        
     }
     
     //Host Methods
@@ -321,6 +327,16 @@ extension PartyServiceManager: MCSessionDelegate{
     
     func session(session: MCSession!, didReceiveStream stream: NSInputStream!, withName streamName: String!, fromPeer peerID: MCPeerID!) {
         NSLog("%@", "didRecieveStream: \(streamName) from peer: \(peerID)")
+        
+        if streamName == "music" {
+            self.songStream = stream
+            self.inputStreamer = TDAudioInputStreamer(inputStream: stream)
+            self.songStream.delegate = self
+            self.songStream.scheduleInRunLoop(NSRunLoop.currentRunLoop(), forMode: NSDefaultRunLoopMode)
+            //self.songStream.open()
+            
+            
+        }
     }
     
     func session(session: MCSession!, didFinishReceivingResourceWithName resourceName: String!, fromPeer peerID: MCPeerID!, atURL localURL: NSURL!, withError error: NSError!) {
@@ -332,6 +348,18 @@ extension PartyServiceManager: MCSessionDelegate{
     }
     
     
+}
+
+extension PartyServiceManager: NSStreamDelegate {
+    func stream(aStream: NSStream, handleEvent eventCode: NSStreamEvent) {
+        if(eventCode == NSStreamEvent.HasBytesAvailable){
+            println("data available in stream")
+        }else if(eventCode == NSStreamEvent.EndEncountered) {
+            println("stream ended")
+        }else if(eventCode == NSStreamEvent.ErrorOccurred) {
+            println("stream error occured")
+        }
+    }
 }
 
 //state extensions

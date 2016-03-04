@@ -9,15 +9,16 @@
 import UIKit
 import MediaPlayer
 import AVFoundation
+import MultipeerConnectivity
 
-class CurrentlyPlayingViewController: UIViewController{
+class CurrentlyPlayingViewController: UIViewController, PartyServiceManagerDelegate{
     //persistant data
     var party: PartyServiceManager!
     var usr: [UserParseData] = []
     var frnds: [FriendData] = []
     var requestData: [FriendData] = []
     var audioPlayer: AVPlayer!
-    var playing = true
+    var playing = false
     var timer = NSTimer()
     
     //controller data
@@ -57,24 +58,34 @@ class CurrentlyPlayingViewController: UIViewController{
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.audioPlayer = AVPlayer(URL: self.party.currentSong.valueForProperty(MPMediaItemPropertyAssetURL) as! NSURL)
+        
         
         // Do any additional setup after loading the view.
         
         if(self.party.role == PeerType.Host_Creator){
+            
+            self.audioPlayer = AVPlayer(URL: self.party.currentSong.valueForProperty(MPMediaItemPropertyAssetURL) as! NSURL)
             
             self.songImg.image = self.party.currentSong.valueForProperty(MPMediaItemPropertyArtwork).imageWithSize(songImg.frame.size)
             self.titleLabel.text = (self.party.currentSong.valueForProperty(MPMediaItemPropertyTitle) as? String!)!
             self.artistAndAlbumLabel.text = (self.party.currentSong.valueForProperty(MPMediaItemPropertyArtist) as? String!)! + " - " + (self.party.currentSong.valueForProperty(MPMediaItemPropertyAlbumTitle) as? String!)!
             self.audioPlayer.volume = self.volCtrl.value
             self.maxLabel.text = String(stringInterpolationSegment: self.audioPlayer.currentItem.duration.value)
-            self.audioPlayer.play()
-            self.timer = NSTimer.scheduledTimerWithTimeInterval(1, target: self, selector: Selector("updateLabels"), userInfo: nil, repeats: true)
+            self.party.delegate = self
+            //self.audioPlayer.play()
+            //self.timer = NSTimer.scheduledTimerWithTimeInterval(1, target: self, selector: Selector("updateLabels"), userInfo: nil, repeats: true)
         }else if (self.party.role == PeerType.Guest_Invited){
             
             self.songImg.image = self.party.currentSongIMG
             self.titleLabel.text = (self.party.currentSongTitle)
+            println(self.party.currentSongTitle)
+            println(self.titleLabel.text)
             self.artistAndAlbumLabel.text = (self.party.currentSongArtistAlbum)
+            self.party.delegate = self
+                        
+            
+            
+            
         }
         
         
@@ -82,14 +93,17 @@ class CurrentlyPlayingViewController: UIViewController{
     }
 
     func updateLabels(){
-        var timeLeft = self.audioPlayer.currentItem.duration.value - self.audioPlayer.currentTime().value
-        var interval = timeLeft
-        var seconds = interval%60
-        println(seconds)
-        var minutes = (interval/60)%60
-        println(minutes)
-        //self.maxLabel.text
-        //self.minLabel.text
+        if (self.playing == true){
+            var timeLeft = self.audioPlayer.currentItem.duration.value - self.audioPlayer.currentTime().value
+            var interval = timeLeft
+            var seconds = interval%60
+            println(seconds)
+            var minutes = (interval/60)%60
+            println(minutes)
+            //self.maxLabel.text
+            //self.minLabel.text
+        }
+        
     }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -126,4 +140,41 @@ class CurrentlyPlayingViewController: UIViewController{
     }
     
 
+}
+
+extension CurrentlyPlayingViewController: PartyServiceManagerDelegate {
+    
+    func foundPeer() {
+        
+    }
+    
+    func lostPeer() {
+        
+    }
+    
+    func invitationWasRecieved(peerID: MCPeerID, invitationHandler: ((Bool, MCSession!) -> Void)!) {
+        
+    }
+    
+    func connectedWithPeer(peerID: MCPeerID) {
+        
+        
+    }
+    
+    func didRecieveInstruction(dictionary: Dictionary<String, AnyObject>){
+        let (instruction, fromPeer) = self.party.decodeInstruction(dictionary)
+        
+        if self.party.disconnectedPeersDictionary[fromPeer.displayName] != nil {
+            
+            var dictionary: [String: String] = ["sender": self.party.myPeerID.displayName, "instruction": "disconnect"]
+            self.party.sendInstruction(dictionary, toPeer: fromPeer)
+        }else{
+            
+        }
+            
+        
+        
+        
+    }
+    
 }
