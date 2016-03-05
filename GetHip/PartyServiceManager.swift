@@ -9,6 +9,7 @@
 import Foundation
 import MultipeerConnectivity
 import MediaPlayer
+import AVFoundation
 
 
 protocol PartyServiceManagerDelegate {
@@ -60,6 +61,8 @@ class PartyServiceManager: NSObject {
     //party-creator variables
     var currentSong: MPMediaItem! = nil
     var outputStreamers: Dictionary<String, TDAudioOutputStreamer> = Dictionary<String, TDAudioOutputStreamer>()
+    var isInvitable: [Bool] = []
+    var invitableCount = 0
     
     //party-guest variables
     var currentSongTitle: String!
@@ -137,6 +140,7 @@ class PartyServiceManager: NSObject {
             }
             return (instruction!, fromPeer)
         }else{
+            
             return ("not_an_instruction", fromPeer)
         }
         

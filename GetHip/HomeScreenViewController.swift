@@ -42,11 +42,15 @@ class HomeScreenViewController: UIViewController, PartyServiceManagerDelegate {
         if(self.firstTime == true){
             self.partyData.setPeerID((self.userData[0].displayName))
             self.partyData.initializeSession()
-
-            self.partyData.setAdvertiser()
             
             //start peer-to-peer advertising
+            self.partyData.setAdvertiser()
             self.partyData.startListening()
+            
+            //start browsing for peers
+            self.partyData.setBrowser()
+            self.partyData.startBrowser()
+            
             self.partyData.delegate = self
             self.firstTime = false
         }
@@ -137,7 +141,20 @@ class HomeScreenViewController: UIViewController, PartyServiceManagerDelegate {
 
 extension HomeScreenViewController: PartyServiceManagerDelegate {
     func foundPeer() {
-        
+        for foundPeer in self.partyData.foundPeers {
+            for friend in self.friendData {
+                if foundPeer.displayName == friend.displayName {
+                    for(index, aFriend) in enumerate(self.friendData) {
+                        if aFriend.displayName == friend.displayName {
+                            self.partyData.isInvitable[index] = true
+                            self.partyData.invitableCount++
+                            
+                            break
+                        }
+                    }
+                }
+            }
+        }
     }
     
     func lostPeer() {

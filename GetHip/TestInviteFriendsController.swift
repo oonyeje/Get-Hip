@@ -14,8 +14,8 @@ class TestInviteFriendsController: UIViewController, UITableViewDelegate, UITabl
     var frnds: [FriendData] = []
     var requestData: [FriendData] = []
     var isFriendSelected: [Bool] = []
-    var isInvitable: [Bool] = []
-    var invitableCount = 0
+    //var isInvitable: [Bool] = []
+    //var invitableCount = 0
     var partyData: PartyServiceManager! = nil
     
     @IBOutlet weak var table: UITableView!
@@ -47,7 +47,7 @@ class TestInviteFriendsController: UIViewController, UITableViewDelegate, UITabl
             
         }
         
-        self.partyData.serviceBrowser.stopBrowsingForPeers()
+        //self.partyData.serviceBrowser.stopBrowsingForPeers()
         
         for booli in self.isFriendSelected {
             if booli == true {
@@ -73,7 +73,7 @@ class TestInviteFriendsController: UIViewController, UITableViewDelegate, UITabl
         
         for i in 0..<self.frnds.count{
             self.isFriendSelected.append(false)
-            self.isInvitable.append(false)
+            self.partyData.isInvitable.append(false)
         }
     }
     
@@ -111,8 +111,8 @@ class TestInviteFriendsController: UIViewController, UITableViewDelegate, UITabl
     
     override func viewWillAppear(animated: Bool) {
         //start browsing for peers
-        self.partyData.setBrowser()
-        self.partyData.startBrowser()
+        //self.partyData.setBrowser()
+        //self.partyData.startBrowser()
     }
     
     override func didReceiveMemoryWarning() {
@@ -132,7 +132,7 @@ class TestInviteFriendsController: UIViewController, UITableViewDelegate, UITabl
         // #warning Incomplete method implementation.
         // Return the number of rows in the section.
         
-        return self.invitableCount
+        return self.partyData.invitableCount
         //return self.frnds.count
     }
     
@@ -143,7 +143,7 @@ class TestInviteFriendsController: UIViewController, UITableViewDelegate, UITabl
         var friend: FriendData!
         
         for i in 0..<self.frnds.count {
-            if(self.isInvitable[i] == true){
+            if(self.partyData.isInvitable[i] == true){
                 friend = self.frnds[i]
             }
         }
@@ -275,8 +275,8 @@ extension TestInviteFriendsController: PartyServiceManagerDelegate {
                 if foundPeer.displayName == friend.displayName {
                     for(index, aFriend) in enumerate(self.frnds) {
                         if aFriend.displayName == friend.displayName {
-                            self.isInvitable[index] = true
-                            self.invitableCount++
+                            self.partyData.isInvitable[index] = true
+                            self.partyData.invitableCount++
                             
                             break
                         }
@@ -288,7 +288,7 @@ extension TestInviteFriendsController: PartyServiceManagerDelegate {
     }
     
     func lostPeer() {
-        self.invitableCount--
+        self.partyData.invitableCount--
         self.table.reloadData()
     }
     

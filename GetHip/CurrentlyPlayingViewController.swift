@@ -74,7 +74,6 @@ class CurrentlyPlayingViewController: UIViewController, PartyServiceManagerDeleg
         // Do any additional setup after loading the view.
         
         if(self.party.role == PeerType.Host_Creator){
-            
             self.audioPlayer = AVPlayer(URL: self.party.currentSong.valueForProperty(MPMediaItemPropertyAssetURL) as! NSURL)
             
             self.songImg.image = self.party.currentSong.valueForProperty(MPMediaItemPropertyArtwork).imageWithSize(songImg.frame.size)

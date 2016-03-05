@@ -218,7 +218,6 @@ extension LoadingPartyViewController: PartyServiceManagerDelegate {
                 
                 
                 
-                
                 /*
                 let asset: AVURLAsset? = AVURLAsset(URL: (self.party.currentSong.valueForProperty(MPMediaItemPropertyAssetURL) as! NSURL), options: nil)
                 
