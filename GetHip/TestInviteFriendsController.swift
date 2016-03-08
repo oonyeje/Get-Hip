@@ -22,8 +22,8 @@ class TestInviteFriendsController: UIViewController, UITableViewDelegate, UITabl
     
     @IBAction func cancelInvites(sender: UIBarButtonItem) {
         //println("Browser service deinitialized and browser deinitialized")
-        self.partyData.stopBrowsing()
-        self.partyData.serviceBrowser = nil
+        //self.partyData.stopBrowsing()
+        //self.partyData.serviceBrowser = nil
         
         self.parentViewController?.dismissViewControllerAnimated(true, completion: nil)
     }
@@ -73,7 +73,7 @@ class TestInviteFriendsController: UIViewController, UITableViewDelegate, UITabl
         
         for i in 0..<self.frnds.count{
             self.isFriendSelected.append(false)
-            self.partyData.isInvitable.append(false)
+            //self.partyData.isInvitable.append(false)
         }
     }
     

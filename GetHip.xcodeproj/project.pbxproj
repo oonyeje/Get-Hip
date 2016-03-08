@@ -49,6 +49,8 @@
 		3E4169491C385F1000B193AF /* 1x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3E4169481C385F1000B193AF /* 1x.png */; };
 		3E4169551C398A5B00B193AF /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E4169541C398A5B00B193AF /* SignUpViewController.swift */; };
 		3E4169571C399C4D00B193AF /* Images-3.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3E4169561C399C4D00B193AF /* Images-3.xcassets */; };
+		3E41D74C1C8D17E100FFD846 /* icon-120.png in Resources */ = {isa = PBXBuildFile; fileRef = 3E41D74B1C8D17E100FFD846 /* icon-120.png */; };
+		3E41D74E1C8D17F300FFD846 /* Icon-60.png in Resources */ = {isa = PBXBuildFile; fileRef = 3E41D74D1C8D17F300FFD846 /* Icon-60.png */; };
 		3E438ADE1C572DFD0055C97A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3E438ADD1C572DFD0055C97A /* Main.storyboard */; };
 		3E438AE61C5738EF0055C97A /* Create@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3E438AE11C5738EF0055C97A /* Create@2x.png */; };
 		3E438AE71C5738EF0055C97A /* Friends@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3E438AE21C5738EF0055C97A /* Friends@2x.png */; };
@@ -196,6 +198,8 @@
 		3E4169481C385F1000B193AF /* 1x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = 1x.png; path = "../../../Dropbox/Gethip/Screens/Logo  Screen/6 Logo Screen/1x.png"; sourceTree = "<group>"; };
 		3E4169541C398A5B00B193AF /* SignUpViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
 		3E4169561C399C4D00B193AF /* Images-3.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Images-3.xcassets"; sourceTree = "<group>"; };
+		3E41D74B1C8D17E100FFD846 /* icon-120.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-120.png"; sourceTree = "<group>"; };
+		3E41D74D1C8D17F300FFD846 /* Icon-60.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-60.png"; sourceTree = "<group>"; };
 		3E438ADD1C572DFD0055C97A /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		3E438AE11C5738EF0055C97A /* Create@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Create@2x.png"; path = "../../../Dropbox/Gethip/Screens/iPhone 5 Home/Icon Assets/Create@2x.png"; sourceTree = "<group>"; };
 		3E438AE21C5738EF0055C97A /* Friends@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Friends@2x.png"; path = "../../../Dropbox/Gethip/Screens/iPhone 5 Home/Icon Assets/Friends@2x.png"; sourceTree = "<group>"; };
@@ -419,6 +423,8 @@
 		3E1BDA4F1C37111D00EE3B84 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				3E41D74D1C8D17F300FFD846 /* Icon-60.png */,
+				3E41D74B1C8D17E100FFD846 /* icon-120.png */,
 				3E1BDA501C37111D00EE3B84 /* Info.plist */,
 			);
 			name = "Supporting Files";
@@ -845,6 +851,7 @@
 				3E438AE91C5738EF0055C97A /* Star@2x.png in Resources */,
 				3E5BD3151C6C45CE00266B16 /* Home Copy@2x.png in Resources */,
 				3E5952831C39DDA800C88C71 /* Settings@3x.png in Resources */,
+				3E41D74C1C8D17E100FFD846 /* icon-120.png in Resources */,
 				3E7BB8E21C5B4A350005B834 /* Change Song@2x.png in Resources */,
 				3E59526B1C39DBC900C88C71 /* Star@3x.png in Resources */,
 				3E59527B1C39DDA800C88C71 /* Create.png in Resources */,
@@ -862,6 +869,7 @@
 				3E59526F1C39DC1E00C88C71 /* Rectangle 10 + Change Photo + voice_presentation copy + voice_presentation copy 2 + voice_presentation + Music 2 + Music 2.png in Resources */,
 				3E59527F1C39DDA800C88C71 /* Group@2x.png in Resources */,
 				3E5952691C39DBC900C88C71 /* Star.png in Resources */,
+				3E41D74E1C8D17F300FFD846 /* Icon-60.png in Resources */,
 				3E59527C1C39DDA800C88C71 /* Create@2x.png in Resources */,
 				3E7D37D51C75D7EF002E682F /* Raise@2x.png in Resources */,
 				3E59526A1C39DBC900C88C71 /* Star@2x.png in Resources */,

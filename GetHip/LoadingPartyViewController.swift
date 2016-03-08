@@ -23,8 +23,10 @@ class LoadingPartyViewController: UIViewController, UICollectionViewDataSource, 
     @IBOutlet var invitedFriends: UICollectionView!
     @IBOutlet var songLabel: UILabel!
     @IBOutlet var timerLabel: UILabel!
+    var arePeersReady = Dictionary<String, Bool>()
+    private var firstPass: Bool = true
     var timer = NSTimer()
-    var counter = 60
+    var counter = 30
     
     @IBAction func cancelInvites(sender: UIButton){
         self.dismissViewControllerAnimated(true, completion: nil)
@@ -44,14 +46,18 @@ class LoadingPartyViewController: UIViewController, UICollectionViewDataSource, 
         self.invitedFriends.dataSource = self
         self.invitedFriends.delegate = self
         
-        // Do any additional setup after loading the view.
-        self.songImg.image = self.party.currentSong.valueForProperty(MPMediaItemPropertyArtwork).imageWithSize(songImg.frame.size)
-        self.songLabel.text = (self.party.currentSong.valueForProperty(MPMediaItemPropertyTitle) as? String!)! + " by " + (self.party.currentSong.valueForProperty(MPMediaItemPropertyArtist) as? String!)!
+        if(self.firstPass){
+            // Do any additional setup after loading the view.
+            self.songImg.image = self.party.currentSong.valueForProperty(MPMediaItemPropertyArtwork).imageWithSize(songImg.frame.size)
+            self.songLabel.text = (self.party.currentSong.valueForProperty(MPMediaItemPropertyTitle) as? String!)! + " by " + (self.party.currentSong.valueForProperty(MPMediaItemPropertyArtist) as? String!)!
+            
+            //sets up timer label and starts countdown to next screen
+            //NSNotificationCenter.defaultCenter().addObserver(self, selector: "updateThumbnail:", name: "peerConnected", object: nil)
+            self.timerLabel.text = String(counter)
+            self.timer = NSTimer.scheduledTimerWithTimeInterval(1, target: self, selector: Selector("updateCounter"), userInfo: nil, repeats: true)
+            self.firstPass = false
+        }
         
-        //sets up timer label and starts countdown to next screen
-        //NSNotificationCenter.defaultCenter().addObserver(self, selector: "updateThumbnail:", name: "peerConnected", object: nil)
-        self.timerLabel.text = String(counter)
-        self.timer = NSTimer.scheduledTimerWithTimeInterval(1, target: self, selector: Selector("updateCounter"), userInfo: nil, repeats: true)
         self.party.delegate = self
     }
 
@@ -60,16 +66,105 @@ class LoadingPartyViewController: UIViewController, UICollectionViewDataSource, 
         // Dispose of any resources that can be recreated.
     }
     
-    func updateThumbnil(notification: NSNotification){
+    func updateCounter(){
+        self.timerLabel.text = String(counter--)
+        println(self.timerLabel.text)
+        if(self.counter == -1){
+            self.timer.invalidate()
+            prepareAndCheckPeers()
+            //self.timer = NSTimer.scheduledTimerWithTimeInterval(10, target: self, selector: Selector("prepareAndCheckPeers"), userInfo: nil, repeats: false)
+            //self.performSegueWithIdentifier("CurrentlyPlayingSegue", sender: nil)
+        }
+    }
+    
+    //selector functions for prepareAndCheckPeers selector function
+    func checkIfReady(){
+        for peer in self.party.session.connectedPeers as! [MCPeerID] {
+            var dictionary: [String: AnyObject] = ["sender": self.party.myPeerID, "instruction": "are_you_ready", "connectedPeers": (self.party.session.connectedPeers as! [MCPeerID])]
+            self.party.sendInstruction(dictionary, toPeer: peer)
+        }
+        
+        var delayStart = NSTimer.scheduledTimerWithTimeInterval(15, target: self, selector: Selector("attemptToStart"), userInfo: nil, repeats: false)
+    }
+    
+    func startParty(){
+        var dictionary: [String: String] = ["sender": self.party.myPeerID.displayName, "instruction": "start_party"]
+        
+        for peer in self.party.session.connectedPeers as! [MCPeerID] {
+            self.party.sendInstruction(dictionary, toPeer: peer )
+        }
+        
+        self.performSegueWithIdentifier("CurrentlyPlayingSegue", sender: self)
         
     }
     
-    func updateCounter(){
-        self.timerLabel.text = String(counter--)
-        if(self.counter == -1){
-            self.timer.invalidate()
-            self.performSegueWithIdentifier("CurrentlyPlayingSegue", sender: nil)
+    func attemptToStart(){
+        
+        
+        
+        for peer in self.party.session.connectedPeers as! [MCPeerID] {
+            if self.arePeersReady[peer.displayName] == false{
+                var dictionary: [String: String] = ["sender": self.party.myPeerID.displayName, "instruction": "disconnect"]
+                self.party.sendInstruction(dictionary, toPeer: peer)
+            }
         }
+        
+        var delTimer = NSTimer.scheduledTimerWithTimeInterval(5, target: self, selector: Selector("startParty"), userInfo: nil, repeats: false)
+        
+        
+    }
+
+    
+    func prepareAndCheckPeers(){
+        
+        for connPeers in self.party.session.connectedPeers as! [MCPeerID] {
+            self.arePeersReady[connPeers.displayName] = false
+        }
+        
+        
+        for invited in self.party.invitedFriends {
+            var joinedPeer: MCPeerID? = self.party.connectedPeersDictionary[invited.displayName] as? MCPeerID
+            
+            if joinedPeer == nil {
+                for aPeer in self.party.foundPeers {
+                    
+                    if aPeer.displayName == invited.displayName {
+                        self.party.session.cancelConnectPeer(aPeer)
+                        self.party.disconnectedPeersDictionary.setValue(aPeer, forKey: aPeer.displayName)
+                        break
+                    }
+                }
+            }else{
+                //sends array of currently connected peers to every connected peer to set up mesh streaming network
+                var currentlyConnected : [FriendData]! = []
+                for peer in self.party.session.connectedPeers as! [MCPeerID]{
+                    for friend in self.party.invitedFriends {
+                        if peer.displayName == friend.displayName {
+                            currentlyConnected.append(friend)
+                        }
+                    }
+                }
+                var userDat = FriendData(display: self.usr[0].displayName, status: "")
+                userDat.profileImg = UIImageView(image: self.usr[0].profileImg.image)
+                currentlyConnected.append(userDat)
+                
+                var dictionaryConnected: [String: AnyObject] = ["sender": self.party.myPeerID, "instruction": "connect_to_other_peers", "connectedPeers": self.party.session.connectedPeers as! [MCPeerID], "friendData": currentlyConnected]
+                self.party.sendInstruction(dictionaryConnected, toPeer: joinedPeer!)
+                var delayCheck = NSTimer.scheduledTimerWithTimeInterval(5, target: self, selector: Selector("checkIfReady"), userInfo: nil, repeats: false)
+                
+                
+                //var dictionary: [String: String] = ["sender": self.party.myPeerID.displayName, "instruction": "start_party"]
+                //self.party.sendInstruction(dictionary, toPeer: joinedPeer! )
+                
+                //start streaming to connected peers
+                //self.party.outputStreamers[joinedPeer!.displayName]!.start()
+                
+                
+                
+            }
+            
+        }
+
     }
     
     func setData(prty:PartyServiceManager, user: [UserParseData], friends: [FriendData], request: [FriendData]){
@@ -94,7 +189,11 @@ class LoadingPartyViewController: UIViewController, UICollectionViewDataSource, 
         //rounds uiimage and configures UIImageView
         cell.friendImage.layer.cornerRadius = cell.friendImage.frame.size.width/2
         cell.friendImage.clipsToBounds = true
-        cell.alpha = 0.5
+        
+        if(self.party.connectedPeersDictionary[friend.displayName] == nil){
+            cell.alpha = 0.5
+        }
+        
         
         return cell
 
@@ -113,7 +212,8 @@ class LoadingPartyViewController: UIViewController, UICollectionViewDataSource, 
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
         if(segue.identifier == "CurrentlyPlayingSegue"){
-            
+            /*
+            //PLACE THIS CODE IN A SEPARATE FUNCTION SO YOU CAN CONTROL TIMING BETTER AND MAKE SURE ALL PEERS ARE READY BEFORE MOVING ON
             //ends invitations with outstanding peers
             for invited in self.party.invitedFriends {
                 var joinedPeer: MCPeerID? = self.party.connectedPeersDictionary[invited.displayName] as? MCPeerID
@@ -128,7 +228,19 @@ class LoadingPartyViewController: UIViewController, UICollectionViewDataSource, 
                         }
                     }
                 }else{
-                    
+                    //sends array of currently connected peers to every connected peer to set up mesh streaming network
+                    var currentlyConnected : [FriendData]!
+                    for peer in self.party.session.connectedPeers as! [MCPeerID]{
+                        for friend in self.party.invitedFriends {
+                            if peer.displayName == friend.displayName {
+                                currentlyConnected.append(friend)
+                            }
+                        }
+                    }
+                    var dictionaryConnected: [String: AnyObject] = ["sender": self.party.myPeerID, "instruction": "connect_to_other_peers", "connectedPeers": self.party.session.connectedPeers as! [MCPeerID], "friendData": currentlyConnected]
+                    self.party.sendInstruction(dictionaryConnected, toPeer: joinedPeer!)
+                  //END OF NOTE
+
                         var dictionary: [String: String] = ["sender": self.party.myPeerID.displayName, "instruction": "start_party"]
                         self.party.sendInstruction(dictionary, toPeer: joinedPeer! )
                         
@@ -148,7 +260,7 @@ class LoadingPartyViewController: UIViewController, UICollectionViewDataSource, 
                 println(error?.localizedDescription)
                 return false
             }*/
-            
+            */
             let vc: CurrentlyPlayingViewController = (segue.destinationViewController as? CurrentlyPlayingViewController)!
             vc.setData(self.party, user: self.usr, friends: self.frnds, request: self.requestData)
         }
@@ -195,11 +307,11 @@ extension LoadingPartyViewController: PartyServiceManagerDelegate {
                         break
                     }
                 }
-                self.party.connectedPeersDictionary.setValue(fromPeer, forKey: fromPeer.displayName)
-                //let cell: InvitedCollectionViewCell = self.invitedFriends.dequeueReusableCellWithReuseIdentifier("InvitedCollectionCell", forIndexPath: NSIndexPath(index: i)) as! InvitedCollectionViewCell
                 
-                //cell.alpha = 1.0
-                println(instruction)
+                
+                
+                self.party.connectedPeersDictionary.setValue(fromPeer, forKey: fromPeer.displayName)
+                self.invitedFriends.reloadData()
                 
                 
                 //prepares party for the guest peers
@@ -261,6 +373,12 @@ extension LoadingPartyViewController: PartyServiceManagerDelegate {
 
 
             }
+            
+            if(instruction == "ready"){
+                self.arePeersReady[fromPeer.displayName] = true
+            }
+            
+            println(instruction)
 
         }
         

@@ -27,6 +27,7 @@ class InvitedToPartyViewController: UIViewController , PartyServiceManagerDelega
     }
     
     @IBAction func acceptInvite(sender: UIButton){
+        self.partyData.currentHost = self.fromPeer.displayName
         self.inviteHandle(true, self.partyData.session)
         self.performSegueWithIdentifier("JoiningPartySegue", sender: self)
     }

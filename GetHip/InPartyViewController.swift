@@ -49,19 +49,26 @@ class InPartyViewController: UIViewController, UICollectionViewDataSource, UICol
 
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         
-        let friend = self.party.invitedFriends[indexPath.row]
-        let cell: InvitedCollectionViewCell = self.friendsInParty.dequeueReusableCellWithReuseIdentifier("InvitedCollectionCell", forIndexPath: indexPath) as! InvitedCollectionViewCell
+        var cell: InvitedCollectionViewCell!
         
-        if friend.profileImg == nil {
-            cell.friendImage.backgroundColor = UIColor.grayColor()
-        }
-        else{
-            cell.friendImage.image = friend.profileImg.image!
+        if(self.party.role == PeerType.Host_Creator){
+            let friend = self.party.invitedFriends[indexPath.row]
+            cell = self.friendsInParty.dequeueReusableCellWithReuseIdentifier("InvitedCollectionCell", forIndexPath: indexPath) as! InvitedCollectionViewCell
+            
+            if friend.profileImg == nil {
+                cell.friendImage.backgroundColor = UIColor.grayColor()
+            }
+            else{
+                cell.friendImage.image = friend.profileImg.image!
+            }
+            
+            //rounds uiimage and configures UIImageView
+            cell.friendImage.layer.cornerRadius = cell.friendImage.frame.size.width/2
+            cell.friendImage.clipsToBounds = true
+        }else{
+            cell = InvitedCollectionViewCell()
         }
         
-        //rounds uiimage and configures UIImageView
-        cell.friendImage.layer.cornerRadius = cell.friendImage.frame.size.width/2
-        cell.friendImage.clipsToBounds = true
         
         return cell
         

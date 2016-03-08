@@ -17,7 +17,7 @@ class HomeScreenViewController: UIViewController, PartyServiceManagerDelegate {
     var userData: [UserParseData] = []
     let partyData = PartyServiceManager()
     var firstTime: Bool = true
-    
+    private var firstTimeBrowsing: Bool = true
     @IBOutlet weak var CreateAPartyBtn: UIButton!
     
     
@@ -33,6 +33,15 @@ class HomeScreenViewController: UIViewController, PartyServiceManagerDelegate {
                 self.friendData.append(pendingFriend)
             }
         }
+        
+        //start browsing for peers
+        self.partyData.setBrowser()
+        self.partyData.startBrowser()
+        
+        //self.partyData.delegate = self
+        self.firstTime = false
+        
+        
     }
     
     func refreshUserData(notification:NSNotification){
@@ -47,12 +56,13 @@ class HomeScreenViewController: UIViewController, PartyServiceManagerDelegate {
             self.partyData.setAdvertiser()
             self.partyData.startListening()
             
+            self.frndDataManager = FriendDataSource()
             //start browsing for peers
-            self.partyData.setBrowser()
-            self.partyData.startBrowser()
+            //self.partyData.setBrowser()
+            //self.partyData.startBrowser()
             
             self.partyData.delegate = self
-            self.firstTime = false
+            //self.firstTime = false
         }
         
     }
@@ -87,7 +97,6 @@ class HomeScreenViewController: UIViewController, PartyServiceManagerDelegate {
         self.friendData = []
         dispatch_async(dispatch_get_main_queue(), {
             self.usrDataManager = UserParseDataSource()
-            self.frndDataManager = FriendDataSource()
         })
         
     }
@@ -141,6 +150,14 @@ class HomeScreenViewController: UIViewController, PartyServiceManagerDelegate {
 
 extension HomeScreenViewController: PartyServiceManagerDelegate {
     func foundPeer() {
+        if(self.firstTimeBrowsing == true){
+            //used for finding nearby friends when starting a party
+            for i in 0..<self.friendData.count{
+                self.partyData.isInvitable.append(false)
+            }
+            self.firstTimeBrowsing = false
+        }
+        
         for foundPeer in self.partyData.foundPeers {
             for friend in self.friendData {
                 if foundPeer.displayName == friend.displayName {

@@ -40,7 +40,7 @@ enum HostSignalType: String {
 
 
 
-class PartyServiceManager: NSObject {
+class PartyServiceManager: NSObject, AnyObject {
 
     let PartyServiceType = "GetHip-Party"
     var serviceAdvertiser: MCNearbyServiceAdvertiser! = nil
@@ -56,6 +56,7 @@ class PartyServiceManager: NSObject {
     var currentHost: String!
     
     var connectedPeersDictionary = NSMutableDictionary()
+    var connecingPeersDictionary = NSMutableDictionary()
     var disconnectedPeersDictionary = NSMutableDictionary()
     
     //party-creator variables
@@ -138,6 +139,37 @@ class PartyServiceManager: NSObject {
                 println(self.currentSongTitle)
                 self.currentSongIMG = UIImage(data: (dataDictionary["songImage"] as! NSData))
             }
+            
+            if (instruction == "connect_to_other_peers"){
+                for peer in dataDictionary["connectedPeers"] as! [MCPeerID] {
+                    if((peer != self.myPeerID) && (peer != dataDictionary["sender"] as! MCPeerID) && (self.connectedPeersDictionary[peer.displayName] == nil)){
+                        
+                        self.serviceBrowser.invitePeer(peer, toSession: self.session, withContext: nil, timeout: 10)
+                    }
+                }
+                
+                for peer in dataDictionary["friendData"] as! [FriendData] {
+                    println(peer)
+                }
+            }
+            
+            if (instruction == "are_you_ready"){
+                var ready = true
+                for peer in dataDictionary["connectedPeers"] as! [MCPeerID] {
+                    if (self.connectedPeersDictionary[peer.displayName] == nil) && (peer != self.myPeerID) {
+                        ready = false
+                        break
+                    }
+                }
+                
+                if ready == true {
+                    var dictionary: [String: String] = ["sender": self.myPeerID.displayName, "instruction": "ready"]
+                    self.sendInstruction(dictionary, toPeer: fromPeer)
+                }else{
+                    self.session.disconnect()
+                }
+            }
+            
             return (instruction!, fromPeer)
         }else{
             
@@ -308,14 +340,20 @@ extension PartyServiceManager: MCSessionDelegate{
     func session(session: MCSession!, peer peerID: MCPeerID!, didChangeState state: MCSessionState) {
         NSLog("%@", "peer \(peerID) didChangeState: \(state.stringValue())")
         if(state == MCSessionState.Connected){
+            
             println(self.myPeerID.displayName + " connected to " + peerID.displayName)
             println("mark 1")
+            self.connectedPeersDictionary[peerID.displayName] = peerID
             self.delegate?.connectedWithPeer(peerID)
             
         }
         
         if(state == MCSessionState.NotConnected){
             NSLog("%@", "peer \(peerID) didChangeState: \(state.stringValue())")
+            self.disconnectedPeersDictionary[peerID.displayName] = peerID
+            if self.connectedPeersDictionary[peerID.displayName] != nil{
+               // self.connectedPeersDictionary[peerID.displayName] = nil
+            }
         }
     }
     

@@ -14,6 +14,7 @@ class JoiningPartyViewController: UIViewController ,PartyServiceManagerDelegate{
     var request = []
     var user: [UserParseData]!
     var party: PartyServiceManager!
+    private var isHostConnected = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -64,13 +65,28 @@ extension JoiningPartyViewController: PartyServiceManagerDelegate {
     }
     
     func invitationWasRecieved(peerID: MCPeerID, invitationHandler: ((Bool, MCSession!) -> Void)!) {
-        
+        if(self.isHostConnected == true){
+            if(self.party.connectedPeersDictionary[ peerID.displayName] == nil){
+                invitationHandler(true, self.party.session)
+            }
+        }
     }
     
     func connectedWithPeer(peerID: MCPeerID) {
         println("mark 2")
-        var dictionary: Dictionary<String,String> = ["sender": self.party.myPeerID.displayName, "instruction": "joined_party"]
-        self.party.sendInstruction(dictionary, toPeer: peerID)
+        
+        
+        if(self.isHostConnected == false){
+            var dictionary: Dictionary<String,AnyObject> = Dictionary<String,AnyObject>()
+            dictionary["sender"] = self.party.myPeerID.displayName
+            dictionary["instruction"] = "joined_party"
+            self.party.sendInstruction(dictionary, toPeer: peerID)
+            self.isHostConnected = true
+        }
+        
+        
+        
+        
     }
     
     func didRecieveInstruction(dictionary: Dictionary<String, AnyObject>){
@@ -85,6 +101,8 @@ extension JoiningPartyViewController: PartyServiceManagerDelegate {
             
             self.dismissViewControllerAnimated(true, completion: nil)
         }
+        
+        
         
         if (instruction == "start_party"){
             println("mark 4")
