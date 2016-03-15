@@ -192,6 +192,45 @@
             </objects>
             <point key="canvasLocation" x="1123" y="2058"/>
         </scene>
+        <!--Next Up View Controller-->
+        <scene sceneID="VyX-Pv-uWi">
+            <objects>
+                <viewController id="zgA-8b-Ylm" customClass="NextUpViewController" customModule="GetHip" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="vMS-hg-ThR"/>
+                        <viewControllerLayoutGuide type="bottom" id="QbP-jL-nFY"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="N4y-zz-1bC">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Next Up:" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oG8-pz-CA3">
+                                <rect key="frame" x="102" y="95" width="117" height="21"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="30" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FFv-lp-b7d">
+                                <rect key="frame" x="139" y="338" width="42" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="u1Z-Ju-AJf">
+                                <rect key="frame" x="70" y="131" width="180" height="180"/>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
+                    <connections>
+                        <outlet property="userImages" destination="u1Z-Ju-AJf" id="0wt-l7-aqy"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="1TM-nl-LNT" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2981" y="73"/>
+        </scene>
         <!--Joining Party View Controller-->
         <scene sceneID="PXH-Ng-lFX">
             <objects>
@@ -1327,6 +1366,7 @@
                         <outlet property="songImg" destination="HKj-kH-yf5" id="UAh-IG-J3y"/>
                         <outlet property="titleLabel" destination="tHQ-qY-ZrL" id="RE7-2e-ghS"/>
                         <outlet property="volCtrl" destination="AA9-Xx-q9o" id="3yD-gc-O6r"/>
+                        <segue destination="zgA-8b-Ylm" kind="presentation" identifier="NextUpSegue" id="Pjh-gk-RHG"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qk5-ei-kCM" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1590,9 +1630,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="i76-3p-Q4h">
-                                <rect key="frame" x="70" y="107" width="180" height="180"/>
-                            </imageView>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VRa-oD-Myj">
                                 <rect key="frame" x="70" y="295" width="180" height="30"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -1604,6 +1641,9 @@
                                     <action selector="changePhoto:" destination="JcU-T3-nLI" eventType="touchUpInside" id="60Q-bw-pkg"/>
                                 </connections>
                             </button>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="i76-3p-Q4h">
+                                <rect key="frame" x="70" y="107" width="180" height="180"/>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>

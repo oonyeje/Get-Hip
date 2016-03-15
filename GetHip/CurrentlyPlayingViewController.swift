@@ -107,6 +107,7 @@ class CurrentlyPlayingViewController: UIViewController, PartyServiceManagerDeleg
         
             self.party.chooseNextHost()
             print(self.party.currentHost)
+            NSNotificationCenter.defaultCenter().addObserver(self, selector: "songDidEnd:", name: "gotDisplayID", object: nil)
         
         }
         
@@ -114,6 +115,10 @@ class CurrentlyPlayingViewController: UIViewController, PartyServiceManagerDeleg
 
     }
 
+    func songDidEnd(notification: NSNotification){
+        self.performSegueWithIdentifier("NextUpSegue", sender: nil)
+    }
+    
     func timeFormat(value: Float) -> String{
         var minutes: Float = floor(roundf((value)/60))
         println(minutes)
@@ -186,6 +191,11 @@ class CurrentlyPlayingViewController: UIViewController, PartyServiceManagerDeleg
             let vc: BackToHomeScreenViewController = (segue.destinationViewController as? BackToHomeScreenViewController)!
             vc.setData(self.party, user: self.usr, friends: self.frnds, request: self.requestData)
         }
+        
+        if segue.identifier == "NextUpSegue" {
+            let vc: NextUpViewController = (segue.destinationViewController as? NextUpViewController)!
+            vc.setData(self.party, user: self.usr, friends: self.frnds, request: self.requestData)
+        }
     }
     
 
@@ -219,9 +229,32 @@ extension CurrentlyPlayingViewController: PartyServiceManagerDelegate {
             self.party.sendInstruction(dictionary, toPeer: fromPeer)
         }else{
             if(instruction == "pause_stream"){
+                
                 self.party.inputStreamer.pause()
+                
             }else if(instruction == "resume_stream"){
+                
                 self.party.inputStreamer.resume()
+                
+            }else if(instruction == "want_to_be_host"){
+                
+                let alert = UIAlertController(title: "Host Request", message: "Would you like to be the next host for the party and pick a song?", preferredStyle: .Alert)
+                alert.addAction(UIAlertAction(title: "Accept", style: .Default, handler:{
+                    (action: UIAlertAction!) -> Void in
+                    
+                    self.party.currentHost = self.party.myPeerID.displayName
+                    alert.dismissViewControllerAnimated(true, completion: nil)
+                    
+                }))
+                
+                alert.addAction(UIAlertAction(title: "Decline", style: .Default, handler:{
+                    (action: UIAlertAction!) -> Void in
+                    var dictionary: [String: AnyObject] = ["sender": self.party.myPeerID, "instruction": "does_not_accept"]
+                    self.party.sendInstruction(dictionary, toPeer: fromPeer)
+                    alert.dismissViewControllerAnimated(true, completion: nil)
+                }))
+                
+                self.presentViewController(alert, animated: true, completion: nil)
             }
         }
             

@@ -49,6 +49,7 @@
 		3E4169491C385F1000B193AF /* 1x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3E4169481C385F1000B193AF /* 1x.png */; };
 		3E4169551C398A5B00B193AF /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E4169541C398A5B00B193AF /* SignUpViewController.swift */; };
 		3E4169571C399C4D00B193AF /* Images-3.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3E4169561C399C4D00B193AF /* Images-3.xcassets */; };
+		3E416EEE1C97BE31001EA319 /* NextUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E416EED1C97BE31001EA319 /* NextUpViewController.swift */; };
 		3E41D74C1C8D17E100FFD846 /* icon-120.png in Resources */ = {isa = PBXBuildFile; fileRef = 3E41D74B1C8D17E100FFD846 /* icon-120.png */; };
 		3E41D74E1C8D17F300FFD846 /* Icon-60.png in Resources */ = {isa = PBXBuildFile; fileRef = 3E41D74D1C8D17F300FFD846 /* Icon-60.png */; };
 		3E438ADE1C572DFD0055C97A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3E438ADD1C572DFD0055C97A /* Main.storyboard */; };
@@ -197,6 +198,7 @@
 		3E4169481C385F1000B193AF /* 1x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = 1x.png; path = "../../../Dropbox/Gethip/Screens/Logo  Screen/6 Logo Screen/1x.png"; sourceTree = "<group>"; };
 		3E4169541C398A5B00B193AF /* SignUpViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
 		3E4169561C399C4D00B193AF /* Images-3.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Images-3.xcassets"; sourceTree = "<group>"; };
+		3E416EED1C97BE31001EA319 /* NextUpViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NextUpViewController.swift; sourceTree = "<group>"; };
 		3E41D74B1C8D17E100FFD846 /* icon-120.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-120.png"; sourceTree = "<group>"; };
 		3E41D74D1C8D17F300FFD846 /* Icon-60.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-60.png"; sourceTree = "<group>"; };
 		3E438ADD1C572DFD0055C97A /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
@@ -368,6 +370,7 @@
 		3E101F041C52E50400C895CA /* PartySessionSource */ = {
 			isa = PBXGroup;
 			children = (
+				3E416EEC1C97BDEA001EA319 /* NextUpInParty */,
 				3E6D43871C78318F00CA805F /* InvitedToParty */,
 				3E1EE6371C6D029800F5C5D7 /* InParty */,
 				3E34125A1C54C73A006226E0 /* PartySession.swift */,
@@ -490,6 +493,14 @@
 				3E3412581C54C6B7006226E0 /* SongCellWrapper.swift */,
 			);
 			name = SelectSong;
+			sourceTree = "<group>";
+		};
+		3E416EEC1C97BDEA001EA319 /* NextUpInParty */ = {
+			isa = PBXGroup;
+			children = (
+				3E416EED1C97BE31001EA319 /* NextUpViewController.swift */,
+			);
+			name = NextUpInParty;
 			sourceTree = "<group>";
 		};
 		3E438AE01C57387B0055C97A /* iPhone5 */ = {
@@ -943,6 +954,7 @@
 				3E627FE71C55AE35005C0372 /* NSMutableArray+QueueMethods.m in Sources */,
 				3E3B14DE1C5BCC9B001C437F /* FriendRequestViewController.swift in Sources */,
 				3E18D4931C51F6230012F7DF /* UserParseData.swift in Sources */,
+				3E416EEE1C97BE31001EA319 /* NextUpViewController.swift in Sources */,
 				3E5952851C39E54A00C88C71 /* HomeScreenViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

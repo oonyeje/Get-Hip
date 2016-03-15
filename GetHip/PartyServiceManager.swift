@@ -93,6 +93,8 @@ class PartyServiceManager: NSObject, AnyObject {
             chooseNextHost()
         }else{
             self.currentHost = self.connectedPeers()[nextHostIndex].displayName
+            var dictionary: [String: AnyObject] = ["sender": self.myPeerID, "instruction": "want_to_be_host"]
+            self.sendInstruction(dictionary, toPeer: self.connectedPeersDictionary[self.currentHost] as! MCPeerID)
         }
     }
     
@@ -174,8 +176,15 @@ class PartyServiceManager: NSObject, AnyObject {
                 }
             }
             
+            if(instruction == "does_not_accept"){
+                self.chooseNextHost()
+            }
+            
+            
+            
             return (instruction!, fromPeer)
-        }else{
+        }
+        else{
             
             return ("not_an_instruction", fromPeer)
         }
