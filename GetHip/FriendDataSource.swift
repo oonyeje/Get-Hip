@@ -31,10 +31,11 @@ class FriendDataSource{
                     //var image:UIImage = UIImage()
                     
                     let userName = object.objectForKey("OtherUser")!.objectForKey("username") as! String
+                    let displayName = object.objectForKey("OtherUser")!.objectForKey("displayName") as! String
                     let requestStatus = object.objectForKey("RequestStatus")! as! String
                     
                     
-                    var newFriend: FriendData = FriendData(display: userName, status: requestStatus)
+                    var newFriend: FriendData = FriendData(display: displayName, status: requestStatus, username: userName )
                     
                     var img = object.objectForKey("OtherUser")!.objectForKey("profilePicture")! as? PFFile
                     
@@ -65,8 +66,9 @@ class FriendDataSource{
                             for object in objects! {
                             
                                 let userName = object.objectForKey("OtherUser")!.objectForKey("username") as! String
+                                let displayName = object.objectForKey("OtherUser")!.objectForKey("displayName") as! String
                                 let requestStatus = object.objectForKey("RequestStatus")! as! String
-                                var newFriend: FriendData = FriendData(display: userName, status: requestStatus)
+                                var newFriend: FriendData = FriendData(display: displayName, status: requestStatus, username: userName)
                                 
                                 var img = object.objectForKey("OtherUser")!.objectForKey("profilePicture")! as? PFFile
                                 

@@ -40,6 +40,13 @@ class InPartyViewController: UIViewController, UICollectionViewDataSource, UICol
         self.friendsInParty.dataSource = self
         self.friendsInParty.delegate = self
     }
+    
+    override func viewDidAppear(animated: Bool) {
+        if(self.party.role == PeerType.Guest_Creator || self.party.role == PeerType.Guest_Invited){
+        
+            self.AddMore.hidden = true
+        }
+    }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -51,23 +58,21 @@ class InPartyViewController: UIViewController, UICollectionViewDataSource, UICol
         
         var cell: InvitedCollectionViewCell!
         
-        if(self.party.role == PeerType.Host_Creator){
-            let friend = self.party.invitedFriends[indexPath.row]
-            cell = self.friendsInParty.dequeueReusableCellWithReuseIdentifier("InvitedCollectionCell", forIndexPath: indexPath) as! InvitedCollectionViewCell
+
+        let friend = self.party.invitedFriends[indexPath.row]
+        cell = self.friendsInParty.dequeueReusableCellWithReuseIdentifier("InvitedCollectionCell", forIndexPath: indexPath) as! InvitedCollectionViewCell
             
-            if friend.profileImg == nil {
-                cell.friendImage.backgroundColor = UIColor.grayColor()
-            }
-            else{
-                cell.friendImage.image = friend.profileImg.image!
-            }
-            
-            //rounds uiimage and configures UIImageView
-            cell.friendImage.layer.cornerRadius = cell.friendImage.frame.size.width/2
-            cell.friendImage.clipsToBounds = true
-        }else{
-            cell = InvitedCollectionViewCell()
+        if friend.profileImg == nil {
+            cell.friendImage.backgroundColor = UIColor.grayColor()
         }
+        else{
+            cell.friendImage.image = friend.profileImg.image!
+        }
+            
+        //rounds uiimage and configures UIImageView
+        cell.friendImage.layer.cornerRadius = cell.friendImage.frame.size.width/2
+        cell.friendImage.clipsToBounds = true
+        
         
         
         return cell
@@ -75,7 +80,10 @@ class InPartyViewController: UIViewController, UICollectionViewDataSource, UICol
     }
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return self.party.invitedFriends.count
+        
+            return self.party.invitedFriends.count
+        
+        
     }
     /*
     // MARK: - Navigation

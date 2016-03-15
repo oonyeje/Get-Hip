@@ -87,8 +87,9 @@ class PartyServiceManager: NSObject, AnyObject {
     func chooseNextHost(){
         var numPeers = self.connectedPeers().count
         var nextHostIndex: Int = Int(arc4random_uniform(UInt32(numPeers)))
-    
-        if (self.connectedPeers()[nextHostIndex].displayName == self.currentHost){
+        println(nextHostIndex)
+        println(self.connectedPeers().count)
+        if (self.currentHost != nil && self.connectedPeers()[nextHostIndex].displayName == self.currentHost){
             chooseNextHost()
         }else{
             self.currentHost = self.connectedPeers()[nextHostIndex].displayName
@@ -149,7 +150,10 @@ class PartyServiceManager: NSObject, AnyObject {
                 }
                 
                 for peer in dataDictionary["friendData"] as! [FriendData] {
-                    println(peer)
+                    if(peer.username != self.myPeerID.displayName){
+                        println(peer.username)
+                        self.invitedFriends.append(peer)
+                    }
                 }
             }
             

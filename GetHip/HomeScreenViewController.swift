@@ -56,7 +56,6 @@ class HomeScreenViewController: UIViewController, PartyServiceManagerDelegate {
             self.partyData.setAdvertiser()
             self.partyData.startListening()
             
-            self.frndDataManager = FriendDataSource()
             //start browsing for peers
             //self.partyData.setBrowser()
             //self.partyData.startBrowser()
@@ -65,6 +64,7 @@ class HomeScreenViewController: UIViewController, PartyServiceManagerDelegate {
             //self.firstTime = false
         }
         
+        self.frndDataManager = FriendDataSource()        
     }
     
     func loadID(notification: NSNotification){
@@ -97,6 +97,8 @@ class HomeScreenViewController: UIViewController, PartyServiceManagerDelegate {
         self.friendData = []
         dispatch_async(dispatch_get_main_queue(), {
             self.usrDataManager = UserParseDataSource()
+            //self.frndDataManager = FriendDataSource()
+
         })
         
     }

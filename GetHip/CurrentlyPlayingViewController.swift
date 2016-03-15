@@ -20,6 +20,7 @@ class CurrentlyPlayingViewController: UIViewController, PartyServiceManagerDeleg
     var audioPlayer: AVPlayer!
     var playing = true
     var timer = NSTimer()
+    var nextHost: String!
     
     //controller data
     @IBOutlet var songImg: UIImageView!
@@ -39,22 +40,23 @@ class CurrentlyPlayingViewController: UIViewController, PartyServiceManagerDeleg
     @IBAction func playPauseFav(sender: UIButton){
         if (self.party.role == PeerType.Host_Creator){
             if(playing == true){
-                self.audioPlayer.pause()
                 for peer in self.party.session.connectedPeers {
                     var dictionary: [String: String] = ["sender": self.party.myPeerID.displayName, "instruction": "pause_stream"]
                     self.party.sendInstruction(dictionary, toPeer: peer as! MCPeerID)
                 }
+                self.audioPlayer.pause()
                 self.playing = false
                 self.ppfButton.setBackgroundImage(UIImage(named: "Play-52.png"), forState: UIControlState.Normal)
                 
             }else{
-                self.audioPlayer.play()
-                self.playing = true
-                self.ppfButton.setBackgroundImage(UIImage(named: "Pause-52.png"), forState: UIControlState.Normal)
                 for peer in self.party.session.connectedPeers {
                     var dictionary: [String: String] = ["sender": self.party.myPeerID.displayName, "instruction": "resume_stream"]
                     self.party.sendInstruction(dictionary, toPeer: peer as! MCPeerID)
                 }
+                self.audioPlayer.play()
+                self.playing = true
+                self.ppfButton.setBackgroundImage(UIImage(named: "Pause-52.png"), forState: UIControlState.Normal)
+                
                 
             }
         }
@@ -72,6 +74,7 @@ class CurrentlyPlayingViewController: UIViewController, PartyServiceManagerDeleg
         
         
         // Do any additional setup after loading the view.
+        self.progressBar.setProgress(0, animated: true)
         
         if(self.party.role == PeerType.Host_Creator){
             self.audioPlayer = AVPlayer(URL: self.party.currentSong.valueForProperty(MPMediaItemPropertyAssetURL) as! NSURL)
@@ -96,24 +99,56 @@ class CurrentlyPlayingViewController: UIViewController, PartyServiceManagerDeleg
             self.artistAndAlbumLabel.text = (self.party.currentSongArtistAlbum)
             self.party.delegate = self
             self.ppfButton.hidden = true
-                        
             
-            
-            
+        }
+        
+        //sets the next host of the party once the party starts
+        if(self.party.role == PeerType.Guest_Creator || self.party.role == PeerType.Host_Creator){
+        
+            self.party.chooseNextHost()
+            print(self.party.currentHost)
+        
         }
         
         
 
     }
 
+    func timeFormat(value: Float) -> String{
+        var minutes: Float = floor(roundf((value)/60))
+        println(minutes)
+        var seconds: Float = roundf(((minutes * 60)))
+        var roundSeconds: Int = Int(roundf(seconds))
+        var roundMinutes: Int = Int(roundf(minutes))
+        var time: String = String(format: "%d:%02d", roundMinutes, roundSeconds)
+        return time
+        
+    }
+    
     func updateLabels(){
         if (self.playing == true){
-            var timeLeft = self.audioPlayer.currentItem.duration.value - self.audioPlayer.currentTime().value
-            var interval = timeLeft
-            var seconds = interval%60
-            println(seconds)
-            var minutes = (interval/60)%60
-            println(minutes)
+           // var timeLeft = self.audioPlayer.currentItem.duration.value - self.audioPlayer.currentTime().value
+            //var interval = timeLeft
+            //var seconds = interval%60
+            //println(seconds)
+            //var minutes = (interval/60)%60
+            //println(minutes)
+            self.minLabel.text = self.timeFormat(Float(CMTimeGetSeconds(self.audioPlayer.currentTime())))
+            
+            println("Time Elapsed:" +  self.timeFormat(Float(CMTimeGetSeconds(self.audioPlayer.currentTime()))))
+            
+            
+            self.maxLabel.text = self.timeFormat((Float(CMTimeGetSeconds(self.audioPlayer.currentItem.duration)) - Float(CMTimeGetSeconds(self.audioPlayer.currentTime()))))
+            
+            println("Time Left:" + self.timeFormat((Float(CMTimeGetSeconds(self.audioPlayer.currentItem.duration)) - Float(CMTimeGetSeconds(self.audioPlayer.currentTime())))))
+            
+            //updates progressBar
+            var normalizedTime = Float((Float(CMTimeGetSeconds(self.audioPlayer.currentTime())) * 100.0)/Float(CMTimeGetSeconds(self.audioPlayer.currentItem.duration)))
+            self.progressBar.setProgress(normalizedTime, animated: true)
+            
+            
+            
+            
             //self.maxLabel.text
             //self.minLabel.text
         }
