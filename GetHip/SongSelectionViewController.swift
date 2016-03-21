@@ -8,6 +8,7 @@
 
 import UIKit
 import MediaPlayer
+import MultipeerConnectivity
 
 class SongSelectionViewController: UIViewController, UITableViewDelegate, UITableViewDataSource  {
     var party: PartyServiceManager!
@@ -167,7 +168,12 @@ class SongSelectionViewController: UIViewController, UITableViewDelegate, UITabl
                 var songs = songsQuery.items
                 var rowItem: MPMediaItem = songs[indexPath.row - 1] as! MPMediaItem
                 self.party.setSong(rowItem)
-                self.performSegueWithIdentifier("LoadingPartySegue", sender: nil)
+                if(self.party.role == PeerType.Host_Creator){
+                    self.performSegueWithIdentifier("LoadingPartySegue", sender: self)
+                }else{
+                    self.performSegueWithIdentifier("NextSongCurrentlyPlayingSegue", sender: self)
+                }
+                
                 
             }
         }
@@ -287,6 +293,35 @@ class SongSelectionViewController: UIViewController, UITableViewDelegate, UITabl
                 
                 
             }
+        }
+        
+        if(segue.identifier == "NextSongCurrentlyPlayingSegue"){
+        
+            let vc: CurrentlyPlayingViewController = (segue.destinationViewController as? CurrentlyPlayingViewController)!
+            vc.setData(self.party, user: self.usr, friends: self.frnds, request: self.requestData)
+            
+            //sends music info incuding, title, artist, album, and image
+            var dictionary: [String: AnyObject] = ["sender": self.party.myPeerID.displayName, "instruction": "set_up_song", "songTitle": (self.party.currentSong.valueForProperty(MPMediaItemPropertyTitle) as? String!)!, "songArtistAndAlbum": (self.party.currentSong.valueForProperty(MPMediaItemPropertyArtist) as? String!)! + " - " + (self.party.currentSong.valueForProperty(MPMediaItemPropertyAlbumTitle) as? String!)!, "songImage": UIImagePNGRepresentation(self.party.currentSong.valueForProperty(MPMediaItemPropertyArtwork).imageWithSize(CGSize(width: 320, height: 320)) )]
+            
+            
+            for peer in self.party.connectedPeers() as! [MCPeerID] {
+                self.party.sendInstruction(dictionary, toPeer: peer)
+                
+                //open stream with peer
+                let stream = self.party.outputStreamForPeer(peer)
+                self.party.outputStreamers[peer.displayName] = TDAudioOutputStreamer(outputStream: stream)
+                self.party.outputStreamers[peer.displayName]!.streamAudioFromURL((self.party.currentSong.valueForProperty(MPMediaItemPropertyAssetURL) as! NSURL))
+            }
+            
+            dictionary = ["sender": self.party.myPeerID.displayName, "instruction": "start"]
+            
+            for peer in self.party.connectedPeers() as! [MCPeerID] {
+                self.party.sendInstruction(dictionary, toPeer: peer)
+            }
+            
+            
+            
+        
         }
     }
     

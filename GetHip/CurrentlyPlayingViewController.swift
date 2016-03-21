@@ -38,7 +38,7 @@ class CurrentlyPlayingViewController: UIViewController, PartyServiceManagerDeleg
         self.audioPlayer.volume = sender.value
     }
     @IBAction func playPauseFav(sender: UIButton){
-        if (self.party.role == PeerType.Host_Creator){
+        if (self.party.role == PeerType.Host_Creator || self.party.role == PeerType.Guest_Creator){
             if(playing == true){
                 for peer in self.party.session.connectedPeers {
                     var dictionary: [String: String] = ["sender": self.party.myPeerID.displayName, "instruction": "pause_stream"]
@@ -76,7 +76,7 @@ class CurrentlyPlayingViewController: UIViewController, PartyServiceManagerDeleg
         // Do any additional setup after loading the view.
         self.progressBar.setProgress(0, animated: true)
         
-        if(self.party.role == PeerType.Host_Creator){
+        if(self.party.role == PeerType.Host_Creator || self.party.role == PeerType.Guest_Creator){
             self.audioPlayer = AVPlayer(URL: self.party.currentSong.valueForProperty(MPMediaItemPropertyAssetURL) as! NSURL)
             
             self.songImg.image = self.party.currentSong.valueForProperty(MPMediaItemPropertyArtwork).imageWithSize(songImg.frame.size)
@@ -90,7 +90,16 @@ class CurrentlyPlayingViewController: UIViewController, PartyServiceManagerDeleg
             }
             self.audioPlayer.play()
             self.timer = NSTimer.scheduledTimerWithTimeInterval(1, target: self, selector: Selector("updateLabels"), userInfo: nil, repeats: true)
-        }else if (self.party.role == PeerType.Guest_Invited){
+            
+            //sets the next host of the party once the party starts
+            self.party.chooseNextHost()
+            print(self.party.currentHost)
+            
+            //used to notify for end of song and initiate next host loop
+            
+            //NSNotificationCenter.defaultCenter().addObserver(self, selector: "songDidEnd:", name: "AVPlayerItemDidPlayToEndTimeNotification", object: nil)
+            
+        }else if (self.party.role == PeerType.Guest_Invited || self.party.role == PeerType.Host_Invited){
             
             self.songImg.image = self.party.currentSongIMG
             self.titleLabel.text = (self.party.currentSongTitle)
@@ -102,21 +111,28 @@ class CurrentlyPlayingViewController: UIViewController, PartyServiceManagerDeleg
             
         }
         
-        //sets the next host of the party once the party starts
-        if(self.party.role == PeerType.Guest_Creator || self.party.role == PeerType.Host_Creator){
-        
-            self.party.chooseNextHost()
-            print(self.party.currentHost)
-            NSNotificationCenter.defaultCenter().addObserver(self, selector: "songDidEnd:", name: "gotDisplayID", object: nil)
-        
-        }
-        
         
 
     }
 
     func songDidEnd(notification: NSNotification){
-        self.performSegueWithIdentifier("NextUpSegue", sender: nil)
+        if(self.party.role == PeerType.Host_Creator){
+            self.party.role == PeerType.Host_Invited
+        }else if (self.party.role == PeerType.Guest_Creator){
+            self.party.role == PeerType.Guest_Invited
+        }
+        
+        for peer in self.party.connectedPeers() as! [MCPeerID]{
+            if (peer.displayName == self.party.currentHost){
+                var dictionary: [String: AnyObject] = ["sender": self.party.myPeerID, "instruction": "start_picking_a_song"]
+                self.party.sendInstruction(dictionary, toPeer: peer)
+            }else{
+                var dictionary: [String: AnyObject] = ["sender": self.party.myPeerID, "instruction": "wait_in_nextUp_Scene"]
+                self.party.sendInstruction(dictionary, toPeer: peer)
+            }
+        }
+        
+        self.performSegueWithIdentifier("NextUpSegue", sender: self)
     }
     
     func timeFormat(value: Float) -> String{
@@ -195,6 +211,18 @@ class CurrentlyPlayingViewController: UIViewController, PartyServiceManagerDeleg
         if segue.identifier == "NextUpSegue" {
             let vc: NextUpViewController = (segue.destinationViewController as? NextUpViewController)!
             vc.setData(self.party, user: self.usr, friends: self.frnds, request: self.requestData)
+            
+            
+        }
+        if segue.identifier == "NextSongSelectionSegue" {
+        
+            let vc: SongSelectionViewController = (segue.destinationViewController as? SongSelectionViewController)!
+            vc.setData(self.party, user: self.usr, friends: self.frnds, request: self.requestData)
+            
+            
+            
+            
+            
         }
     }
     
@@ -238,7 +266,7 @@ extension CurrentlyPlayingViewController: PartyServiceManagerDelegate {
                 
             }else if(instruction == "want_to_be_host"){
                 
-                let alert = UIAlertController(title: "Host Request", message: "Would you like to be the next host for the party and pick a song?", preferredStyle: .Alert)
+                let alert = UIAlertController(title: "Hosting Request", message: "Would you like to be the next host for the party and pick a song?", preferredStyle: .Alert)
                 alert.addAction(UIAlertAction(title: "Accept", style: .Default, handler:{
                     (action: UIAlertAction!) -> Void in
                     
@@ -255,6 +283,17 @@ extension CurrentlyPlayingViewController: PartyServiceManagerDelegate {
                 }))
                 
                 self.presentViewController(alert, animated: true, completion: nil)
+                
+            }else if(instruction == "start_picking_a_song"){
+                if(self.party.role == PeerType.Host_Invited){
+                    self.party.role == PeerType.Host_Creator
+                }
+                if(self.party.role == PeerType.Guest_Invited){
+                    self.party.role == PeerType.Guest_Creator
+                }
+                self.performSegueWithIdentifier("NextSongSelectionSegue", sender: self)
+            }else if(instruction == "wait_in_nextUp_Scene"){
+                self.performSegueWithIdentifier("NextUpSegue", sender: self)
             }
         }
             

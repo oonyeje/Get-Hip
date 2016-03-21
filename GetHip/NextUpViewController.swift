@@ -7,8 +7,9 @@
 //
 
 import UIKit
+import MultipeerConnectivity
 
-class NextUpViewController: UIViewController {
+class NextUpViewController: UIViewController, PartyServiceManagerDelegate {
     var party: PartyServiceManager!
     var usr: [UserParseData] = []
     var frnds: [FriendData] = []
@@ -17,6 +18,7 @@ class NextUpViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.party.delegate = self
         self.userImages.layer.cornerRadius = self.userImages.frame.size.width/2
         self.userImages.clipsToBounds = true
         // Do any additional setup after loading the view.
@@ -35,14 +37,55 @@ class NextUpViewController: UIViewController {
         self.requestData = request
     }
     
-    /*
+    
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
+        
+        if(segue.identifier == "NextSongSegue"){
+            let vc: CurrentlyPlayingViewController = (segue.destinationViewController as? CurrentlyPlayingViewController)!
+            
+            vc.setData(self.party, user: self.usr, friends: self.frnds, request: self.requestData)
+        }
     }
-    */
+    
 
+}
+
+extension NextUpViewController: PartyServiceManagerDelegate {
+    
+    func foundPeer() {
+        
+    }
+    
+    func lostPeer() {
+    }
+    
+    func invitationWasRecieved(peerID: MCPeerID, invitationHandler: ((Bool, MCSession!) -> Void)!) {
+        
+    }
+    
+    func connectedWithPeer(peerID: MCPeerID) {
+        
+    }
+    
+    func didRecieveInstruction(dictionary: Dictionary<String, AnyObject>){
+        let (instruction, fromPeer) = self.party.decodeInstruction(dictionary)
+        
+        if self.party.disconnectedPeersDictionary[fromPeer.displayName] != nil {
+            
+            var dictionary: [String: String] = ["sender": self.party.myPeerID.displayName, "instruction": "disconnect"]
+            self.party.sendInstruction(dictionary, toPeer: fromPeer)
+        }else{
+            if (instruction == "start"){
+                self.performSegueWithIdentifier("NextSongSegue", sender: self)
+            }
+        }
+
+    }
+    
+    
 }
