@@ -19,11 +19,12 @@ class SettingsTableViewController: UIViewController, UITableViewDataSource, UITa
     @IBOutlet weak var logOutBtn: UIButton!
     @IBOutlet weak var table: UITableView!
     
+    /*
     @IBAction func dismissSettingsView(sender: UIBarButtonItem) {
         
         self.dismissViewControllerAnimated(true, completion: nil)
         self.party = nil
-    }
+    }*/
     
     
     @IBAction func logOutUser(sender: UIButton) {

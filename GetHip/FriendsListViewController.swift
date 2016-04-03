@@ -18,13 +18,14 @@ class FriendsListViewController: UIViewController, UITableViewDelegate, UITableV
     
     @IBOutlet weak var table: UITableView!
     
-    
+    /*
     @IBAction func dismissFriendView(sender: UIBarButtonItem) {
         
         self.dismissViewControllerAnimated(true, completion: nil)
         self.navigationController?.navigationBarHidden = false
 
     }
+    */
     @IBAction func addFriend(sender: UIBarButtonItem){
         self.performSegueWithIdentifier("FriendRequestSegue", sender: nil)
     }

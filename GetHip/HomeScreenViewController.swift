@@ -15,7 +15,7 @@ class HomeScreenViewController: UIViewController, PartyServiceManagerDelegate {
     var friendData: [FriendData] = []
     var requestData: [FriendData] = []
     var userData: [UserParseData] = []
-    let partyData = PartyServiceManager()
+    var partyData: PartyServiceManager! //= PartyServiceManager()
     var firstTime: Bool = true
     private var firstTimeBrowsing: Bool = true
     @IBOutlet weak var CreateAPartyBtn: UIButton!
@@ -76,12 +76,26 @@ class HomeScreenViewController: UIViewController, PartyServiceManagerDelegate {
     }
     */
     
+    func listenForData(notification: NSNotification){
+        self.userData = (self.tabBarController as? HomeTabController)!.userData
+        self.partyData = (self.tabBarController as? HomeTabController)!.partyData
+        self.friendData = (self.tabBarController as? HomeTabController)!.friendData
+        self.requestData = (self.tabBarController as? HomeTabController)!.requestData
+    }
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        //for sharing data with tab bar navigations
+        //var vc = self.tabBarController as? HomeTabController
+        //self.userData = (self.tabBarController as? HomeTabController)!.userData
+        //self.partyData = (self.tabBarController as? HomeTabController)!.partyData
+        //self.friendData = (self.tabBarController as? HomeTabController)!.friendData
+        //self.requestData = (self.tabBarController as? HomeTabController)!.requestData
+        
         // Do any additional setup after loading the view.
-        self.view.backgroundColor = UIColor.whiteColor()
+        //self.view.backgroundColor = UIColor.whiteColor()
         CreateAPartyBtn.layer.cornerRadius = 5
         CreateAPartyBtn.layer.borderWidth = 1
         //self.tabBarController?.delegate = self
@@ -93,8 +107,7 @@ class HomeScreenViewController: UIViewController, PartyServiceManagerDelegate {
         
         //NSNotificationCenter.defaultCenter().addObserver(self, selector: "refreshUserData:", name: "refreshSettingsView", object: nil)
     
-        
-        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "listenForData:", name: "dataMark", object: nil)
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -134,7 +147,8 @@ class HomeScreenViewController: UIViewController, PartyServiceManagerDelegate {
             let nav: UINavigationController = (segue.destinationViewController as? UINavigationController)!
             
             let vc: SettingsTableViewController = (nav.viewControllers[0] as? SettingsTableViewController)!
-            vc.setData(self.userData, prty: self.partyData, frends: self.friendData, request: self.requestData)
+            
+            //vc.setData(self.userData, prty: self.partyData, frends: self.friendData, request: self.requestData)
         }
         
         if segue.identifier == "FriendListSegue" {

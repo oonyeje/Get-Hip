@@ -41,6 +41,8 @@ class HomeTabController: UITabBarController {
         //self.partyData.delegate = self
         self.firstTime = false
         
+        NSNotificationCenter.defaultCenter().postNotificationName("dataMark", object: nil)
+        
         
     }
     

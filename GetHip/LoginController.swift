@@ -35,16 +35,24 @@ class LoginController: UIViewController, PFLogInViewControllerDelegate, UITextFi
                             if(user != nil || error == nil){
                                 //self.performSegueWithIdentifier("LoginToHomeSegue", sender: self)
                                 let storyboard = UIStoryboard(name: "Main", bundle: nil)
-                                let tabBarController = storyboard.instantiateViewControllerWithIdentifier("TabControllerVC") as! UITabBarController
+                                let tabBarController = storyboard.instantiateViewControllerWithIdentifier("TabControlVC") as! HomeTabController
                                 let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
                                 appDelegate.window?.rootViewController = tabBarController
+                                
+                                self.presentViewController(tabBarController, animated: true, completion: nil)
                             }else{
                                 var alert = UIAlertController(title: "Invalid Login", message: "Invalid email or password", preferredStyle: .Alert)
                                 alert.addAction(UIAlertAction(title: "OK", style: .Default, handler:{(action: UIAlertAction!) in alert.dismissViewControllerAnimated(true, completion: nil)}))
                                 
                                 self.presentViewController(alert, animated: true, completion: nil)
                             }
-                        })                    }
+                        })
+                    }else{
+                        var alert = UIAlertController(title: "Invalid Login", message: "Invalid email or password", preferredStyle: .Alert)
+                        alert.addAction(UIAlertAction(title: "OK", style: .Default, handler:{(action: UIAlertAction!) in alert.dismissViewControllerAnimated(true, completion: nil)}))
+                        
+                        self.presentViewController(alert, animated: true, completion: nil)
+                    }
                 })
             })
         }else{
