@@ -22,6 +22,7 @@ class HomeScreenViewController: UIViewController, PartyServiceManagerDelegate {
     
     
     //async data update methods
+    /*
     func refreshFriendData(notification:NSNotification){
         
         let friendInfo = self.frndDataManager.getFriends()
@@ -43,7 +44,8 @@ class HomeScreenViewController: UIViewController, PartyServiceManagerDelegate {
         
         
     }
-    
+*/
+    /*
     func refreshUserData(notification:NSNotification){
         
         self.userData = self.usrDataManager.getUser()
@@ -66,11 +68,13 @@ class HomeScreenViewController: UIViewController, PartyServiceManagerDelegate {
         
         self.frndDataManager = FriendDataSource()        
     }
+    */
     
+    /*
     func loadID(notification: NSNotification){
         self.performSegueWithIdentifier("InviteFriendsSegue", sender: nil)
     }
-    
+    */
     
     
     override func viewDidLoad() {
@@ -80,19 +84,21 @@ class HomeScreenViewController: UIViewController, PartyServiceManagerDelegate {
         self.view.backgroundColor = UIColor.whiteColor()
         CreateAPartyBtn.layer.cornerRadius = 5
         CreateAPartyBtn.layer.borderWidth = 1
-        self.navigationController?.navigationBarHidden = true
+        //self.tabBarController?.delegate = self
+        //self.navigationController?.navigationBarHidden = true
         
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "loadID:", name: "gotDisplayID", object: nil)
+        //NSNotificationCenter.defaultCenter().addObserver(self, selector: "loadID:", name: "gotDisplayID", object: nil)
         
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "refreshFriendData:", name: "refreshTableView", object: nil)
+        //NSNotificationCenter.defaultCenter().addObserver(self, selector: "refreshFriendData:", name: "refreshTableView", object: nil)
         
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "refreshUserData:", name: "refreshSettingsView", object: nil)
+        //NSNotificationCenter.defaultCenter().addObserver(self, selector: "refreshUserData:", name: "refreshSettingsView", object: nil)
     
         
         
     }
     
     override func viewWillAppear(animated: Bool) {
+        /*
         self.userData = []
         self.friendData = []
         dispatch_async(dispatch_get_main_queue(), {
@@ -100,6 +106,7 @@ class HomeScreenViewController: UIViewController, PartyServiceManagerDelegate {
             //self.frndDataManager = FriendDataSource()
 
         })
+*/
         
     }
 
@@ -133,7 +140,7 @@ class HomeScreenViewController: UIViewController, PartyServiceManagerDelegate {
         if segue.identifier == "FriendListSegue" {
             let nav: UINavigationController = (segue.destinationViewController as? UINavigationController)!
             
-            let vc: FriendsListViewController = (nav.viewControllers[0] as? FriendsListViewController)!
+            let vc: FriendsListViewController = /*segue.destinationViewController as! FriendsListViewController */(nav.viewControllers[0] as? FriendsListViewController)!
             vc.setData(self.friendData, requst: self.requestData, party: self.partyData, user: self.userData)
         }
     }
@@ -149,7 +156,23 @@ class HomeScreenViewController: UIViewController, PartyServiceManagerDelegate {
     */
 
 }
-
+/*
+extension HomeScreenViewController: UITabBarControllerDelegate {
+    func tabBarController(tabBarController: UITabBarController, didSelectViewController viewController: UIViewController) {
+        if viewController .isKindOfClass(SettingsTableViewController) {
+        
+            let vc: SettingsTableViewController = (viewController as? SettingsTableViewController)!
+            vc.setData(self.userData, prty: self.partyData, frends: self.friendData, request: self.requestData)
+            
+        }else if(viewController .isKindOfClass(FriendsListViewController)){
+            
+            let vc: FriendsListViewController = (viewController as? FriendsListViewController)!
+            vc.setData(self.friendData, requst: self.requestData, party: self.partyData, user: self.userData)
+            
+        }
+    }
+}
+*/
 extension HomeScreenViewController: PartyServiceManagerDelegate {
     func foundPeer() {
         if(self.firstTimeBrowsing == true){

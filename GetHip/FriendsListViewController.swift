@@ -38,6 +38,13 @@ class FriendsListViewController: UIViewController, UITableViewDelegate, UITableV
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        //for sharing data with tab bar navigations
+        self.user = (self.tabBarController as? HomeTabController)!.userData
+        self.party = (self.tabBarController as? HomeTabController)!.partyData
+        self.friends = (self.tabBarController as? HomeTabController)!.friendData
+        self.request = (self.tabBarController as? HomeTabController)!.requestData
+        
         self.table.delegate = self
         self.table.dataSource = self
         self.party.delegate = self

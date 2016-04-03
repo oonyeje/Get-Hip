@@ -35,6 +35,7 @@
 		3E3412591C54C6B7006226E0 /* SongCellWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E3412581C54C6B7006226E0 /* SongCellWrapper.swift */; };
 		3E34125B1C54C73A006226E0 /* PartySession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E34125A1C54C73A006226E0 /* PartySession.swift */; };
 		3E34125D1C54CF1B006226E0 /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3E34125C1C54CF1B006226E0 /* MediaPlayer.framework */; };
+		3E37709E1CAB5EC000A66097 /* ForgotPassViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E37709D1CAB5EC000A66097 /* ForgotPassViewController.swift */; };
 		3E379EF61C3E646000F7BCCD /* ParseNetDebug.m in Sources */ = {isa = PBXBuildFile; fileRef = 3E379EF51C3E646000F7BCCD /* ParseNetDebug.m */; };
 		3E379EF71C3F794500F7BCCD /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3E76CF2D1C3835C500193B58 /* CFNetwork.framework */; };
 		3E379EFE1C3F794500F7BCCD /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3E379EF81C3F794500F7BCCD /* CoreGraphics.framework */; };
@@ -120,13 +121,10 @@
 		3E6D438D1C78969A00CA805F /* CancelInvited@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3E6D438C1C78969A00CA805F /* CancelInvited@2x.png */; };
 		3E76CF2C1C38349D00193B58 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 3E76CF2B1C38349D00193B58 /* libsqlite3.dylib */; };
 		3E7BB8E21C5B4A350005B834 /* Change Song@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3E7BB8E11C5B4A350005B834 /* Change Song@2x.png */; };
-		3E7D37D51C75D7EF002E682F /* Raise@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3E7D37D41C75D7EF002E682F /* Raise@2x.png */; };
-		3E7D37D71C75D80F002E682F /* Lower@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3E7D37D61C75D80F002E682F /* Lower@2x.png */; };
-		3E7D37D91C75D882002E682F /* B2P Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3E7D37D81C75D882002E682F /* B2P Icon@2x.png */; };
-		3E7D37DB1C75D899002E682F /* B2P Button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3E7D37DA1C75D899002E682F /* B2P Button@2x.png */; };
 		3EB6B39B1C87B8AE006B674D /* JoiningPartyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EB6B39A1C87B8AE006B674D /* JoiningPartyViewController.swift */; };
 		3EB8845D1C6C647700CCDCCE /* Add More@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3EB8845B1C6C647700CCDCCE /* Add More@2x.png */; };
 		3EB8845E1C6C647700CCDCCE /* Leave Party@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3EB8845C1C6C647700CCDCCE /* Leave Party@2x.png */; };
+		3EBE825A1CB06793004A2730 /* HomeTabController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EBE82591CB06793004A2730 /* HomeTabController.swift */; };
 		3EBE97661C53CEDA0079B54A /* Send Invites Button.png in Resources */ = {isa = PBXBuildFile; fileRef = 3EBE97651C53CEDA0079B54A /* Send Invites Button.png */; };
 		3EBE976A1C53E4290079B54A /* Blue Check.png in Resources */ = {isa = PBXBuildFile; fileRef = 3EBE97671C53E4290079B54A /* Blue Check.png */; };
 		3EBE976B1C53E4290079B54A /* cross.png in Resources */ = {isa = PBXBuildFile; fileRef = 3EBE97681C53E4290079B54A /* cross.png */; };
@@ -184,6 +182,7 @@
 		3E3412581C54C6B7006226E0 /* SongCellWrapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SongCellWrapper.swift; sourceTree = "<group>"; };
 		3E34125A1C54C73A006226E0 /* PartySession.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PartySession.swift; sourceTree = "<group>"; };
 		3E34125C1C54CF1B006226E0 /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
+		3E37709D1CAB5EC000A66097 /* ForgotPassViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ForgotPassViewController.swift; sourceTree = "<group>"; };
 		3E379EF51C3E646000F7BCCD /* ParseNetDebug.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ParseNetDebug.m; sourceTree = "<group>"; };
 		3E379EF81C3F794500F7BCCD /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		3E379EF91C3F794500F7BCCD /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
@@ -286,13 +285,10 @@
 		3E76CF2D1C3835C500193B58 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		3E76CF2F1C3835E300193B58 /* NetworkExtension.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = NetworkExtension.framework; path = System/Library/Frameworks/NetworkExtension.framework; sourceTree = SDKROOT; };
 		3E7BB8E11C5B4A350005B834 /* Change Song@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Change Song@2x.png"; path = "../../../Dropbox/Gethip/Screens/Song Selected/5 Song Selected/Assets/Change Song@2x.png"; sourceTree = "<group>"; };
-		3E7D37D41C75D7EF002E682F /* Raise@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Raise@2x.png"; path = "../../../Dropbox/Gethip/For final/Volume/i5 Volume/Raise@2x.png"; sourceTree = "<group>"; };
-		3E7D37D61C75D80F002E682F /* Lower@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Lower@2x.png"; path = "../../../Dropbox/Gethip/For final/Volume/i5 Volume/Lower@2x.png"; sourceTree = "<group>"; };
-		3E7D37D81C75D882002E682F /* B2P Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "B2P Icon@2x.png"; path = "../../../Dropbox/Gethip/For final/Back To Party/i5/B2P Icon@2x.png"; sourceTree = "<group>"; };
-		3E7D37DA1C75D899002E682F /* B2P Button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "B2P Button@2x.png"; path = "../../../Dropbox/Gethip/For final/Back To Party/i5/B2P Button@2x.png"; sourceTree = "<group>"; };
 		3EB6B39A1C87B8AE006B674D /* JoiningPartyViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JoiningPartyViewController.swift; sourceTree = "<group>"; };
 		3EB8845B1C6C647700CCDCCE /* Add More@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Add More@2x.png"; path = "../../../Dropbox/Gethip/Screens/iPhone 5 Party Screens/Party Screen/Assets/Add More@2x.png"; sourceTree = "<group>"; };
 		3EB8845C1C6C647700CCDCCE /* Leave Party@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Leave Party@2x.png"; path = "../../../Dropbox/Gethip/Screens/iPhone 5 Party Screens/Party Screen/Assets/Leave Party@2x.png"; sourceTree = "<group>"; };
+		3EBE82591CB06793004A2730 /* HomeTabController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeTabController.swift; sourceTree = "<group>"; };
 		3EBE97651C53CEDA0079B54A /* Send Invites Button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Send Invites Button.png"; path = "../../../Dropbox/Gethip/Screens/Friends + Invite Screens/i6/Invite Friends/Send Invites Button.png"; sourceTree = "<group>"; };
 		3EBE97671C53E4290079B54A /* Blue Check.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Blue Check.png"; path = "../../../Dropbox/Gethip/Screens/Friends + Invite Screens/i6/Invite Friends/Blue Check.png"; sourceTree = "<group>"; };
 		3EBE97681C53E4290079B54A /* cross.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = cross.png; path = "../../../Dropbox/Gethip/Screens/Friends + Invite Screens/i6/Invite Friends/cross.png"; sourceTree = "<group>"; };
@@ -363,6 +359,7 @@
 				3E18D4921C51F6230012F7DF /* UserParseData.swift */,
 				3E326BCB1C51C20000F785CF /* SettingsTableViewController.swift */,
 				3E1B5E441C5274E700D1AB62 /* SettingsDetailViewWrapper.swift */,
+				3EBE82591CB06793004A2730 /* HomeTabController.swift */,
 			);
 			name = UserSettingsSoruce;
 			sourceTree = "<group>";
@@ -510,10 +507,6 @@
 				3E6D438A1C78968C00CA805F /* Joining@2x.png */,
 				3E6D43851C782E3200CA805F /* Decline@2x.png */,
 				3E4AA5201C853E1A00746839 /* Rectangle 10 + Change Photo + voice_presentation copy + voice_presentation copy 2 + voice_presentation + Music 2 + Music 2@2x.png */,
-				3E7D37DA1C75D899002E682F /* B2P Button@2x.png */,
-				3E7D37D81C75D882002E682F /* B2P Icon@2x.png */,
-				3E7D37D61C75D80F002E682F /* Lower@2x.png */,
-				3E7D37D41C75D7EF002E682F /* Raise@2x.png */,
 				3E0B78B71C6E3756001DF21E /* Pause-52.png */,
 				3E0B78B81C6E3756001DF21E /* Play-52.png */,
 				3EB8845B1C6C647700CCDCCE /* Add More@2x.png */,
@@ -619,6 +612,7 @@
 				3E1BDA561C37111D00EE3B84 /* ViewController.swift */,
 				3E6738F41C6E9C7700B47C3E /* LoginController.swift */,
 				3EF36C751C71694C00CD0DC0 /* SignInController.swift */,
+				3E37709D1CAB5EC000A66097 /* ForgotPassViewController.swift */,
 			);
 			name = "User Authentication";
 			sourceTree = "<group>";
@@ -830,7 +824,6 @@
 			files = (
 				3E5BD3171C6C45CE00266B16 /* StarPlayer@2x.png in Resources */,
 				3E5BD3161C6C45CE00266B16 /* Party@2x.png in Resources */,
-				3E7D37D71C75D80F002E682F /* Lower@2x.png in Resources */,
 				3E4169491C385F1000B193AF /* 1x.png in Resources */,
 				3E4AA5211C853E1A00746839 /* Rectangle 10 + Change Photo + voice_presentation copy + voice_presentation copy 2 + voice_presentation + Music 2 + Music 2@2x.png in Resources */,
 				3E5952641C39DBC900C88C71 /* Friends@2x.png in Resources */,
@@ -852,7 +845,6 @@
 				3E5952811C39DDA800C88C71 /* Settings.png in Resources */,
 				3E59527E1C39DDA800C88C71 /* Group.png in Resources */,
 				3E6D438D1C78969A00CA805F /* CancelInvited@2x.png in Resources */,
-				3E7D37DB1C75D899002E682F /* B2P Button@2x.png in Resources */,
 				3E5952711C39DC1E00C88C71 /* Rectangle 10 + Change Photo + voice_presentation copy + voice_presentation copy 2 + voice_presentation + Music 2 + Music 2@3x.png in Resources */,
 				3E6D438B1C78968C00CA805F /* Joining@2x.png in Resources */,
 				3E33EFDC1C5B56340011B9B5 /* No Friend Requests i5@2x.png in Resources */,
@@ -866,7 +858,6 @@
 				3E59527B1C39DDA800C88C71 /* Create.png in Resources */,
 				3E5952701C39DC1E00C88C71 /* Rectangle 10 + Change Photo + voice_presentation copy + voice_presentation copy 2 + voice_presentation + Music 2 + Music 2@2x.png in Resources */,
 				3EBE976C1C53E4290079B54A /* Tap Circle.png in Resources */,
-				3E7D37D91C75D882002E682F /* B2P Icon@2x.png in Resources */,
 				3E5952671C39DBC900C88C71 /* Settings@2x.png in Resources */,
 				3EBE976A1C53E4290079B54A /* Blue Check.png in Resources */,
 				3E438AE71C5738EF0055C97A /* Friends@2x.png in Resources */,
@@ -880,7 +871,6 @@
 				3E5952691C39DBC900C88C71 /* Star.png in Resources */,
 				3E41D74E1C8D17F300FFD846 /* Icon-60.png in Resources */,
 				3E59527C1C39DDA800C88C71 /* Create@2x.png in Resources */,
-				3E7D37D51C75D7EF002E682F /* Raise@2x.png in Resources */,
 				3E59526A1C39DBC900C88C71 /* Star@2x.png in Resources */,
 				3E5952821C39DDA800C88C71 /* Settings@2x.png in Resources */,
 				3EB8845D1C6C647700CCDCCE /* Add More@2x.png in Resources */,
@@ -913,10 +903,12 @@
 				3E627FE61C55AE35005C0372 /* NSInputStream+URLInitialization.m in Sources */,
 				3E5485B51C69CE2F00E7D5AB /* InvitedCollectionViewCell.swift in Sources */,
 				3E6D43891C7831B100CA805F /* InvitedToPartyViewController.swift in Sources */,
+				3E37709E1CAB5EC000A66097 /* ForgotPassViewController.swift in Sources */,
 				3E3412571C54C31F006226E0 /* SongSelectionViewController.swift in Sources */,
 				3E627FE81C55AE35005C0372 /* TDAudioMetaInfo.m in Sources */,
 				3E6738F51C6E9C7700B47C3E /* LoginController.swift in Sources */,
 				3E34125B1C54C73A006226E0 /* PartySession.swift in Sources */,
+				3EBE825A1CB06793004A2730 /* HomeTabController.swift in Sources */,
 				3E50E0401C74B97300EB9EA9 /* BackToHomeScreenViewController.swift in Sources */,
 				3E627FF01C55AE35005C0372 /* TDAudioStream.m in Sources */,
 				3E627FE91C55AE35005C0372 /* TDAudioPlayer.m in Sources */,

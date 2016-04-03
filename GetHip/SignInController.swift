@@ -8,7 +8,7 @@
 
 import UIKit
 
-class SignInController: UIViewController, UINavigationControllerDelegate, UIImagePickerControllerDelegate {
+class SignInController: UIViewController, UINavigationControllerDelegate, UIImagePickerControllerDelegate, UITextFieldDelegate {
     @IBOutlet var nameField: UITextField!
     @IBOutlet var userField: UITextField!
     @IBOutlet var emailField: UITextField!
@@ -16,6 +16,7 @@ class SignInController: UIViewController, UINavigationControllerDelegate, UIImag
     @IBOutlet var saveBtn: UIButton!
     @IBOutlet var chngPhotoBtn: UIButton!
     @IBOutlet var profilePic: UIImageView!
+    @IBOutlet var scrollView:UIScrollView!
     private var picker = UIImagePickerController()
 
     
@@ -60,7 +61,11 @@ class SignInController: UIViewController, UINavigationControllerDelegate, UIImag
                                 (succeeded: Bool, error: NSError?) -> Void in
                                 
                                 if error == nil {
-                                    self.performSegueWithIdentifier("SignedUpSegue", sender: self)
+                                    //self.performSegueWithIdentifier("SignedUpSegue", sender: self)
+                                    let storyboard = UIStoryboard(name: "Main", bundle: nil)
+                                    let tabBarController = storyboard.instantiateViewControllerWithIdentifier("TabControllerVC") as! UITabBarController
+                                    let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+                                    appDelegate.window?.rootViewController = tabBarController
                                 }
                                 else{
                                     
@@ -119,12 +124,25 @@ class SignInController: UIViewController, UINavigationControllerDelegate, UIImag
     override func viewDidLoad() {
         
         super.viewDidLoad()
+        
+        //dismisses keyboard when screen is tapped
+        let tapGesture = UITapGestureRecognizer(target: self, action: Selector("hideKeyboard"))
+        tapGesture.cancelsTouchesInView = true
+        self.view.addGestureRecognizer(tapGesture)
+        
+        self.nameField.delegate = self
+        self.passField.delegate = self
+        self.userField.delegate = self
+        self.emailField.delegate = self
+        
+        
         self.navigationController?.title = "Create An Account"
         self.chngPhotoBtn.layer.borderWidth = 1
         self.chngPhotoBtn.layer.cornerRadius = 5
         self.chngPhotoBtn.layer.borderColor = UIColor.blackColor().CGColor
         self.picker.delegate = self
         self.profilePic.layer.cornerRadius = self.profilePic.frame.size.width/2
+        self.profilePic.clipsToBounds = true
         self.profilePic.backgroundColor = UIColor.grayColor()
         
         //add cancel bar to navigation bar
@@ -139,6 +157,22 @@ class SignInController: UIViewController, UINavigationControllerDelegate, UIImag
         // Dispose of any resources that can be recreated.
     }
     
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        self.view.endEditing(true)
+        return false
+    }
+    
+    func hideKeyboard() {
+        self.view.endEditing(true)
+    }
+    
+    func textFieldDidBeginEditing(textField: UITextField) {
+        scrollView.setContentOffset(CGPointMake(0, 200), animated: true)
+    }
+    
+    func textFieldDidEndEditing(textField: UITextField) {
+        scrollView.setContentOffset(CGPointMake(0, 0), animated: true)
+    }
 
     /*
     // MARK: - Navigation

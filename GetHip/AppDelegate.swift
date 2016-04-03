@@ -44,14 +44,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate , CLLocationManagerDelegat
         startSignificantChangeUpdates()
         
         //check if user logged in on app startup
-        if(PFUser.currentUser() != nil){
+        var storyboard = UIStoryboard(name: "Main", bundle: nil)
+        
+        if(PFUser.currentUser() == nil){
             
-            var storyboard = UIStoryboard(name: "Main", bundle: nil)
-            
-            var initialViewController = storyboard.instantiateViewControllerWithIdentifier("HomeVC") as! HomeScreenViewController
+            //var initialViewController = storyboard.instantiateViewControllerWithIdentifier("HomeVC") as! HomeScreenViewController
+            var initialViewController = storyboard.instantiateViewControllerWithIdentifier("LoginVC") as! UITabBarController
             self.window?.rootViewController = initialViewController
             self.window?.makeKeyAndVisible()
             
+        }else{
         }
         
         return true

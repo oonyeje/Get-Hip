@@ -19,7 +19,7 @@ class LoginController: UIViewController, PFLogInViewControllerDelegate, UITextFi
     
     @IBAction func loginBtnPressed(sender: UIButton){
         //check if user logging in with email
-        if(contains(self.userEmailField.text!, "@")){
+        if(contains(self.userEmailField.text!, "@") ){
             let predicate: NSPredicate = NSPredicate(format: "(email = %@)", argumentArray: [self.userEmailField.text!])
             var userQuery: PFQuery = PFQuery(className: "_User", predicate: predicate)
             
@@ -32,10 +32,14 @@ class LoginController: UIViewController, PFLogInViewControllerDelegate, UITextFi
                         PFUser.logInWithUsernameInBackground(object!.objectForKey("username") as! String, password: self.password.text!, block: {
                             (user, error) -> Void in
                             
-                            if(user != nil){
-                                self.performSegueWithIdentifier("LoginToHomeSegue", sender: self)
+                            if(user != nil || error == nil){
+                                //self.performSegueWithIdentifier("LoginToHomeSegue", sender: self)
+                                let storyboard = UIStoryboard(name: "Main", bundle: nil)
+                                let tabBarController = storyboard.instantiateViewControllerWithIdentifier("TabControllerVC") as! UITabBarController
+                                let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+                                appDelegate.window?.rootViewController = tabBarController
                             }else{
-                                var alert = UIAlertController(title: "Invalid Login", message: "Your username/email or password is incorrect!", preferredStyle: .Alert)
+                                var alert = UIAlertController(title: "Invalid Login", message: "Invalid email or password", preferredStyle: .Alert)
                                 alert.addAction(UIAlertAction(title: "OK", style: .Default, handler:{(action: UIAlertAction!) in alert.dismissViewControllerAnimated(true, completion: nil)}))
                                 
                                 self.presentViewController(alert, animated: true, completion: nil)
@@ -44,6 +48,10 @@ class LoginController: UIViewController, PFLogInViewControllerDelegate, UITextFi
                 })
             })
         }else{
+            let alert = UIAlertController(title: "Invalid Login", message: "Invalid email or password", preferredStyle: .Alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .Default, handler:{(action: UIAlertAction!) in alert.dismissViewControllerAnimated(true, completion: nil)}))
+            self.presentViewController(alert, animated: true, completion: nil)
+            /*
             PFUser.logInWithUsernameInBackground(userEmailField.text!, password: password.text!, block: {
                 (user, error) -> Void in
                 
@@ -58,13 +66,13 @@ class LoginController: UIViewController, PFLogInViewControllerDelegate, UITextFi
                         self.presentViewController(alert, animated: true, completion: nil)
                     }
                 }else{
-                    let alert = UIAlertController(title: "Network Error", message: error?.description, preferredStyle: .Alert)
+                    let alert = UIAlertController(title: "Invalid Login", message: "Your username/email or password is incorrect!", preferredStyle: .Alert)
                     alert.addAction(UIAlertAction(title: "OK", style: .Default, handler:{(action: UIAlertAction!) in alert.dismissViewControllerAnimated(true, completion: nil)}))
                     
                     self.presentViewController(alert, animated: true, completion: nil)
                 }
                 
-            })
+            })*/
         }
         
     }
@@ -73,7 +81,9 @@ class LoginController: UIViewController, PFLogInViewControllerDelegate, UITextFi
         self.performSegueWithIdentifier("signUpSegue", sender: self)
     }
     
-
+    @IBAction func forgotPassBtn(sender: UIButton){
+        self.performSegueWithIdentifier("ForgotPassSegue", sender: self)
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -85,6 +95,10 @@ class LoginController: UIViewController, PFLogInViewControllerDelegate, UITextFi
             presentLoggedInAlert()
             
         }*/
+        let tapGesture = UITapGestureRecognizer(target: self, action: Selector("hideKeyboard"))
+        tapGesture.cancelsTouchesInView = true
+        self.view.addGestureRecognizer(tapGesture)
+        
         
         self.userEmailField.delegate = self
         self.password.delegate = self
@@ -95,6 +109,10 @@ class LoginController: UIViewController, PFLogInViewControllerDelegate, UITextFi
             
         
         
+    }
+    
+    func hideKeyboard() {
+        self.view.endEditing(true)
     }
 
     override func didReceiveMemoryWarning() {

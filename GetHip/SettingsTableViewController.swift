@@ -50,6 +50,13 @@ class SettingsTableViewController: UIViewController, UITableViewDataSource, UITa
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        //for sharing data with tab bar navigations
+        self.user = (self.tabBarController as? HomeTabController)!.userData
+        self.party = (self.tabBarController as? HomeTabController)!.partyData
+        self.friendData = (self.tabBarController as? HomeTabController)!.friendData
+        self.requestData = (self.tabBarController as? HomeTabController)!.requestData
+        
         self.title = "Settings"
         
         self.logOutBtn.layer.borderWidth = 1
@@ -294,6 +301,23 @@ class SettingsTableViewController: UIViewController, UITableViewDataSource, UITa
     */
 
 }
+
+extension SettingsTableViewController: UITabBarControllerDelegate {
+    func tabBarController(tabBarController: UITabBarController, didSelectViewController viewController: UIViewController) {
+        if viewController .isKindOfClass(SettingsTableViewController) {
+            
+            let vc: SettingsTableViewController = (viewController as? SettingsTableViewController)!
+            vc.setData(self.user as! [UserParseData], prty: self.party, frends: self.friendData, request: self.requestData)
+            
+        }else if(viewController .isKindOfClass(FriendsListViewController)){
+            
+            let vc: FriendsListViewController = (viewController as? FriendsListViewController)!
+            vc.setData(self.friendData, requst: self.requestData, party: self.party, user: self.user as! [UserParseData])
+            
+        }
+    }
+}
+
 
 extension SettingsTableViewController: PartyServiceManagerDelegate {
     func foundPeer() {
