@@ -68,7 +68,7 @@ class SettingsTableViewController: UIViewController, UITableViewDataSource, UITa
         self.navigationController?.navigationBarHidden = false
         self.table.tableFooterView = UIView(frame: CGRectZero)
         self.party.delegate = self
-        //NSNotificationCenter.defaultCenter().addObserver(self, selector: "refreshTable:", name: "refreshSettingsView", object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "refreshTable:", name: "refreshSettingsView", object: nil)
         
         self.table.reloadData()
         // Uncomment the following line to preserve selection between presentations
@@ -96,7 +96,7 @@ class SettingsTableViewController: UIViewController, UITableViewDataSource, UITa
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete method implementation.
         // Return the number of rows in the section.
-        return 5
+        return 4
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
@@ -110,7 +110,7 @@ class SettingsTableViewController: UIViewController, UITableViewDataSource, UITa
             }
             
             return cell
-            
+        /*
         case 1:
             let cell = (self.table.dequeueReusableCellWithIdentifier("UserNameCell", forIndexPath: indexPath) as? UserNameCell)!
             
@@ -119,8 +119,8 @@ class SettingsTableViewController: UIViewController, UITableViewDataSource, UITa
             }
             
             return cell
-            
-        case 2:
+        */
+        case 1:
             let cell = (self.table.dequeueReusableCellWithIdentifier("EmailCell", forIndexPath: indexPath) as? EmailCell)!
             
             if self.user.count > 0 {
@@ -128,7 +128,7 @@ class SettingsTableViewController: UIViewController, UITableViewDataSource, UITa
             }
             
             return cell
-        case 3:
+        case 2:
             let cell = (self.table.dequeueReusableCellWithIdentifier("PassCell", forIndexPath: indexPath) as? ResetPassCell)!
             
             if self.user.count > 0 {
@@ -138,10 +138,6 @@ class SettingsTableViewController: UIViewController, UITableViewDataSource, UITa
             return cell
         default:
             let cell = (self.table.dequeueReusableCellWithIdentifier("PictureCell", forIndexPath: indexPath) as? ProfilePicCell)!
-            
-            if self.user.count > 0 {
-                
-            }
             
             return cell
         }
@@ -161,6 +157,7 @@ class SettingsTableViewController: UIViewController, UITableViewDataSource, UITa
             }
             
         //user name view
+        /*
         case 1:
             
             if self.user.count > 0 {
@@ -169,19 +166,21 @@ class SettingsTableViewController: UIViewController, UITableViewDataSource, UITa
             }
             
             break
-            
+        */
         //email view
-        case 2:
+        case 1:
+            break
             
+            /*
             if self.user.count > 0 {
                 self.performSegueWithIdentifier("EmailSegue", sender: nil)
             }
-        
+            */
         //reset pass
-        case 3:
+        case 2:
             
             if self.user.count > 0 {
-                
+                self.performSegueWithIdentifier("ResetPassSegue", sender: nil)
             }
             break
             
@@ -210,20 +209,24 @@ class SettingsTableViewController: UIViewController, UITableViewDataSource, UITa
                 }
                 
                 //email view
-            case 2:
-                
+            case 1:
+                break
+                /*
                 if self.user.count > 0 {
                     let vc: EmailDetailViewController = (segue.destinationViewController as? EmailDetailViewController)!
                     vc.setData((self.user[0] as? UserParseData)!.email)
                     
                     println(vc.email)
                 }
-                
+                */
                 //reset pass
-            case 3:
+            case 2:
                 
                 if self.user.count > 0 {
+                    let vc: ResetPassDetailViewController = (segue.destinationViewController as? ResetPassDetailViewController)!
+                    vc.setData((self.user[0] as? UserParseData)!.email)
                     
+                    println(vc.email)
                 }
                 
                 //Profile Picture View
@@ -241,10 +244,10 @@ class SettingsTableViewController: UIViewController, UITableViewDataSource, UITa
         
     }
     
-   /* func refreshTable(notification: NSNotification){
-        self.user = manager.getUser()
+   func refreshTable(notification: NSNotification){
+        //self.user = manager.getUser()
         self.table.reloadData()
-    }*/
+    }
     
     /*
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {

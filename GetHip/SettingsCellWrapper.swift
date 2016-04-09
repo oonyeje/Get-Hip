@@ -20,6 +20,7 @@ class DisplayNameCell: UITableViewCell {
     }
 }
 
+/*
 class UserNameCell: UITableViewCell {
     @IBOutlet var usrName: UILabel!
     
@@ -31,6 +32,7 @@ class UserNameCell: UITableViewCell {
         super.setSelected(selected, animated: animated)
     }
 }
+*/
 
 class EmailCell: UITableViewCell {
     @IBOutlet var email: UILabel!

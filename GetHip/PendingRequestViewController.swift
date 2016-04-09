@@ -17,11 +17,12 @@ class PendingRequestViewController: UITableViewController {
     @IBAction func didAcceptFriend(sender: AnyObject?){
         var path:NSIndexPath = self.table.indexPathForCell(sender?.superview!!.superview as! PendingFriendCell)!
         var cell: PendingFriendCell! = self.table.cellForRowAtIndexPath(path) as! PendingFriendCell
+        let pending = self.requests[path.row] as! FriendData
         
         var query: PFQuery! = PFQuery(className: "FriendRequest")
         query.whereKey("username", equalTo: PFUser.currentUser()!.username!)
         query.whereKey("RequestStatus", equalTo: "pending")
-        query.whereKey("inRealtionTo", equalTo: cell.friendName.text!)
+        query.whereKey("inRealtionTo", equalTo: pending.email)
         query.includeKey("OtherUser")
         
         dispatch_async(dispatch_get_main_queue(), {
@@ -61,7 +62,14 @@ class PendingRequestViewController: UITableViewController {
                                 object!.save()
                                 
                             
-                                
+                                cell.proImg.hidden = true
+                                cell.acceptButton.hidden = true
+                                cell.denyButton.hidden = true
+                                var tempString = cell.friendName.text!
+                                cell.friendName.text = "You added " + tempString + "!!"
+                                NSNotificationCenter.defaultCenter().addObserver(self, selector: "refreshFriendList:", name: "reloadDataF", object: nil)
+                                (self.tabBarController as! HomeTabController).reloadParseData()
+
                             }
                         })
                     })
@@ -75,18 +83,21 @@ class PendingRequestViewController: UITableViewController {
             })
         })
         
-        cell.proImg.hidden = true
-        cell.acceptButton.hidden = true
-        cell.denyButton.hidden = true
-        var tempString = cell.friendName.text!
-        cell.friendName.text = "You added " + tempString + "!!"
-        //self.table.reloadData()
+        
         
     }
     
     @IBAction func didRejectFriend(sender: AnyObject?){
         
     }
+    
+    //local refresh method for friend list view controller table
+    func refreshFriendList(notification: NSNotification){
+        ((self.parentViewController as! UINavigationController).viewControllers[0] as! FriendsListViewController).viewDidLoad()
+        ((self.parentViewController as! UINavigationController).viewControllers[0] as! FriendsListViewController).table.reloadData()
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: "reloadDataF", object: nil)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = "Friend Requests"
@@ -144,6 +155,10 @@ class PendingRequestViewController: UITableViewController {
             
             //rounds uiimage and configures UIImageView
             cell!.proImg.layer.cornerRadius = cell!.proImg.frame.size.width/2
+            cell!.acceptButton.layer.cornerRadius = cell!.acceptButton.frame.size.width/2
+            cell!.denyButton.layer.cornerRadius = cell!.acceptButton.frame.size.width/2
+            cell!.denyButton.clipsToBounds = true
+            cell!.acceptButton.clipsToBounds = true
             cell!.proImg.clipsToBounds = true
             //cell!.proImage.layer.borderColor = UIColor.whiteColor().CGColor
             //cell!.proImage.layer.masksToBounds = true

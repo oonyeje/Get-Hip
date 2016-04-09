@@ -9,8 +9,8 @@
 import UIKit
 
 class FriendRequestViewController: UIViewController{
-    var searchedUsername: String!
-    var frnds: [String]!
+    var searchedEmail: String! //contains the searched email address by user
+    var frnds: [String]! //holds email addresses of current users friends
     var party: PartyServiceManager!
     
     @IBOutlet var displayImage: UIImageView!
@@ -20,7 +20,7 @@ class FriendRequestViewController: UIViewController{
     
     @IBAction func sendButtonClicked(sender: AnyObject){
         var query = PFQuery(className: "_User")
-        query.whereKey("username", equalTo: foundName.text!)
+        query.whereKey("username", equalTo: self.searchedEmail!)
         dispatch_async(dispatch_get_main_queue(),{
             query.getFirstObjectInBackgroundWithBlock({
                 (object:PFObject?, error: NSError?) -> Void in
@@ -135,49 +135,88 @@ extension FriendRequestViewController: UITextFieldDelegate{
     }
     
     func textFieldDidEndEditing(textField: UITextField) {
-        self.searchedUsername = searchBar.text
         var inFriendsList: Bool = false
         
-        for name in self.frnds{
-            if name == self.searchedUsername{
-                inFriendsList = true
-                break
-            }
-        }
-        if(inFriendsList == false){
-            var query = PFQuery(className: "_User")
-            query.whereKey("username", equalTo: searchedUsername)
+        
             
-            dispatch_async(dispatch_get_main_queue(), {() -> Void in
-                query.getFirstObjectInBackgroundWithBlock({
-                    (object: PFObject?, error: NSError?) -> Void in
-                    if(error == nil){
-                        self.foundName.text = object?.objectForKey("username") as? String
+            //case where user display name is entered
+        	self.searchedEmail = searchBar.text
+            
+            for email in self.frnds{
+                if email == self.searchedEmail{
+                    inFriendsList = true
+                    break
+                }
+            }
+            
+            if(self.searchedEmail == (self.tabBarController as! HomeTabController).userData[0].email){
+                
+                let alert = UIAlertController(title: "That's You!", message: "Sorry, you can't send a request to yourself.", preferredStyle: .Alert)
+                alert.addAction(UIAlertAction(title: "OK", style: .Default, handler:{(action: UIAlertAction!) in alert.dismissViewControllerAnimated(true, completion: nil)}))
+                self.presentViewController(alert, animated: true, completion: nil)
+                
+            }
+            else if(inFriendsList == false){
+                
+                var checkRelation: PFRelation! = PFUser.currentUser()?.relationForKey("FriendRequest")
+                var checkQuery = checkRelation.query().whereKey("RequestStatus", equalTo: "Awaiting Response")
+                
+                checkQuery.whereKey("inRealtionTo", equalTo: self.searchedEmail)
+                
+                dispatch_async(dispatch_get_main_queue(), {() -> Void in
+                    checkQuery.getFirstObjectInBackgroundWithBlock({
+                        (object, error) -> Void in
                         
-                        //download profile imge
-                        var img = object!.objectForKey("profilePicture")! as? PFFile
-                        
-                        dispatch_async(dispatch_get_main_queue(), {
-                            img!.getDataInBackgroundWithBlock({
-                                (imgData, error) -> Void in
-                                
-                                var downloadedImg = UIImage(data: imgData!)
-                                self.displayImage.image = downloadedImg
+                        //put in the checking code after lab today
+                        if object == nil {
+                            var query = PFQuery(className: "_User")
+                            query.whereKey("username", equalTo: self.searchedEmail)
+                            
+                            dispatch_async(dispatch_get_main_queue(), {() -> Void in
+                                query.getFirstObjectInBackgroundWithBlock({
+                                    (object: PFObject?, error: NSError?) -> Void in
+                                    if(error == nil){
+                                        self.foundName.text = object?.objectForKey("displayName") as? String
+                                        
+                                        //download profile imge
+                                        var img = object!.objectForKey("profilePicture")! as? PFFile
+                                        
+                                        dispatch_async(dispatch_get_main_queue(), {
+                                            img!.getDataInBackgroundWithBlock({
+                                                (imgData, error) -> Void in
+                                                
+                                                var downloadedImg = UIImage(data: imgData!)
+                                                self.displayImage.image = downloadedImg
+                                            })
+                                        })
+                                        
+                                        self.sendRequest.enabled = true
+                                    }else{
+                                        self.foundName.text = "No Friend Found :("
+                                        self.sendRequest.enabled = false
+                                    }
+                                })
                             })
-                        })
+                            
+                        }else{
+                            let alert = UIAlertController(title: "Request Already Made", message: "You have already sent a friend request to this user.", preferredStyle: .Alert)
+                            alert.addAction(UIAlertAction(title: "OK", style: .Default, handler:{(action: UIAlertAction!) in alert.dismissViewControllerAnimated(true, completion: nil)}))
+                            self.presentViewController(alert, animated: true, completion: nil)
+                        }
                         
-                        self.sendRequest.enabled = true
-                    }else{
-                        self.foundName.text = "No Friend Found :("
-                        self.sendRequest.enabled = false
-                    }
+                    })
                 })
-            })
-        }else{
-           let alert = UIAlertController(title: "Already Friends", message: "You are already friends with this user!", preferredStyle: .Alert)
-            alert.addAction(UIAlertAction(title: "OK", style: .Default, handler:{(action: UIAlertAction!) in alert.dismissViewControllerAnimated(true, completion: nil)}))
-            self.presentViewController(alert, animated: true, completion: nil)
-        }
+                
+            }else{
+                
+                let alert = UIAlertController(title: "Already Friends", message: "You are already friends with this user!", preferredStyle: .Alert)
+                alert.addAction(UIAlertAction(title: "OK", style: .Default, handler:{(action:  UIAlertAction!) in alert.dismissViewControllerAnimated(true, completion: nil)}))
+                    self.presentViewController(alert, animated: true, completion: nil)
+            }
+
+        
+        
+        
         
     }
     

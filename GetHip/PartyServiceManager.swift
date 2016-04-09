@@ -152,8 +152,8 @@ class PartyServiceManager: NSObject, AnyObject {
                 }
                 
                 for peer in dataDictionary["friendData"] as! [FriendData] {
-                    if(peer.username != self.myPeerID.displayName){
-                        println(peer.username)
+                    if(peer.displayName != self.myPeerID.displayName){
+                        println(peer.displayName)
                         self.invitedFriends.append(peer)
                     }
                 }

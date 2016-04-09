@@ -17,6 +17,7 @@ class HomeTabController: UITabBarController {
     var userData: [UserParseData] = []
     let partyData = PartyServiceManager()
     var firstTime: Bool = true
+    private var reloadingData: Bool = false
     private var firstTimeBrowsing: Bool = true
     //@IBOutlet weak var CreateAPartyBtn: UIButton!
     
@@ -33,17 +34,22 @@ class HomeTabController: UITabBarController {
                 self.friendData.append(pendingFriend)
             }
         }
+        if(firstTime == true){
+            //start browsing for peers
+            self.partyData.setBrowser()
+            self.partyData.startBrowser()
+            //self.partyData.delegate = self
+            self.firstTime = false
+        }
         
-        //start browsing for peers
-        self.partyData.setBrowser()
-        self.partyData.startBrowser()
-        
-        //self.partyData.delegate = self
-        self.firstTime = false
         
         NSNotificationCenter.defaultCenter().postNotificationName("dataMark", object: nil)
         
-        
+        if(self.reloadingData == true){
+            NSNotificationCenter.defaultCenter().postNotificationName("reloadDataF", object: nil)
+            NSNotificationCenter.defaultCenter().postNotificationName("reloadDataS", object: nil)
+            self.reloadingData = false
+        }
     }
     
     func refreshUserData(notification:NSNotification){
@@ -91,6 +97,20 @@ class HomeTabController: UITabBarController {
         
         self.userData = []
         self.friendData = []
+        self.requestData = []
+        dispatch_async(dispatch_get_main_queue(), {
+            self.usrDataManager = UserParseDataSource()
+            //self.frndDataManager = FriendDataSource()
+            
+        })
+    }
+    
+    //Parse data refresh methods
+    func reloadParseData(){
+        self.reloadingData = true
+        self.userData = []
+        self.friendData = []
+        self.requestData = []
         dispatch_async(dispatch_get_main_queue(), {
             self.usrDataManager = UserParseDataSource()
             //self.frndDataManager = FriendDataSource()

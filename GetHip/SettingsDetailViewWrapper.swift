@@ -36,7 +36,9 @@ class DisplayDetailViewController: UIViewController {
             else if let object = object{
                 object.setObject(self.possibleName, forKey: "displayName")
                 object.saveInBackground()
-                //NSNotificationCenter.defaultCenter().postNotificationName("savingName", object: nil)
+                
+                NSNotificationCenter.defaultCenter().addObserver(self, selector: "refreshSettings:", name: "reloadDataS", object: nil)
+                (self.tabBarController as! HomeTabController).reloadParseData()
             }
         }
         
@@ -49,10 +51,6 @@ class DisplayDetailViewController: UIViewController {
         self.displayName = display
     }
     
-    func refreshView(notification: NSNotification){
-
-        
-    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -63,12 +61,18 @@ class DisplayDetailViewController: UIViewController {
         self.ChnDspName.layer.cornerRadius = 5
         self.ChnDspName.layer.borderColor = UIColor.blackColor().CGColor
         // Do any additional setup after loading the view.
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "refreshView:", name: "savingName", object: nil)
+        
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    func refreshSettings(notification: NSNotification){
+        ((self.parentViewController as! UINavigationController).viewControllers[0] as! SettingsTableViewController).viewDidLoad()
+        ((self.parentViewController as! UINavigationController).viewControllers[0] as! SettingsTableViewController).table.reloadData()
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: "reloadDataS", object: nil)
     }
     
    
@@ -85,6 +89,7 @@ class DisplayDetailViewController: UIViewController {
     */
 
 }
+/*
 
 class EmailDetailViewController: UIViewController {
     var possibleEmail: String!
@@ -97,26 +102,31 @@ class EmailDetailViewController: UIViewController {
         
         self.possibleEmail = self.textfield?.text
         //sanitize and alert for input and success later
-        
-        var query = PFUser.query()
-        var currentUser = PFUser.currentUser()
-        
-        query!.whereKey("username", equalTo: (currentUser?.username as String!))
-        
-        query!.getFirstObjectInBackgroundWithBlock {
-            (object, error) -> Void in
+        if(contains(self.possibleEmail, "@")){
+            var query = PFUser.query()
+            var currentUser = PFUser.currentUser()
             
-            if error != nil || object == nil {
-                println("Object request failed")
+            query!.whereKey("username", equalTo: (currentUser?.username as String!))
+            
+            query!.getFirstObjectInBackgroundWithBlock {
+                (object, error) -> Void in
+                
+                if error != nil || object == nil {
+                    println("Object request failed")
+                }
+                else if let object = object{
+                    object.setObject(self.possibleEmail, forKey: "email")
+                    object.saveInBackground()
+                    
+                    NSNotificationCenter.defaultCenter().addObserver(self, selector: "refreshSettings:", name: "reloadDataS", object: nil)
+                    (self.tabBarController as! HomeTabController).reloadParseData()
+                }
             }
-            else if let object = object{
-                object.setObject(self.possibleEmail, forKey: "email")
-                object.saveInBackground()
-                NSNotificationCenter.defaultCenter().postNotificationName("savingEmail", object: nil)
-            }
+            
+            println(self.possibleEmail)
         }
-
-        println(self.possibleEmail)
+        
+        
     }
     
     
@@ -135,7 +145,7 @@ class EmailDetailViewController: UIViewController {
         self.ChnEmailBtn.layer.cornerRadius = 5
         self.ChnEmailBtn.layer.borderColor = UIColor.blackColor().CGColor
         // Do any additional setup after loading the view.
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "refreshView:", name: "savingEmail", object: nil)
+        
     }
     
     override func didReceiveMemoryWarning() {
@@ -143,8 +153,10 @@ class EmailDetailViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    func refreshView(notification: NSNotification){
-        
+    func refreshSettings(notification: NSNotification){
+        ((self.parentViewController as! UINavigationController).viewControllers[0] as! SettingsTableViewController).viewDidLoad()
+        ((self.parentViewController as! UINavigationController).viewControllers[0] as! SettingsTableViewController).table.reloadData()
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: "reloadDataS", object: nil)
     }
     
     /*
@@ -157,6 +169,69 @@ class EmailDetailViewController: UIViewController {
     }
     */
     
+}
+*/
+
+class ResetPassDetailViewController: UIViewController {
+    @IBOutlet weak var currPass: UITextField!
+    @IBOutlet weak var newPass: UITextField!
+    @IBOutlet weak var chgPassBtn: UIButton!
+    
+    @IBAction func changePass(sender: UIButton){
+        
+        PFUser.logInWithUsernameInBackground(self.email, password: self.currPass.text! ) {
+        
+            (user, error) -> Void in
+            
+            if error == nil {
+            
+                var query = PFUser.query()
+                
+                query!.whereKey("username", equalTo: PFUser.currentUser()!.username!)
+                
+                query?.findObjectsInBackgroundWithBlock({
+                    (objects, error) -> Void in
+                    
+                    for object in objects! {
+                       var obj: PFObject = object as! PFObject
+                        
+                       obj.setObject(self.newPass.text!, forKey: "password")
+                        
+                       obj.save()
+                    
+                        let alert = UIAlertController(title: "Password Changed", message: "Your password has been updated", preferredStyle: .Alert)
+                        alert.addAction(UIAlertAction(title: "OK", style: .Default, handler:{(action: UIAlertAction!) in alert.dismissViewControllerAnimated(true, completion: nil)}))
+                        self.presentViewController(alert, animated: true, completion: nil)
+                    }
+                    
+                    
+                
+                })
+                
+            } else {
+            
+                let alert = UIAlertController(title: "Incorrect Password", message: "The password you gave as your current password was incorrect. Please enter the correct password.", preferredStyle: .Alert)
+                alert.addAction(UIAlertAction(title: "OK", style: .Default, handler:{(action: UIAlertAction!) in alert.dismissViewControllerAnimated(true, completion: nil)}))
+                self.presentViewController(alert, animated: true, completion: nil)
+            }
+        }
+    }
+    
+    var email: String!
+    
+    func setData(email: String){
+        self.email = email
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        //rounded border for button
+        self.chgPassBtn.layer.borderWidth = 1
+        self.chgPassBtn.layer.cornerRadius = 5
+        self.chgPassBtn.layer.borderColor = UIColor.blackColor().CGColor
+        
+    }
 }
 
 class ProfileDetailViewController: UIViewController, UINavigationControllerDelegate, UIImagePickerControllerDelegate {
@@ -243,6 +318,31 @@ class ProfileDetailViewController: UIViewController, UINavigationControllerDeleg
 extension ProfileDetailViewController: UIImagePickerControllerDelegate{
     //MARK: -Image Picker Delegate
     func imagePickerController(picker: UIImagePickerController, didFinishPickingImage image: UIImage!, editingInfo: [NSObject : AnyObject]!) {
+        
+        var img:PFFile = PFFile(data: UIImageJPEGRepresentation(image, 1.0))!
+        
+        var query = PFUser.query()
+        var currentUser = PFUser.currentUser()
+        
+        query!.whereKey("username", equalTo: (currentUser?.username as String!))
+        
+        query!.getFirstObjectInBackgroundWithBlock {
+            (object, error) -> Void in
+            
+            if error != nil || object == nil {
+                println("Object request failed")
+            }
+            else if let object = object{
+                object.setObject(img, forKey: "profilePicture")
+                object.saveInBackground()
+                //NSNotificationCenter.defaultCenter().postNotificationName("", object: nil)
+            }
+        }
+        self.img.image = image
+        
+        var homeController = self.tabBarController as? HomeTabController
+        homeController?.userData[0].profileImg.image = image
+        dismissViewControllerAnimated(true, completion: nil)
         
     }
     

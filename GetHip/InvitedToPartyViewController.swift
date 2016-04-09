@@ -37,13 +37,13 @@ class InvitedToPartyViewController: UIViewController , PartyServiceManagerDelega
         
         // Do any additional setup after loading the view.
         var query = PFQuery(className: "_User")
-        query.whereKey("username", equalTo: self.fromPeer.displayName)
+        query.whereKey("displayName", equalTo: self.fromPeer.displayName)
         
         dispatch_async(dispatch_get_main_queue(), {() -> Void in
             query.getFirstObjectInBackgroundWithBlock({
                 (object: PFObject?, error: NSError?) -> Void in
                 if(error == nil){
-                    self.inviteTxt.text = "You have been invited by " + (object?.objectForKey("username")! as? String)! + " to join a Party!"
+                    self.inviteTxt.text = "You have been invited by " + (object?.objectForKey("displayName")! as? String)! + " to join a Party!"
                     
                     //download profile imge
                     var img = object!.objectForKey("profilePicture")! as? PFFile

@@ -16,7 +16,7 @@ class UserParseDataSource{
         var query = PFUser.query()
         var currentUser = PFUser.currentUser()
         
-        query!.whereKey("username", equalTo: (currentUser?.username as String!))
+        query!.whereKey("email", equalTo: (currentUser?.email as String!))
         
         query!.findObjectsInBackgroundWithBlock {
             (objects, error) -> Void in
@@ -25,24 +25,23 @@ class UserParseDataSource{
                 for object in objects! {
                     var usr: UserParseData
                     
-                    var usrName: String!
+                    //var usrName: String!
                     var profileImage: UIImageView
                     var displayName: String
                     var email: String
                     
-                    usrName = object.objectForKey("username")! as! String
+                    //usrName = object.objectForKey("username")! as! String
                     displayName = object.objectForKey("displayName") as! String
                     
                     
-                    
+                    /*
                     if displayName.isEmpty {
                         displayName = usrName
                     }
-                    
+                    */
                     email = object.objectForKey("email")! as! String
                     
-                    
-                     usr = UserParseData(usrName: usrName, dispName: displayName, email: email)
+                    usr = UserParseData(dispName: displayName, email: email)
                     
                     var img = object.objectForKey("profilePicture")! as? PFFile
                     

@@ -30,6 +30,17 @@ class FriendsListViewController: UIViewController, UITableViewDelegate, UITableV
         self.performSegueWithIdentifier("FriendRequestSegue", sender: nil)
     }
     
+    @IBAction func reloadList(sender: UIBarButtonItem){
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "refreshFriends:", name: "reloadDataF", object: nil)
+        (self.tabBarController as! HomeTabController).reloadParseData()
+    }
+    
+    func refreshFriends(notification: NSNotification){
+        self.viewDidLoad()
+        self.table.reloadData()
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: "reloadDataF", object: nil)
+    }
+    
     func setData(frnds:[FriendData], requst: [FriendData], party: PartyServiceManager, user: [UserParseData]){
         self.friends = frnds
         self.request = requst
@@ -181,8 +192,8 @@ class FriendsListViewController: UIViewController, UITableViewDelegate, UITableV
             if (self.friends.count != 0){
                 for i in 0...self.friends.count-1{
                     var frends: FriendData! = self.friends[i] as! FriendData
-                    println(frends.displayName!)
-                    frndNames.append(frends.displayName!)
+                    println(frends.email!)
+                    frndNames.append(frends.email!)
                 }
             }
             

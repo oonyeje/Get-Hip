@@ -10,7 +10,7 @@ import UIKit
 
 class SignInController: UIViewController, UINavigationControllerDelegate, UIImagePickerControllerDelegate, UITextFieldDelegate {
     @IBOutlet var nameField: UITextField!
-    @IBOutlet var userField: UITextField!
+    //@IBOutlet var userField: UITextField!
     @IBOutlet var emailField: UITextField!
     @IBOutlet var passField: UITextField!
     @IBOutlet var saveBtn: UIButton!
@@ -22,7 +22,7 @@ class SignInController: UIViewController, UINavigationControllerDelegate, UIImag
     
     @IBAction func saveNewProfile(sender: UIButton){
         if(self.nameField.hasText() == false
-            || self.userField.hasText() == false
+            /*|| self.userField.hasText() == false*/
             || self.emailField.hasText() == false
             || self.passField.hasText() == false
             || self.profilePic.image == nil){
@@ -33,9 +33,9 @@ class SignInController: UIViewController, UINavigationControllerDelegate, UIImag
                 self.presentViewController(alert, animated: true, completion: nil)
                 
         }else{
-            if(!(contains(self.userField.text!, "@") || contains(self.nameField.text!, "@"))){
+            if /*(!(contains(self.userField.text!, "@") ||*/ contains(self.nameField.text!, "@"){
             
-                let predicate: NSPredicate = NSPredicate(format: "((username = %@) OR (email = %@))", argumentArray: [self.nameField.text!,self.emailField.text!])
+                let predicate: NSPredicate = NSPredicate(format: "(email = %@)", argumentArray: [self.emailField.text!])
                 var userQuery: PFQuery = PFQuery(className: "_User", predicate: predicate)
                 
                 dispatch_async(dispatch_get_main_queue(), {
@@ -49,8 +49,8 @@ class SignInController: UIViewController, UINavigationControllerDelegate, UIImag
                             self.presentViewController(alert, animated: true, completion: nil)
                         }else{
                             var user = PFUser()
-                            var img:PFFile = PFFile(data: UIImagePNGRepresentation(self.profilePic.image))!
-                            user.username = self.userField.text!
+                            var img:PFFile = PFFile(data: UIImageJPEGRepresentation(self.profilePic.image, 1.0))!
+                            user.username = self.emailField.text!
                             user.password = self.passField.text!
                             user.email = self.emailField.text!
                             user.setObject(self.nameField.text!, forKey: "displayName")
@@ -63,7 +63,7 @@ class SignInController: UIViewController, UINavigationControllerDelegate, UIImag
                                 if error == nil {
                                     //self.performSegueWithIdentifier("SignedUpSegue", sender: self)
                                     let storyboard = UIStoryboard(name: "Main", bundle: nil)
-                                    let tabBarController = storyboard.instantiateViewControllerWithIdentifier("TabControllerVC") as! UITabBarController
+                                    let tabBarController = storyboard.instantiateViewControllerWithIdentifier("TabControlVC") as! UITabBarController
                                     let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
                                     appDelegate.window?.rootViewController = tabBarController
                                 }
@@ -132,7 +132,7 @@ class SignInController: UIViewController, UINavigationControllerDelegate, UIImag
         
         self.nameField.delegate = self
         self.passField.delegate = self
-        self.userField.delegate = self
+        //self.userField.delegate = self
         self.emailField.delegate = self
         
         
@@ -191,7 +191,7 @@ extension SignInController: UIImagePickerControllerDelegate{
     func imagePickerController(picker: UIImagePickerController, didFinishPickingImage image: UIImage!, editingInfo: [NSObject : AnyObject]!) {
         
         self.profilePic.image = image
-        
+        dismissViewControllerAnimated(true, completion: nil)
     }
     
     func imagePickerControllerDidCancel(picker: UIImagePickerController) {

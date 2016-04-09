@@ -49,7 +49,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate , CLLocationManagerDelegat
         if(PFUser.currentUser() == nil){
             
             //var initialViewController = storyboard.instantiateViewControllerWithIdentifier("HomeVC") as! HomeScreenViewController
-            var initialViewController = storyboard.instantiateViewControllerWithIdentifier("LoginVC") as! UITabBarController
+            var initialViewController = storyboard.instantiateViewControllerWithIdentifier("LoginVC") as! LoginController
             self.window?.rootViewController = initialViewController
             self.window?.makeKeyAndVisible()
             

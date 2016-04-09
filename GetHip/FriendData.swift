@@ -12,13 +12,15 @@ class FriendData: NSObject, NSCoding {
     var displayName: String!
     var profileImg: UIImageView!
     var status: String!
-    var username: String!
+    //var username: String!
+    var email: String!
     
-    init(display: String, status: String, username: String){
+    init(display: String, status: String, /*username: String,*/ email: String){
         self.displayName = display
         self.profileImg = nil
         self.status = status
-        self.username = username
+        //self.username = username
+        self.email = email
         super.init()
         
     }
@@ -29,7 +31,8 @@ class FriendData: NSObject, NSCoding {
         self.displayName = aDecoder.decodeObjectForKey("displayName") as! String
         self.profileImg = aDecoder.decodeObjectForKey("profileImg") as! UIImageView!
         self.status = aDecoder.decodeObjectForKey("status") as! String
-        self.username = aDecoder.decodeObjectForKey("username") as! String
+        //self.username = aDecoder.decodeObjectForKey("username") as! String
+        self.email = aDecoder.decodeObjectForKey("email") as! String
         super.init()
     }
     
@@ -37,7 +40,8 @@ class FriendData: NSObject, NSCoding {
         aCoder.encodeObject(self.displayName, forKey: "displayName")
         aCoder.encodeObject(self.profileImg, forKey: "profileImg")
         aCoder.encodeObject(self.status, forKey: "status")
-        aCoder.encodeObject(self.username, forKey: "username")
+        //aCoder.encodeObject(self.username, forKey: "username")
+        aCoder.encodeObject(self.email, forKey: "email")
     }
     
     //Mark: NSObject
@@ -47,7 +51,8 @@ class FriendData: NSObject, NSCoding {
             return self.displayName == object.displayName
                 && self.profileImg == object.profileImg
                 && self.status == object.status
-                && self.username == object.username
+          //      && self.username == object.username
+                && self.email == object.email
         }else {
             return false
         }

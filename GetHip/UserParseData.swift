@@ -11,15 +11,15 @@ import Foundation
 import Foundation
 
 class UserParseData {
-    var username: String!
+    //var username: String!
     var displayName: String!
     var profileImg: UIImageView!
     var email: String!
     
     
     
-    init(usrName: String, dispName: String, email: String){
-        self.username = usrName
+    init(dispName: String, email: String){
+        //self.username = usrName
         self.profileImg = nil //proImage
         self.displayName = dispName
         self.email = email

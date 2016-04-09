@@ -30,12 +30,14 @@ class FriendDataSource{
                 for object in objects! {
                     //var image:UIImage = UIImage()
                     
-                    let userName = object.objectForKey("OtherUser")!.objectForKey("username") as! String
+                    let email = object.objectForKey("OtherUser")!.objectForKey("email") as! String
+                    println(email)
                     let displayName = object.objectForKey("OtherUser")!.objectForKey("displayName") as! String
                     let requestStatus = object.objectForKey("RequestStatus")! as! String
                     
                     
-                    var newFriend: FriendData = FriendData(display: displayName, status: requestStatus, username: userName )
+                    
+                    var newFriend: FriendData = FriendData(display: displayName, status: requestStatus, email: email )
                     
                     var img = object.objectForKey("OtherUser")!.objectForKey("profilePicture")! as? PFFile
                     
@@ -49,7 +51,7 @@ class FriendDataSource{
                     })
                     //print(userName)
                     self.dataSource.append(newFriend)
-                    
+                    println(self.dataSource.count)
                     
                 }
                 NSLog("%d", self.dataSource.count)
@@ -65,10 +67,11 @@ class FriendDataSource{
                         if (error == nil){
                             for object in objects! {
                             
-                                let userName = object.objectForKey("OtherUser")!.objectForKey("username") as! String
+                                let email = object.objectForKey("OtherUser")!.objectForKey("email") as! String
+                                println(email)
                                 let displayName = object.objectForKey("OtherUser")!.objectForKey("displayName") as! String
                                 let requestStatus = object.objectForKey("RequestStatus")! as! String
-                                var newFriend: FriendData = FriendData(display: displayName, status: requestStatus, username: userName)
+                                var newFriend: FriendData = FriendData(display: displayName, status: requestStatus, email: email)
                                 
                                 var img = object.objectForKey("OtherUser")!.objectForKey("profilePicture")! as? PFFile
                                 
@@ -84,6 +87,7 @@ class FriendDataSource{
                                 
                                 //print(userName)
                                 self.dataSource.append(newFriend)
+                                println(self.dataSource.count)
                                 
                             }
                             NSNotificationCenter.defaultCenter().postNotificationName("refreshTableView", object: nil)

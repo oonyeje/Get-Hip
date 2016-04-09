@@ -29,7 +29,7 @@ class LoginController: UIViewController, PFLogInViewControllerDelegate, UITextFi
                     (object, error) -> Void in
                     
                     if(object != nil && error == nil){
-                        PFUser.logInWithUsernameInBackground(object!.objectForKey("username") as! String, password: self.password.text!, block: {
+                        PFUser.logInWithUsernameInBackground(object!.objectForKey("email") as! String, password: self.password.text!, block: {
                             (user, error) -> Void in
                             
                             if(user != nil || error == nil){
@@ -56,7 +56,7 @@ class LoginController: UIViewController, PFLogInViewControllerDelegate, UITextFi
                 })
             })
         }else{
-            let alert = UIAlertController(title: "Invalid Login", message: "Invalid email or password", preferredStyle: .Alert)
+            var alert = UIAlertController(title: "Invalid Login", message: "Invalid email or password", preferredStyle: .Alert)
             alert.addAction(UIAlertAction(title: "OK", style: .Default, handler:{(action: UIAlertAction!) in alert.dismissViewControllerAnimated(true, completion: nil)}))
             self.presentViewController(alert, animated: true, completion: nil)
             /*

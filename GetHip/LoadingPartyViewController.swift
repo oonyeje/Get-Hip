@@ -144,7 +144,7 @@ class LoadingPartyViewController: UIViewController, UICollectionViewDataSource, 
                         }
                     }
                 }
-                var userDat = FriendData(display: self.usr[0].displayName, status: "", username: self.usr[0].username)
+                var userDat = FriendData(display: self.usr[0].displayName, status: "", email: self.usr[0].email)
                 userDat.profileImg = UIImageView(image: self.usr[0].profileImg.image)
                 currentlyConnected.append(userDat)
                 
