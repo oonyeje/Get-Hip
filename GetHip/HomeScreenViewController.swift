@@ -81,6 +81,7 @@ class HomeScreenViewController: UIViewController, PartyServiceManagerDelegate {
         self.partyData = (self.tabBarController as? HomeTabController)!.partyData
         self.friendData = (self.tabBarController as? HomeTabController)!.friendData
         self.requestData = (self.tabBarController as? HomeTabController)!.requestData
+        self.partyData.delegate = self
     }
     
     

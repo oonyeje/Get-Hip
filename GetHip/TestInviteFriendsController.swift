@@ -270,6 +270,13 @@ class TestInviteFriendsController: UIViewController, UITableViewDelegate, UITabl
 extension TestInviteFriendsController: PartyServiceManagerDelegate {
     
     func foundPeer() {
+        //case where friend is nearby and detected after party is started and none were found before
+        if(self.partyData.isInvitable.count == 0){
+            for i in 0..<self.frnds.count{
+                self.partyData.isInvitable.append(false)
+            }
+        }
+        
         for foundPeer in self.partyData.foundPeers {
             for friend in self.frnds {
                 if foundPeer.displayName == friend.displayName {
