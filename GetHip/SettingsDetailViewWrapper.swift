@@ -199,10 +199,23 @@ class ResetPassDetailViewController: UIViewController {
                         
                        obj.save()
                     
-                        let alert = UIAlertController(title: "Password Changed", message: "Your password has been updated", preferredStyle: .Alert)
-                        alert.addAction(UIAlertAction(title: "OK", style: .Default, handler:{(action: UIAlertAction!) in alert.dismissViewControllerAnimated(true, completion: nil)}))
-                        self.presentViewController(alert, animated: true, completion: nil)
-                    }
+                        //for ios 7 and lower compatibility
+                        
+                        if objc_getClass("UIAlertController") != nil {
+                            
+                            let alert = UIAlertController(title: "Password Changed", message: "Your password has been updated.", preferredStyle: .Alert)
+                            alert.addAction(UIAlertAction(title: "OK", style: .Default, handler:{(action: UIAlertAction!) in alert.dismissViewControllerAnimated(true, completion: nil)}))
+                            self.presentViewController(alert, animated: true, completion: nil)
+
+                        }else{
+                            let alert = UIAlertView()
+                            alert.title = "Password Changed"
+                            alert.message = "Your password has been updated."
+                            alert.addButtonWithTitle("OK")
+                            alert.show()
+                        }
+                        
+                                            }
                     
                     
                 
@@ -210,9 +223,23 @@ class ResetPassDetailViewController: UIViewController {
                 
             } else {
             
-                let alert = UIAlertController(title: "Incorrect Password", message: "The password you gave as your current password was incorrect. Please enter the correct password.", preferredStyle: .Alert)
-                alert.addAction(UIAlertAction(title: "OK", style: .Default, handler:{(action: UIAlertAction!) in alert.dismissViewControllerAnimated(true, completion: nil)}))
-                self.presentViewController(alert, animated: true, completion: nil)
+                //for ios 7 and lower compatibility
+                
+                if objc_getClass("UIAlertController") != nil {
+                    
+                    let alert = UIAlertController(title: "Incorrect Password", message: "The password you gave as your current password was incorrect. Please enter the correct password.", preferredStyle: .Alert)
+                    alert.addAction(UIAlertAction(title: "OK", style: .Default, handler:{(action: UIAlertAction!) in alert.dismissViewControllerAnimated(true, completion: nil)}))
+                    self.presentViewController(alert, animated: true, completion: nil)
+                    
+                }else{
+                    let alert = UIAlertView()
+                    alert.title = "Incorrect Password"
+                    alert.message = "The password you gave as your current password was incorrect. Please enter the correct password."
+                    alert.addButtonWithTitle("OK")
+                    alert.show()
+                }
+                
+                
             }
         }
     }
@@ -234,7 +261,7 @@ class ResetPassDetailViewController: UIViewController {
     }
 }
 
-class ProfileDetailViewController: UIViewController, UINavigationControllerDelegate, UIImagePickerControllerDelegate {
+class ProfileDetailViewController: UIViewController, UINavigationControllerDelegate, UIImagePickerControllerDelegate, UIActionSheetDelegate {
     var profileImg: UIImageView!
     private var picker = UIImagePickerController()
     
@@ -244,32 +271,46 @@ class ProfileDetailViewController: UIViewController, UINavigationControllerDeleg
     
     
     @IBAction func changePhoto(sender: UIButton) {
-        let captureMenu = UIAlertController(title: nil, message:nil, preferredStyle: .ActionSheet)
         
-        let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel, handler: {
-            (alert: UIAlertAction!) -> Void in
-        })
+        //for ios 7 and lower compatibility
         
-        let cameraAction = UIAlertAction(title: "Take a New Pic", style: .Default, handler: {
-            (alert: UIAlertAction!) -> Void in
-            self.picker.allowsEditing = false
-            self.picker.sourceType = UIImagePickerControllerSourceType.Camera
-            self.picker.cameraCaptureMode = .Photo
-            self.presentViewController(self.picker, animated: true, completion: nil)
+        if objc_getClass("UIAlertController") != nil {
             
-        })
+            let captureMenu = UIAlertController(title: nil, message:nil, preferredStyle: .ActionSheet)
+            
+            let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel, handler: {
+                (alert: UIAlertAction!) -> Void in
+            })
+            
+            let cameraAction = UIAlertAction(title: "Take a New Pic", style: .Default, handler: {
+                (alert: UIAlertAction!) -> Void in
+                self.picker.allowsEditing = false
+                self.picker.sourceType = UIImagePickerControllerSourceType.Camera
+                self.picker.cameraCaptureMode = .Photo
+                self.presentViewController(self.picker, animated: true, completion: nil)
+                
+            })
+            
+            let galleryAction = UIAlertAction(title: "Select a Profile Pic", style: .Default, handler: {
+                (alert: UIAlertAction!) -> Void in
+                self.picker.allowsEditing = false
+                self.picker.sourceType = .PhotoLibrary
+                self.presentViewController(self.picker, animated: true, completion: nil)
+            })
+            
+            captureMenu.addAction(galleryAction)
+            captureMenu.addAction(cameraAction)
+            captureMenu.addAction(cancelAction)
+            self.presentViewController(captureMenu, animated: true, completion: nil)
+
+            
+        }else{
+            let actionSheet = UIActionSheet(title: nil, delegate: self, cancelButtonTitle: nil, destructiveButtonTitle: "Cancel", otherButtonTitles: "Take a New Pic")
+            actionSheet.addButtonWithTitle("Select a Profile Pic")
+            
+            actionSheet.showInView(self.view)
+        }
         
-        let galleryAction = UIAlertAction(title: "Select a Profile Pic", style: .Default, handler: {
-            (alert: UIAlertAction!) -> Void in
-            self.picker.allowsEditing = false
-            self.picker.sourceType = .PhotoLibrary
-            self.presentViewController(self.picker, animated: true, completion: nil)
-        })
-        
-        captureMenu.addAction(galleryAction)
-        captureMenu.addAction(cameraAction)
-        captureMenu.addAction(cancelAction)
-        self.presentViewController(captureMenu, animated: true, completion: nil)
     }
     
     
@@ -348,5 +389,29 @@ extension ProfileDetailViewController: UIImagePickerControllerDelegate{
     
     func imagePickerControllerDidCancel(picker: UIImagePickerController) {
         dismissViewControllerAnimated(true, completion: nil)
+    }
+}
+
+extension ProfileDetailViewController: UIActionSheetDelegate {
+    func actionSheet(actionSheet: UIActionSheet, clickedButtonAtIndex buttonIndex: Int) {
+        
+        switch buttonIndex {
+        
+        case 0:
+            break;
+        case 1:
+            self.picker.allowsEditing = false
+            self.picker.sourceType = UIImagePickerControllerSourceType.Camera
+            self.picker.cameraCaptureMode = .Photo
+            self.presentViewController(self.picker, animated: true, completion: nil)
+        case 2:
+            self.picker.allowsEditing = false
+            self.picker.sourceType = .PhotoLibrary
+            self.presentViewController(self.picker, animated: true, completion: nil)
+            break;
+        default:
+            break;
+            
+        }
     }
 }

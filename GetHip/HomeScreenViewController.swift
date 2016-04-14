@@ -139,6 +139,11 @@ class HomeScreenViewController: UIViewController, PartyServiceManagerDelegate {
             //initialize host role
             self.partyData.setRole(PeerType(rawValue: 0)!)
             
+            //remove fake peers that would appear in list if a peer that is found disconnects before entering invite screen
+    
+                
+            
+            
             
             
             vc.setData(self.userData, frndData: self.friendData, party: self.partyData, request: self.requestData)

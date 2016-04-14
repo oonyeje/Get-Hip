@@ -142,6 +142,7 @@ class TestInviteFriendsController: UIViewController, UITableViewDelegate, UITabl
         //iterate through the currently found peers and display only friends who are available
         var friend: FriendData!
         
+        //need to rethink this logic
         for i in 0..<self.frnds.count {
             if(self.partyData.isInvitable[i] == true){
                 friend = self.frnds[i]

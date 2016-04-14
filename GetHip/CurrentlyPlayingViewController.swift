@@ -11,7 +11,7 @@ import MediaPlayer
 import AVFoundation
 import MultipeerConnectivity
 
-class CurrentlyPlayingViewController: UIViewController, PartyServiceManagerDelegate{
+class CurrentlyPlayingViewController: UIViewController, PartyServiceManagerDelegate, UICollectionViewDataSource, UICollectionViewDelegate{
     //persistant data
     var party: PartyServiceManager!
     var usr: [UserParseData] = []
@@ -21,19 +21,97 @@ class CurrentlyPlayingViewController: UIViewController, PartyServiceManagerDeleg
     var playing = true
     var timer = NSTimer()
     var nextHost: String!
+    @IBOutlet var segmentControl: UISegmentedControl!
     
-    //controller data
+    @IBAction func switchViews(segCtrl: UISegmentedControl){
+    
+        if(segCtrl.selectedSegmentIndex == 0){
+            //hide all in party view elements
+            self.friendsInParty.hidden = true
+            self.leaveOrEnd.hidden = true
+            self.leaveOrEnd.enabled = false
+            self.addMore.hidden = true
+            self.addMore.enabled == true
+            
+            
+            //show all relevent current playing ui components
+            self.songImg.hidden = false
+            self.titleLabel.hidden = false
+            self.artistAndAlbumLabel.hidden = false
+            self.minLabel.hidden = false
+            self.maxLabel.hidden = false
+            self.progressBar.hidden = false
+            
+            if(self.party.role == PeerType.Host_Creator || self.party.role == PeerType.Guest_Creator){
+            
+                self.volCtrl.hidden == false
+                self.volCtrl.enabled = true
+                
+            }
+            
+        }
+        
+        if(segCtrl.selectedSegmentIndex == 1){
+            //show all in party view elements
+            self.friendsInParty.hidden = false
+            self.leaveOrEnd.hidden = false
+            self.leaveOrEnd.enabled = true
+            
+            
+            if(self.party.role == PeerType.Host_Creator || self.party.role == PeerType.Guest_Creator){
+                
+                self.addMore.hidden = false
+                self.addMore.enabled == true
+            }
+            
+            
+            //hide all relevent current playing ui components
+            self.songImg.hidden = true
+            self.titleLabel.hidden = true
+            self.artistAndAlbumLabel.hidden = true
+            self.minLabel.hidden = true
+            self.maxLabel.hidden = true
+            self.progressBar.hidden = true
+            
+            self.volCtrl.hidden == true
+            self.volCtrl.enabled = false
+        }
+        
+    }
+    
+    //controller data for currently playing segment
     @IBOutlet var songImg: UIImageView!
     @IBOutlet var titleLabel: UILabel!
     @IBOutlet var artistAndAlbumLabel: UILabel!
     @IBOutlet var minLabel: UILabel!
     @IBOutlet var maxLabel: UILabel!
     @IBOutlet var progressBar: UIProgressView!
-    
-    //Host buttons
+    /*Host Buttons*/
     @IBOutlet var volCtrl: UISlider!
     @IBOutlet var ppfButton: UIButton!
     
+    //controller data for in party view
+    @IBOutlet var friendsInParty: UICollectionView!
+    @IBOutlet var leaveOrEnd: UIButton!
+    /*Host Buttons*/
+    @IBOutlet var addMore: UIButton!
+    
+    
+    
+    //Action Methods for In Party View
+    
+    //Only visible for host
+    @IBAction func inviteMore(sender: UIButton!){
+        
+    }
+    
+    //Alternates to either end a party or leave a party depending on host or guest role
+    @IBAction func endOrLeaveParty(sender: UIButton){
+        
+    }
+    
+    
+    //Action Methods for Currently Playing View
     @IBAction func volChng(sender: UISlider){
         self.audioPlayer.volume = sender.value
     }
@@ -63,10 +141,6 @@ class CurrentlyPlayingViewController: UIViewController, PartyServiceManagerDeleg
         
     }
     
-    
-    //Guest buttons
-    
-    
 
     
     override func viewDidLoad() {
@@ -74,9 +148,24 @@ class CurrentlyPlayingViewController: UIViewController, PartyServiceManagerDeleg
         
         
         // Do any additional setup after loading the view.
+        
+        //set up for in party view
+        self.friendsInParty.dataSource = self
+        self.friendsInParty.delegate = self
+        self.friendsInParty.hidden = true
+        self.leaveOrEnd.hidden = true
+        self.leaveOrEnd.enabled = false
+        
+        
+        //Set up for CurrentlyPlayingView
         self.progressBar.setProgress(0, animated: true)
+        self.volCtrl.hidden = true
+        self.volCtrl.enabled = false
         
         if(self.party.role == PeerType.Host_Creator || self.party.role == PeerType.Guest_Creator){
+            self.volCtrl.hidden = false
+            self.volCtrl.enabled = true
+            
             self.audioPlayer = AVPlayer(URL: self.party.currentSong.valueForProperty(MPMediaItemPropertyAssetURL) as! NSURL)
             
             self.songImg.image = self.party.currentSong.valueForProperty(MPMediaItemPropertyArtwork).imageWithSize(songImg.frame.size)
@@ -100,6 +189,8 @@ class CurrentlyPlayingViewController: UIViewController, PartyServiceManagerDeleg
             //NSNotificationCenter.defaultCenter().addObserver(self, selector: "songDidEnd:", name: "AVPlayerItemDidPlayToEndTimeNotification", object: nil)
             
         }else if (self.party.role == PeerType.Guest_Invited || self.party.role == PeerType.Host_Invited){
+            self.volCtrl.hidden = true
+            self.volCtrl.enabled = false
             
             self.songImg.image = self.party.currentSongIMG
             self.titleLabel.text = (self.party.currentSongTitle)
@@ -113,6 +204,11 @@ class CurrentlyPlayingViewController: UIViewController, PartyServiceManagerDeleg
         
         
 
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        //make this part check which view to display later
+        
     }
 
     func songDidEnd(notification: NSNotification){
@@ -229,6 +325,43 @@ class CurrentlyPlayingViewController: UIViewController, PartyServiceManagerDeleg
 
 }
 
+//collection view methods
+extension CurrentlyPlayingViewController {
+
+    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
+        
+        var cell: InvitedCollectionViewCell!
+        
+        
+        let friend = self.party.invitedFriends[indexPath.row]
+        cell = self.friendsInParty.dequeueReusableCellWithReuseIdentifier("InvitedCollectionCell", forIndexPath: indexPath) as! InvitedCollectionViewCell
+        
+        if friend.profileImg == nil {
+            cell.friendImage.backgroundColor = UIColor.grayColor()
+        }
+        else{
+            cell.friendImage.image = friend.profileImg.image!
+        }
+        
+        //rounds uiimage and configures UIImageView
+        cell.friendImage.layer.cornerRadius = cell.friendImage.frame.size.width/2
+        cell.friendImage.clipsToBounds = true
+        
+        
+        
+        return cell
+        
+    }
+    
+    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        
+        return self.party.invitedFriends.count
+        
+        
+    }
+
+}
+
 extension CurrentlyPlayingViewController: PartyServiceManagerDelegate {
     
     func foundPeer() {
@@ -266,23 +399,35 @@ extension CurrentlyPlayingViewController: PartyServiceManagerDelegate {
                 
             }else if(instruction == "want_to_be_host"){
                 
-                let alert = UIAlertController(title: "Hosting Request", message: "Would you like to be the next host for the party and pick a song?", preferredStyle: .Alert)
-                alert.addAction(UIAlertAction(title: "Accept", style: .Default, handler:{
-                    (action: UIAlertAction!) -> Void in
+                if objc_getClass("UIAlertController") != nil {
                     
-                    self.party.currentHost = self.party.myPeerID.displayName
-                    alert.dismissViewControllerAnimated(true, completion: nil)
+                    let alert = UIAlertController(title: "Hosting Request", message: "Would you like to be the next host for the party and pick a song?", preferredStyle: .Alert)
+                    alert.addAction(UIAlertAction(title: "Accept", style: .Default, handler:{
+                        (action: UIAlertAction!) -> Void in
+                        
+                        self.party.currentHost = self.party.myPeerID.displayName
+                        alert.dismissViewControllerAnimated(true, completion: nil)
+                        
+                    }))
                     
-                }))
-                
-                alert.addAction(UIAlertAction(title: "Decline", style: .Default, handler:{
-                    (action: UIAlertAction!) -> Void in
-                    var dictionary: [String: AnyObject] = ["sender": self.party.myPeerID, "instruction": "does_not_accept"]
-                    self.party.sendInstruction(dictionary, toPeer: fromPeer)
-                    alert.dismissViewControllerAnimated(true, completion: nil)
-                }))
-                
-                self.presentViewController(alert, animated: true, completion: nil)
+                    
+                    alert.addAction(UIAlertAction(title: "Decline", style: .Default, handler:{
+                        (action: UIAlertAction!) -> Void in
+                        var dictionary: [String: AnyObject] = ["sender": self.party.myPeerID, "instruction": "does_not_accept"]
+                        self.party.sendInstruction(dictionary, toPeer: fromPeer)
+                        alert.dismissViewControllerAnimated(true, completion: nil)
+                    }))
+                    
+                    self.presentViewController(alert, animated: true, completion: nil)
+                    
+                }else{
+                    let alert = UIAlertView()
+                    alert.title = "Password Changed"
+                    alert.message = "Your password has been updated."
+                    alert.addButtonWithTitle("Yes")
+                    alert.addButtonWithTitle("No")
+                    alert.show()
+                }
                 
             }else if(instruction == "start_picking_a_song"){
                 if(self.party.role == PeerType.Host_Invited){

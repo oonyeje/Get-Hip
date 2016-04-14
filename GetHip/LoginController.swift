@@ -41,25 +41,71 @@ class LoginController: UIViewController, PFLogInViewControllerDelegate, UITextFi
                                 
                                 self.presentViewController(tabBarController, animated: true, completion: nil)
                             }else{
-                                var alert = UIAlertController(title: "Invalid Login", message: "Invalid email or password", preferredStyle: .Alert)
-                                alert.addAction(UIAlertAction(title: "OK", style: .Default, handler:{(action: UIAlertAction!) in alert.dismissViewControllerAnimated(true, completion: nil)}))
+                                //for ios 7 and lower compatibility
                                 
-                                self.presentViewController(alert, animated: true, completion: nil)
+                                if objc_getClass("UIAlertController") != nil {
+                                    var alert = UIAlertController(title: "Invalid Login", message: "Invalid email or password", preferredStyle: .Alert)
+                                    alert.addAction(UIAlertAction(title: "OK", style: .Default, handler:{(action: UIAlertAction!) in alert.dismissViewControllerAnimated(true, completion: nil)}))
+                                    
+                                    self.presentViewController(alert, animated: true, completion: nil)
+                                    
+                                    
+                                    
+                                }else{
+                                    let alert = UIAlertView()
+                                    alert.title = "Invalid Login"
+                                    alert.message = "Invalid email or password"
+                                    alert.addButtonWithTitle("OK")
+                                    alert.show()
+                                }
                             }
                         })
                     }else{
-                        var alert = UIAlertController(title: "Invalid Login", message: "Invalid email or password", preferredStyle: .Alert)
-                        alert.addAction(UIAlertAction(title: "OK", style: .Default, handler:{(action: UIAlertAction!) in alert.dismissViewControllerAnimated(true, completion: nil)}))
                         
-                        self.presentViewController(alert, animated: true, completion: nil)
+                        //for ios 7 and lower compatibility
+                        
+                        if objc_getClass("UIAlertController") != nil {
+                            var alert = UIAlertController(title: "Invalid Login", message: "Invalid email or password", preferredStyle: .Alert)
+                            alert.addAction(UIAlertAction(title: "OK", style: .Default, handler:{(action: UIAlertAction!) in alert.dismissViewControllerAnimated(true, completion: nil)}))
+                            
+                            self.presentViewController(alert, animated: true, completion: nil)
+                            
+                            
+                            
+                        }else{
+                            let alert = UIAlertView()
+                            alert.title = "Invalid Login"
+                            alert.message = "Invalid email or password"
+                            alert.addButtonWithTitle("OK")
+                            alert.show()
+                        }
+                        
+                        
                     }
                 })
             })
         }else{
-            var alert = UIAlertController(title: "Invalid Login", message: "Invalid email or password", preferredStyle: .Alert)
-            alert.addAction(UIAlertAction(title: "OK", style: .Default, handler:{(action: UIAlertAction!) in alert.dismissViewControllerAnimated(true, completion: nil)}))
-            self.presentViewController(alert, animated: true, completion: nil)
-            /*
+            
+            //for ios 7 and lower compatibility
+            
+            if objc_getClass("UIAlertController") != nil {
+                var alert = UIAlertController(title: "Invalid Login", message: "Invalid email or password", preferredStyle: .Alert)
+                alert.addAction(UIAlertAction(title: "OK", style: .Default, handler:{(action: UIAlertAction!) in alert.dismissViewControllerAnimated(true, completion: nil)}))
+                self.presentViewController(alert, animated: true, completion: nil)
+
+                
+                
+            }else{
+                let alert = UIAlertView()
+                alert.title = "Invalid Login"
+                alert.message = "Invalid email or password"
+                alert.addButtonWithTitle("OK")
+                alert.show()
+            }
+            
+            
+            
+                        /*
             PFUser.logInWithUsernameInBackground(userEmailField.text!, password: password.text!, block: {
                 (user, error) -> Void in
                 

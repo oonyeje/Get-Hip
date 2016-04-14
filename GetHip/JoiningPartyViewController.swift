@@ -105,11 +105,19 @@ extension JoiningPartyViewController: PartyServiceManagerDelegate {
         
         
         if (instruction == "start_party"){
-            println("mark 4")
+            println("mark 4: start party")
+            //var microDelay = NSTimer.scheduledTimerWithTimeInterval(0.1, target: self, selector: Selector("doIt"), userInfo: nil, repeats: false)
             self.performSegueWithIdentifier("EnteringPartySegue", sender: self)
+            println("micro-triggered")
+
         }
         
      
+    }
+    
+    func doIt(){
+        self.performSegueWithIdentifier("EnteringPartySegue", sender: self)
+        println("triggered")
     }
     
 }

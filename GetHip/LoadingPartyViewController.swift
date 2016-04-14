@@ -91,6 +91,7 @@ class LoadingPartyViewController: UIViewController, UICollectionViewDataSource, 
         var dictionary: [String: String] = ["sender": self.party.myPeerID.displayName, "instruction": "start_party"]
         
         for peer in self.party.session.connectedPeers as! [MCPeerID] {
+            println("start_party_from_host")
             self.party.sendInstruction(dictionary, toPeer: peer )
         }
         
@@ -100,7 +101,7 @@ class LoadingPartyViewController: UIViewController, UICollectionViewDataSource, 
     
     func attemptToStart(){
         
-        
+        /*
         
         for peer in self.party.session.connectedPeers as! [MCPeerID] {
             if self.arePeersReady[peer.displayName] == false{
@@ -108,7 +109,7 @@ class LoadingPartyViewController: UIViewController, UICollectionViewDataSource, 
                 self.party.sendInstruction(dictionary, toPeer: peer)
             }
         }
-        
+        */
         var delTimer = NSTimer.scheduledTimerWithTimeInterval(5, target: self, selector: Selector("startParty"), userInfo: nil, repeats: false)
         
         

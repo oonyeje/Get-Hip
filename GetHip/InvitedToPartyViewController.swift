@@ -23,13 +23,21 @@ class InvitedToPartyViewController: UIViewController , PartyServiceManagerDelega
     
     @IBAction func declineInvite(sender: UIButton){
         self.inviteHandle(false, self.partyData.session)
+        self.shouldEndInvite = true
         self.dismissViewControllerAnimated(true, completion: nil)
     }
     
     @IBAction func acceptInvite(sender: UIButton){
         self.partyData.currentHost = self.fromPeer.displayName
         self.inviteHandle(true, self.partyData.session)
+        self.shouldEndInvite = true
         self.performSegueWithIdentifier("JoiningPartySegue", sender: self)
+        /*self.dismissViewControllerAnimated(true, completion: {
+            () -> Void in
+            
+            
+        })*/
+        
     }
     
     override func viewDidLoad() {

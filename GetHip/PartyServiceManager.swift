@@ -161,6 +161,7 @@ class PartyServiceManager: NSObject, AnyObject {
             
             if (instruction == "are_you_ready"){
                 var ready = true
+                println("guest is ready")
                 for peer in dataDictionary["connectedPeers"] as! [MCPeerID] {
                     if (self.connectedPeersDictionary[peer.displayName] == nil) && (peer != self.myPeerID) {
                         ready = false
@@ -256,7 +257,7 @@ class PartyServiceManager: NSObject, AnyObject {
     
     //Host Methods
     func initializeSession(){
-        self.session = MCSession(peer: self.myPeerID, securityIdentity: nil, encryptionPreference: MCEncryptionPreference.Required)
+        self.session = MCSession(peer: self.myPeerID)//, securityIdentity: nil, encryptionPreference: MCEncryptionPreference.Required)
         self.session.delegate = self
         println("Initialized Peer-To-Peer Connection")
     }
@@ -305,9 +306,29 @@ extension PartyServiceManager: MCNearbyServiceBrowserDelegate{
         if(!isPeerFound(peerID)){
             if(peerID.displayName != self.myPeerID.displayName) {
                 NSLog("%@", "foundPeer: \(peerID)")
-                self.foundPeers.append(peerID)
-                self.delegate?.foundPeer()
-                //self.serviceBrowser.invitePeer(peerID, toSession: self.session, withContext: nil, timeout: NSTimeInterval(60.00))
+                
+                /*
+                //compare hash values of the 2 peer ids
+                if(UInt32(self.myPeerID.hash) > UInt32(peerID.hash)){
+                
+                }
+                /*
+                */
+                if(isPeerFound(peerID)){
+                    for(index, aPeer) in enumerate(foundPeers) {
+                        if aPeer.displayName == peerID.displayName{
+                            foundPeers[index] = peerID
+                            break
+                        }
+                    }
+                }else{
+*/
+                    self.foundPeers.append(peerID)
+                    //disconnectedPeersDictionary[peerID.displayName]
+                    self.delegate?.foundPeer()
+                    //self.serviceBrowser.invitePeer(peerID, toSession: self.session, withContext: nil, timeout: NSTimeInterval(60.00))
+                /*
+                }*/
                 
             }
             
@@ -324,6 +345,8 @@ extension PartyServiceManager: MCNearbyServiceBrowserDelegate{
             for(index, aPeer) in enumerate(foundPeers) {
                 if aPeer == peerID{
                     foundPeers.removeAtIndex(index)
+                    //disconnectedPeersDictionary[peerID.displayName] = peerID
+                    self.invitableCount--
                     break
                 }
             }
@@ -371,8 +394,8 @@ extension PartyServiceManager: MCSessionDelegate{
     }
     
     func session(session: MCSession!, didReceiveData data: NSData!, fromPeer peerID: MCPeerID!) {
-        NSLog("%@", "didRecieveData: \(data)")
-        
+        //NSLog("%@", "didRecieveData: \(data)")
+        println("recieved data")
         let dictionary: [String: AnyObject] = ["data": data, "fromPeer": peerID]
         self.delegate?.didRecieveInstruction(dictionary)
         
@@ -397,6 +420,12 @@ extension PartyServiceManager: MCSessionDelegate{
     
     func session(session: MCSession!, didStartReceivingResourceWithName resourceName: String!, fromPeer peerID: MCPeerID!, withProgress progress: NSProgress!) {
         NSLog("%@", "didStartReceivingResourceWithName: \(resourceName) from peer: \(peerID)")
+    }
+    
+    func session(session: MCSession!, didReceiveCertificate certificate: [AnyObject]!, fromPeer peerID: MCPeerID!, certificateHandler: ((Bool) -> Void)!) {
+        if(certificateHandler != nil){
+            certificateHandler(true)
+        }
     }
     
     

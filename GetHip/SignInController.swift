@@ -27,13 +27,27 @@ class SignInController: UIViewController, UINavigationControllerDelegate, UIImag
             || self.passField.hasText() == false
             || self.profilePic.image == nil){
                 
-                let alert = UIAlertController(title: "Invalid Registration", message: "We're missing some information from you, before we can start the party!", preferredStyle: .Alert)
-                alert.addAction(UIAlertAction(title: "OK", style: .Default, handler:{(action: UIAlertAction!) in alert.dismissViewControllerAnimated(true, completion: nil)}))
                 
-                self.presentViewController(alert, animated: true, completion: nil)
+                //for ios 7 and lower compatibility
+                
+                if objc_getClass("UIAlertController") != nil {
+                    let alert = UIAlertController(title: "Invalid Registration", message: "We're missing some information from you, before we can start the party!", preferredStyle: .Alert)
+                    alert.addAction(UIAlertAction(title: "OK", style: .Default, handler:{(action: UIAlertAction!) in alert.dismissViewControllerAnimated(true, completion: nil)}))
+                    
+                    self.presentViewController(alert, animated: true, completion: nil)
+                    
+                    
+                    
+                }else{
+                    let alert = UIAlertView()
+                    alert.title = "Invalid Registration"
+                    alert.message = "We're missing some information from you, before we can start the party!"
+                    alert.addButtonWithTitle("OK")
+                    alert.show()
+                }
                 
         }else{
-            if /*(!(contains(self.userField.text!, "@") ||*/ contains(self.nameField.text!, "@"){
+            if /*(!(contains(self.userField.text!, "@") ||*/ !contains(self.nameField.text!, "@"){
             
                 let predicate: NSPredicate = NSPredicate(format: "(email = %@)", argumentArray: [self.emailField.text!])
                 var userQuery: PFQuery = PFQuery(className: "_User", predicate: predicate)
@@ -43,10 +57,23 @@ class SignInController: UIViewController, UINavigationControllerDelegate, UIImag
                         (object, error) -> Void in
                         
                         if(object != nil && error == nil){
-                            let alert = UIAlertController(title: "User Info Taken", message: "Sorry this information is already registered to another user. Please try again.", preferredStyle: .Alert)
-                            alert.addAction(UIAlertAction(title: "OK", style: .Default, handler:{(action: UIAlertAction!) in alert.dismissViewControllerAnimated(true, completion: nil)}))
                             
-                            self.presentViewController(alert, animated: true, completion: nil)
+                            //for ios 7 and lower compatibility
+                            
+                            if objc_getClass("UIAlertController") != nil {
+                                let alert = UIAlertController(title: "User Info Taken", message: "Sorry this information is already registered to another user. Please try again.", preferredStyle: .Alert)
+                                alert.addAction(UIAlertAction(title: "OK", style: .Default, handler:{(action: UIAlertAction!) in alert.dismissViewControllerAnimated(true, completion: nil)}))
+                                
+                                self.presentViewController(alert, animated: true, completion: nil)
+                                
+                            }else{
+                                let alert = UIAlertView()
+                                alert.title = "User Info Taken"
+                                alert.message = "Sorry this information is already registered to another user. Please try again."
+                                alert.addButtonWithTitle("OK")
+                                alert.show()
+                            }
+                            
                         }else{
                             var user = PFUser()
                             var img:PFFile = PFFile(data: UIImageJPEGRepresentation(self.profilePic.image, 1.0))!
@@ -78,10 +105,22 @@ class SignInController: UIViewController, UINavigationControllerDelegate, UIImag
 
             
             }else{
-                let alert = UIAlertController(title: "Illegal Characters", message: "The username or email you entered contains illegal characters such as: '@'", preferredStyle: .Alert)
-                alert.addAction(UIAlertAction(title: "OK", style: .Default, handler:{(action: UIAlertAction!) in alert.dismissViewControllerAnimated(true, completion: nil)}))
+                //for ios 7 and lower compatibility
                 
-                self.presentViewController(alert, animated: true, completion: nil)
+                if objc_getClass("UIAlertController") != nil {
+                    let alert = UIAlertController(title: "Illegal Characters", message: "The display name you entered contains illegal characters such as: '@'", preferredStyle: .Alert)
+                    alert.addAction(UIAlertAction(title: "OK", style: .Default, handler:{(action: UIAlertAction!) in alert.dismissViewControllerAnimated(true, completion: nil)}))
+                    
+                    self.presentViewController(alert, animated: true, completion: nil)
+
+                    
+                }else{
+                    let alert = UIAlertView()
+                    alert.title = "Illegal Characters"
+                    alert.message = "The display name you entered contains illegal characters such as: '@'"
+                    alert.addButtonWithTitle("OK")
+                    alert.show()
+                }
             }
             
         }

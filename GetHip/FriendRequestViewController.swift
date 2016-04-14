@@ -53,10 +53,23 @@ class FriendRequestViewController: UIViewController{
                         (succeeded, error) -> Void in
                         
                         if(succeeded){
-                            var alert = UIAlertController(title: "Request Sent!", message: "Your friend request was sent successfully!", preferredStyle: .Alert)
-                            alert.addAction(UIAlertAction(title: "OK", style: .Default, handler:{(action: UIAlertAction!) in alert.dismissViewControllerAnimated(true, completion: nil)}))
                             
-                            self.presentViewController(alert, animated: true, completion: nil)
+                            //for ios 7 and lower compatibility
+                            
+                            if objc_getClass("UIAlertController") != nil {
+                                
+                                var alert = UIAlertController(title: "Request Sent!", message: "Your friend request was sent successfully!", preferredStyle: .Alert)
+                                alert.addAction(UIAlertAction(title: "OK", style: .Default, handler:{(action: UIAlertAction!) in alert.dismissViewControllerAnimated(true, completion: nil)}))
+                                
+                                self.presentViewController(alert, animated: true, completion: nil)
+                                
+                            }else{
+                                let alert = UIAlertView()
+                                alert.title = "Request Sent!"
+                                alert.message = "Your friend request was sent successfully!"
+                                alert.addButtonWithTitle("OK")
+                                alert.show()
+                            }
                             
                             println(friendRequest.objectId!)
                             var params = NSMutableDictionary()
@@ -151,9 +164,25 @@ extension FriendRequestViewController: UITextFieldDelegate{
             
             if(self.searchedEmail == (self.tabBarController as! HomeTabController).userData[0].email){
                 
-                let alert = UIAlertController(title: "That's You!", message: "Sorry, you can't send a request to yourself.", preferredStyle: .Alert)
-                alert.addAction(UIAlertAction(title: "OK", style: .Default, handler:{(action: UIAlertAction!) in alert.dismissViewControllerAnimated(true, completion: nil)}))
-                self.presentViewController(alert, animated: true, completion: nil)
+
+                
+                //for ios 7 and lower compatibility
+                if objc_getClass("UIAlertController") != nil {
+                
+                    
+                    let alert = UIAlertController(title: "That's You!", message: "Sorry, you can't send a request to yourself.", preferredStyle: .Alert)
+                    alert.addAction(UIAlertAction(title: "OK", style: .Default, handler:{(action: UIAlertAction!) in alert.dismissViewControllerAnimated(true, completion: nil)}))
+                    self.presentViewController(alert, animated: true, completion: nil)
+                    
+                }else{
+                    let alert = UIAlertView()
+                    alert.title = "That's You!"
+                    alert.message = "Sorry, you can't send a request to yourself."
+                    alert.addButtonWithTitle("OK")
+                    alert.show()
+                }
+                
+                
                 
             }
             else if(inFriendsList == false){
@@ -199,19 +228,47 @@ extension FriendRequestViewController: UITextFieldDelegate{
                             })
                             
                         }else{
-                            let alert = UIAlertController(title: "Request Already Made", message: "You have already sent a friend request to this user.", preferredStyle: .Alert)
-                            alert.addAction(UIAlertAction(title: "OK", style: .Default, handler:{(action: UIAlertAction!) in alert.dismissViewControllerAnimated(true, completion: nil)}))
-                            self.presentViewController(alert, animated: true, completion: nil)
-                        }
+                            
+                            //for ios 7 and lower compatibility
+                            
+                            if objc_getClass("UIAlertController") != nil {
+                                let alert = UIAlertController(title: "Request Already Made!", message: "You have already sent a friend request to this user.", preferredStyle: .Alert)
+                                alert.addAction(UIAlertAction(title: "OK", style: .Default, handler:{(action: UIAlertAction!) in alert.dismissViewControllerAnimated(true, completion: nil)}))
+                                self.presentViewController(alert, animated: true, completion: nil)
+
+                                
+                            }else{
+                                let alert = UIAlertView()
+                                alert.title = "Request Already Made!"
+                                alert.message = "You have already sent a friend request to this user."
+                                alert.addButtonWithTitle("OK")
+                                alert.show()
+                            }
+                            
+                                                    }
                         
                     })
                 })
                 
             }else{
                 
-                let alert = UIAlertController(title: "Already Friends", message: "You are already friends with this user!", preferredStyle: .Alert)
-                alert.addAction(UIAlertAction(title: "OK", style: .Default, handler:{(action:  UIAlertAction!) in alert.dismissViewControllerAnimated(true, completion: nil)}))
+                //for ios 7 and lower compatibility
+                
+                if objc_getClass("UIAlertController") != nil {
+                    let alert = UIAlertController(title: "Already Friends!", message: "You are already friends with this user!", preferredStyle: .Alert)
+                    alert.addAction(UIAlertAction(title: "OK", style: .Default, handler:{(action:  UIAlertAction!) in alert.dismissViewControllerAnimated(true, completion: nil)}))
                     self.presentViewController(alert, animated: true, completion: nil)
+
+                    
+                }else{
+                    let alert = UIAlertView()
+                    alert.title = "Already Friends!"
+                    alert.message = "You are already friends with this user!"
+                    alert.addButtonWithTitle("OK")
+                    alert.show()
+                }
+                
+                
             }
 
         
