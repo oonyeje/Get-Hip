@@ -21,6 +21,8 @@ class CurrentlyPlayingViewController: UIViewController, PartyServiceManagerDeleg
     var playing = true
     var timer = NSTimer()
     var nextHost: String!
+    var messageOutputStream: Dictionary<String, NSOutputStream>!
+    var messageInputStream: Dictionary<String, NSInputStresm>!
     @IBOutlet var segmentControl: UISegmentedControl!
     
     @IBAction func switchViews(segCtrl: UISegmentedControl){
@@ -31,7 +33,7 @@ class CurrentlyPlayingViewController: UIViewController, PartyServiceManagerDeleg
             self.leaveOrEnd.hidden = true
             self.leaveOrEnd.enabled = false
             self.addMore.hidden = true
-            self.addMore.enabled == true
+            self.addMore.enabled = true
             
             
             //show all relevent current playing ui components
@@ -44,7 +46,7 @@ class CurrentlyPlayingViewController: UIViewController, PartyServiceManagerDeleg
             
             if(self.party.role == PeerType.Host_Creator || self.party.role == PeerType.Guest_Creator){
             
-                self.volCtrl.hidden == false
+                self.volCtrl.hidden = false
                 self.volCtrl.enabled = true
                 
             }
@@ -61,7 +63,7 @@ class CurrentlyPlayingViewController: UIViewController, PartyServiceManagerDeleg
             if(self.party.role == PeerType.Host_Creator || self.party.role == PeerType.Guest_Creator){
                 
                 self.addMore.hidden = false
-                self.addMore.enabled == true
+                self.addMore.enabled = true
             }
             
             
@@ -73,7 +75,7 @@ class CurrentlyPlayingViewController: UIViewController, PartyServiceManagerDeleg
             self.maxLabel.hidden = true
             self.progressBar.hidden = true
             
-            self.volCtrl.hidden == true
+            self.volCtrl.hidden = true
             self.volCtrl.enabled = false
         }
         
