@@ -192,7 +192,12 @@ class LoadingPartyViewController: UIViewController, UICollectionViewDataSource, 
         cell.friendImage.clipsToBounds = true
         
         if(self.party.connectedPeersDictionary[friend.displayName] == nil){
-            cell.alpha = 0.5
+            dispatch_async(dispatch_get_main_queue()){
+                cell.alpha = 0.5
+            }
+            
+            
+            
         }
         
         

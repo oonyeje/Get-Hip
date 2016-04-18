@@ -282,7 +282,7 @@ class SongSelectionViewController: UIViewController, UITableViewDelegate, UITabl
             
             for i_peer in self.party.invitedFriends{
                 for peer in self.party.foundPeers {
-                    if (peer.displayName == i_peer.displayName && self.party.myPeerID.hash > peer.hash){
+                    if (peer.displayName == i_peer.displayName /*&& self.party.myPeerID.hash > peer.hash*/ && (self.party.connectedPeersDictionary[peer.displayName] == nil || self.party.connectedPeersDictionary[peer.displayName]!.displayName == "@nil" )){
                         self.party.serviceBrowser.invitePeer(peer, toSession: self.party.session, withContext: nil, timeout: 30.0)
                         
                         break

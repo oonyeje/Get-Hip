@@ -184,7 +184,7 @@ class PartyServiceManager: NSObject, AnyObject {
             
             if(instruction == "does_accept"){
             
-                self.currentHost == fromPeer.displayName
+                self.currentHost = fromPeer.displayName
             
             }
             
@@ -395,7 +395,7 @@ extension PartyServiceManager: MCSessionDelegate{
             NSLog("%@", "peer \(peerID) didChangeState: \(state.stringValue())")
             self.disconnectedPeersDictionary[peerID.displayName] = peerID
             if self.connectedPeersDictionary[peerID.displayName] != nil{
-               // self.connectedPeersDictionary[peerID.displayName] = nil
+                self.connectedPeersDictionary[peerID.displayName] = MCPeerID(displayName: "@nil")
             }
         }
     }

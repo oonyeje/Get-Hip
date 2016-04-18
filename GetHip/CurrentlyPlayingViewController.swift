@@ -23,6 +23,7 @@ class CurrentlyPlayingViewController: UIViewController, PartyServiceManagerDeleg
     var nextHost: String!
     var messageOutputStream: Dictionary<String, NSOutputStream>!
     var messageInputStream: Dictionary<String, NSInputStream>!
+    var firstPass = true
     @IBOutlet var segmentControl: UISegmentedControl!
     
     //class variable for responding to peer who has just sent a message
@@ -149,6 +150,7 @@ class CurrentlyPlayingViewController: UIViewController, PartyServiceManagerDeleg
 
     
     override func viewDidLoad() {
+        
         super.viewDidLoad()
         
         
@@ -247,9 +249,16 @@ class CurrentlyPlayingViewController: UIViewController, PartyServiceManagerDeleg
     override func viewDidAppear(animated: Bool) {
         //make this part check which view to display later
         
+        if(self.firstPass){
+            self.firstPass = !self.firstPass
+        }else{
+            viewDidLoad()
+        }
+        
     }
 
     func songDidEnd(notification: NSNotification){
+        
         if(self.party.role == PeerType.Host_Creator){
             self.party.role == PeerType.Host_Invited
         }else if (self.party.role == PeerType.Guest_Creator){
@@ -258,6 +267,8 @@ class CurrentlyPlayingViewController: UIViewController, PartyServiceManagerDeleg
         
         var didAnyoneBecomeHost: Bool = false
         for peer in self.party.connectedPeers() as! [MCPeerID]{
+            self.party.outputStreamers[peer.displayName]?.stop()
+            
             if ((self.party.currentHost != nil) && (peer.displayName == self.party.currentHost)){
                 var dictionary: [String: AnyObject] = ["sender": self.party.myPeerID, "instruction": "start_picking_a_song"]
                 self.party.sendInstruction(dictionary, toPeer: peer)
@@ -269,9 +280,9 @@ class CurrentlyPlayingViewController: UIViewController, PartyServiceManagerDeleg
         }
         
         if(didAnyoneBecomeHost){
-            self.performSegueWithIdentifier("NextSongSelectionSegue", sender: self)
-        }else{
             self.performSegueWithIdentifier("NextUpSegue", sender: self)
+        }else{
+            self.performSegueWithIdentifier("NextSongSelectionSegue", sender: self)
         }
         
     }
@@ -379,8 +390,8 @@ extension CurrentlyPlayingViewController {
         if(indexPath.row == 0){
             cell.friendImage.image = self.usr[0].profileImg.image!
         }
-        else if((indexPath.row > 0) && (indexPath.row < self.party.invitedFriends.count)){
-            let friend = self.party.invitedFriends[indexPath.row]
+        else if((indexPath.row > 0) && (indexPath.row <= self.party.invitedFriends.count)){
+            let friend = self.party.invitedFriends[indexPath.row - 1]
             if friend.profileImg == nil {
                 cell.friendImage.backgroundColor = UIColor.lightGrayColor()
             }
@@ -466,6 +477,7 @@ extension CurrentlyPlayingViewController: PartyServiceManagerDelegate {
                 self.party.inputStreamer.resume()
                 
             }else if(instruction == "want_to_be_host"){
+                self.curr_fromPeer = fromPeer
                 
                 let priority = DISPATCH_QUEUE_PRIORITY_DEFAULT
                 dispatch_async(dispatch_get_global_queue(priority, 0)) {
@@ -497,6 +509,7 @@ extension CurrentlyPlayingViewController: PartyServiceManagerDelegate {
                             
                         }else{
                             let alert = UIAlertView()
+                            alert.delegate = self
                             
                             alert.title = "Hosting Rrequest"
                             alert.message = "Would you like to be the next host for the party and pick a song?"

@@ -80,7 +80,7 @@ extension NextUpViewController: PartyServiceManagerDelegate {
             var dictionary: [String: String] = ["sender": self.party.myPeerID.displayName, "instruction": "disconnect"]
             self.party.sendInstruction(dictionary, toPeer: fromPeer)
         }else{
-            if (instruction == "start"){
+            if (instruction == "start_party"){
                 self.performSegueWithIdentifier("NextSongSegue", sender: self)
             }
         }
