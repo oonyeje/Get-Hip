@@ -213,6 +213,7 @@ class TestInviteFriendsController: UIViewController, UITableViewDelegate, UITabl
         for var i = 0; i < self.isFriendSelected.count; i++ {
             if (self.isFriendSelected[i] == true) {
                 invited.append(self.frnds[i])
+                
             }
         }
         self.partyData.invitedFriends = invited

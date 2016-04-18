@@ -87,14 +87,15 @@ class PartyServiceManager: NSObject, AnyObject {
     func chooseNextHost(){
         var numPeers = self.connectedPeers().count
         var nextHostIndex: Int = Int(arc4random_uniform(UInt32(numPeers)))
-        println(nextHostIndex)
-        println(self.connectedPeers().count)
+        println("")
+        println(self.currentHost)
+        println(self.connectedPeers()[nextHostIndex].displayName)
+        
         if (self.currentHost != nil && self.connectedPeers()[nextHostIndex].displayName == self.currentHost){
             chooseNextHost()
         }else{
-            self.currentHost = self.connectedPeers()[nextHostIndex].displayName
             var dictionary: [String: AnyObject] = ["sender": self.myPeerID, "instruction": "want_to_be_host"]
-            self.sendInstruction(dictionary, toPeer: self.connectedPeersDictionary[self.currentHost] as! MCPeerID)
+            self.sendInstruction(dictionary, toPeer: self.connectedPeersDictionary[self.connectedPeers()[nextHostIndex].displayName] as! MCPeerID)
         }
     }
     
@@ -179,6 +180,12 @@ class PartyServiceManager: NSObject, AnyObject {
             
             if(instruction == "does_not_accept"){
                 self.chooseNextHost()
+            }
+            
+            if(instruction == "does_accept"){
+            
+                self.currentHost == fromPeer.displayName
+            
             }
             
             

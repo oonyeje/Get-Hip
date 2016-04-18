@@ -11,7 +11,7 @@ import MediaPlayer
 import AVFoundation
 import MultipeerConnectivity
 
-class CurrentlyPlayingViewController: UIViewController, PartyServiceManagerDelegate, UICollectionViewDataSource, UICollectionViewDelegate{
+class CurrentlyPlayingViewController: UIViewController, PartyServiceManagerDelegate, UICollectionViewDataSource, UICollectionViewDelegate, UIAlertViewDelegate{
     //persistant data
     var party: PartyServiceManager!
     var usr: [UserParseData] = []
@@ -22,8 +22,11 @@ class CurrentlyPlayingViewController: UIViewController, PartyServiceManagerDeleg
     var timer = NSTimer()
     var nextHost: String!
     var messageOutputStream: Dictionary<String, NSOutputStream>!
-    var messageInputStream: Dictionary<String, NSInputStresm>!
+    var messageInputStream: Dictionary<String, NSInputStream>!
     @IBOutlet var segmentControl: UISegmentedControl!
+    
+    //class variable for responding to peer who has just sent a message
+    private var curr_fromPeer: MCPeerID!
     
     @IBAction func switchViews(segCtrl: UISegmentedControl){
     
@@ -159,6 +162,7 @@ class CurrentlyPlayingViewController: UIViewController, PartyServiceManagerDeleg
         self.leaveOrEnd.enabled = false
         
         
+        
         //Set up for CurrentlyPlayingView
         self.progressBar.setProgress(0, animated: true)
         self.volCtrl.hidden = true
@@ -176,11 +180,29 @@ class CurrentlyPlayingViewController: UIViewController, PartyServiceManagerDeleg
             self.audioPlayer.volume = self.volCtrl.value
             self.maxLabel.text = String(stringInterpolationSegment: self.audioPlayer.currentItem.duration.value)
             self.party.delegate = self
-            for peer in self.party.session.connectedPeers {
-                self.party.outputStreamers[peer.displayName]?.start()
+            
+            let priority = DISPATCH_QUEUE_PRIORITY_DEFAULT
+            dispatch_async(dispatch_get_global_queue(priority, 0)) {
+                // Put the calculations here
+                
+                for peer in self.party.session.connectedPeers {
+                    self.party.outputStreamers[peer.displayName]?.start()
+                }
+                self.audioPlayer.play()
+                
+                self.timer = NSTimer.scheduledTimerWithTimeInterval(1, target: self, selector: Selector("updateLabels"), userInfo: nil, repeats: true)
+                
+                
+                
+                dispatch_async(dispatch_get_main_queue()) {
+                    // any updates of the UI need to be here to do them in the main thread after your background task. For example adding subviews
+                    
+                    if (self.party.role == PeerType.Guest_Creator){
+                        self.leaveOrEnd.titleLabel!.text = "Leave Party"
+                    }
+                    
+                }
             }
-            self.audioPlayer.play()
-            self.timer = NSTimer.scheduledTimerWithTimeInterval(1, target: self, selector: Selector("updateLabels"), userInfo: nil, repeats: true)
             
             //sets the next host of the party once the party starts
             self.party.chooseNextHost()
@@ -188,20 +210,34 @@ class CurrentlyPlayingViewController: UIViewController, PartyServiceManagerDeleg
             
             //used to notify for end of song and initiate next host loop
             
-            //NSNotificationCenter.defaultCenter().addObserver(self, selector: "songDidEnd:", name: "AVPlayerItemDidPlayToEndTimeNotification", object: nil)
+            NSNotificationCenter.defaultCenter().addObserver(self, selector: "songDidEnd:", name: "AVPlayerItemDidPlayToEndTimeNotification", object: nil)
             
         }else if (self.party.role == PeerType.Guest_Invited || self.party.role == PeerType.Host_Invited){
-            self.volCtrl.hidden = true
-            self.volCtrl.enabled = false
-            
-            self.songImg.image = self.party.currentSongIMG
-            self.titleLabel.text = (self.party.currentSongTitle)
-            println(self.party.currentSongTitle)
-            println(self.titleLabel.text)
-            self.artistAndAlbumLabel.text = (self.party.currentSongArtistAlbum)
-            self.party.delegate = self
-            self.ppfButton.hidden = true
-            
+            let priority = DISPATCH_QUEUE_PRIORITY_DEFAULT
+            dispatch_async(dispatch_get_global_queue(priority, 0)) {
+                // Put the calculations here
+                dispatch_async(dispatch_get_main_queue()) {
+                    // any updates of the UI need to be here to do them in the main thread after your background task. For example adding subviews
+                    
+                    self.volCtrl.hidden = true
+                    self.volCtrl.enabled = false
+                    
+                    self.songImg.image = self.party.currentSongIMG
+                    self.titleLabel.text = (self.party.currentSongTitle)
+                    println(self.party.currentSongTitle)
+                    println(self.titleLabel.text)
+                    self.artistAndAlbumLabel.text = (self.party.currentSongArtistAlbum)
+                    self.party.delegate = self
+                    self.ppfButton.hidden = true
+                    
+                    if(self.party.role == PeerType.Guest_Invited){
+                        self.leaveOrEnd.titleLabel!.text = "Leave Party"
+                    }
+                    
+
+                    
+                }
+            }
         }
         
         
@@ -220,17 +256,24 @@ class CurrentlyPlayingViewController: UIViewController, PartyServiceManagerDeleg
             self.party.role == PeerType.Guest_Invited
         }
         
+        var didAnyoneBecomeHost: Bool = false
         for peer in self.party.connectedPeers() as! [MCPeerID]{
-            if (peer.displayName == self.party.currentHost){
+            if ((self.party.currentHost != nil) && (peer.displayName == self.party.currentHost)){
                 var dictionary: [String: AnyObject] = ["sender": self.party.myPeerID, "instruction": "start_picking_a_song"]
                 self.party.sendInstruction(dictionary, toPeer: peer)
+                didAnyoneBecomeHost = true
             }else{
                 var dictionary: [String: AnyObject] = ["sender": self.party.myPeerID, "instruction": "wait_in_nextUp_Scene"]
                 self.party.sendInstruction(dictionary, toPeer: peer)
             }
         }
         
-        self.performSegueWithIdentifier("NextUpSegue", sender: self)
+        if(didAnyoneBecomeHost){
+            self.performSegueWithIdentifier("NextSongSelectionSegue", sender: self)
+        }else{
+            self.performSegueWithIdentifier("NextUpSegue", sender: self)
+        }
+        
     }
     
     func timeFormat(value: Float) -> String{
@@ -332,36 +375,59 @@ extension CurrentlyPlayingViewController {
 
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         
-        var cell: InvitedCollectionViewCell!
-        
-        
-        let friend = self.party.invitedFriends[indexPath.row]
-        cell = self.friendsInParty.dequeueReusableCellWithReuseIdentifier("InvitedCollectionCell", forIndexPath: indexPath) as! InvitedCollectionViewCell
-        
-        if friend.profileImg == nil {
-            cell.friendImage.backgroundColor = UIColor.grayColor()
+        var cell: InvitedCollectionViewCell! = self.friendsInParty.dequeueReusableCellWithReuseIdentifier("InvitedCollectionCell", forIndexPath: indexPath) as! InvitedCollectionViewCell
+        if(indexPath.row == 0){
+            cell.friendImage.image = self.usr[0].profileImg.image!
         }
-        else{
-            cell.friendImage.image = friend.profileImg.image!
+        else if((indexPath.row > 0) && (indexPath.row < self.party.invitedFriends.count)){
+            let friend = self.party.invitedFriends[indexPath.row]
+            if friend.profileImg == nil {
+                cell.friendImage.backgroundColor = UIColor.lightGrayColor()
+            }
+            else{
+                cell.friendImage.image = friend.profileImg.image!
+            }
+            
+            
+        }else{
+            
+            cell.friendImage.backgroundColor = UIColor.grayColor()
+            
         }
         
         //rounds uiimage and configures UIImageView
         cell.friendImage.layer.cornerRadius = cell.friendImage.frame.size.width/2
         cell.friendImage.clipsToBounds = true
-        
-        
-        
         return cell
-        
     }
+
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         
-        return self.party.invitedFriends.count
+        return 8
         
         
     }
 
+}
+
+extension CurrentlyPlayingViewController: UIAlertViewDelegate {
+
+    func alertView(alertView: UIAlertView, clickedButtonAtIndex buttonIndex: Int) {
+        if(buttonIndex == 0){
+            var dictionary: [String: AnyObject] = ["sender": self.party.myPeerID, "instruction": "does_accept"]
+            self.party.sendInstruction(dictionary, toPeer: curr_fromPeer)
+            self.party.currentHost = self.party.myPeerID.displayName
+            print(self.party.currentHost)
+            alertView.dismissWithClickedButtonIndex(0, animated: true)
+        }
+        if(buttonIndex == 1){
+            var dictionary: [String: AnyObject] = ["sender": self.party.myPeerID, "instruction": "does_not_accept"]
+            self.party.sendInstruction(dictionary, toPeer: curr_fromPeer)
+            alertView.dismissWithClickedButtonIndex(1, animated: true)
+        }
+
+    }
 }
 
 extension CurrentlyPlayingViewController: PartyServiceManagerDelegate {
@@ -401,35 +467,50 @@ extension CurrentlyPlayingViewController: PartyServiceManagerDelegate {
                 
             }else if(instruction == "want_to_be_host"){
                 
-                if objc_getClass("UIAlertController") != nil {
-                    
-                    let alert = UIAlertController(title: "Hosting Request", message: "Would you like to be the next host for the party and pick a song?", preferredStyle: .Alert)
-                    alert.addAction(UIAlertAction(title: "Accept", style: .Default, handler:{
-                        (action: UIAlertAction!) -> Void in
+                let priority = DISPATCH_QUEUE_PRIORITY_DEFAULT
+                dispatch_async(dispatch_get_global_queue(priority, 0)) {
+                    // Put the calculations here
+                    dispatch_async(dispatch_get_main_queue()) {
+                        // any updates of the UI need to be here to do them in the main thread after your background task. For example adding subviews
                         
-                        self.party.currentHost = self.party.myPeerID.displayName
-                        alert.dismissViewControllerAnimated(true, completion: nil)
-                        
-                    }))
-                    
-                    
-                    alert.addAction(UIAlertAction(title: "Decline", style: .Default, handler:{
-                        (action: UIAlertAction!) -> Void in
-                        var dictionary: [String: AnyObject] = ["sender": self.party.myPeerID, "instruction": "does_not_accept"]
-                        self.party.sendInstruction(dictionary, toPeer: fromPeer)
-                        alert.dismissViewControllerAnimated(true, completion: nil)
-                    }))
-                    
-                    self.presentViewController(alert, animated: true, completion: nil)
-                    
-                }else{
-                    let alert = UIAlertView()
-                    alert.title = "Password Changed"
-                    alert.message = "Your password has been updated."
-                    alert.addButtonWithTitle("Yes")
-                    alert.addButtonWithTitle("No")
-                    alert.show()
+                        if objc_getClass("UIAlertController") != nil {
+                            
+                            let alert = UIAlertController(title: "Hosting Request", message: "Would you like to be the next host for the party and pick a song?", preferredStyle: .Alert)
+                            alert.addAction(UIAlertAction(title: "Accept", style: .Default, handler:{
+                                (action: UIAlertAction!) -> Void in
+                                var dictionary: [String: AnyObject] = ["sender": self.party.myPeerID, "instruction": "does_accept"]
+                                self.party.sendInstruction(dictionary, toPeer: fromPeer)
+                                self.party.currentHost = self.party.myPeerID.displayName
+                                alert.dismissViewControllerAnimated(true, completion: nil)
+                                
+                            }))
+                            
+                            
+                            alert.addAction(UIAlertAction(title: "Decline", style: .Default, handler:{
+                                (action: UIAlertAction!) -> Void in
+                                var dictionary: [String: AnyObject] = ["sender": self.party.myPeerID, "instruction": "does_not_accept"]
+                                self.party.sendInstruction(dictionary, toPeer: fromPeer)
+                                alert.dismissViewControllerAnimated(true, completion: nil)
+                            }))
+                            
+                            self.presentViewController(alert, animated: true, completion: nil)
+                            
+                        }else{
+                            let alert = UIAlertView()
+                            
+                            alert.title = "Hosting Rrequest"
+                            alert.message = "Would you like to be the next host for the party and pick a song?"
+                            alert.addButtonWithTitle("Accept")
+                            alert.addButtonWithTitle("Decline")
+                            alert.show()
+                            
+                            }
+                            
+                            
+                        }
+
                 }
+            
                 
             }else if(instruction == "start_picking_a_song"){
                 if(self.party.role == PeerType.Host_Invited){

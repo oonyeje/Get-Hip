@@ -16,57 +16,47 @@ class SongSelectionViewController: UIViewController, UITableViewDelegate, UITabl
     var frnds: [FriendData] = []
     var requestData: [FriendData] = []
     @IBOutlet weak var table: UITableView!
+    @IBOutlet weak var segCtrl: UISegmentedControl!
 
-    
-    @IBAction func selectFilter(sender: AnyObject) {
-        let filterMenu = UIAlertController(title: nil, message:nil, preferredStyle: .ActionSheet)
-        let cell: FilterCell = self.table.cellForRowAtIndexPath(NSIndexPath(forRow: 0, inSection: 0)) as! FilterCell
+    @IBAction func switchViews(segCtrl: UISegmentedControl){
+        switch self.segCtrl.selectedSegmentIndex {
         
-        let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel, handler: {
-            (alert: UIAlertAction!) -> Void in
-        })
-        
-        let songFilterAction = UIAlertAction(title: "Songs", style: .Default, handler: {
-            (alert: UIAlertAction!) -> Void in
+        case 0:
             self.filter = "Songs"
-            self.table.reloadData()
-            cell.filterBtn.titleLabel?.text = self.filter
-
-        })
-        
-        let albumFilterAction = UIAlertAction(title: "Albums", style: .Default, handler: {
-            (alert: UIAlertAction!) -> Void in
+            break
+        case 1:
             self.filter = "Albums"
-            self.table.reloadData()
-            cell.filterBtn.titleLabel?.text = self.filter
-        })
-        
-        let artistFilterAction = UIAlertAction(title: "Artists", style: .Default, handler: {
-            (alert: UIAlertAction!) -> Void in
-            self.filter = "Artists"
-            self.table.reloadData()
-            cell.filterBtn.titleLabel?.text = self.filter
-
-        })
-        
-        switch self.filter {
-        
-        case "Artists":
-            filterMenu.addAction(songFilterAction)
-            filterMenu.addAction(albumFilterAction)
-        case "Albums":
-            filterMenu.addAction(songFilterAction)
-            filterMenu.addAction(artistFilterAction)
             break
         default:
-            filterMenu.addAction(artistFilterAction)
-            filterMenu.addAction(albumFilterAction)
+            self.filter = "Artists"
             break
+        
         }
-        filterMenu.addAction(cancelAction)
-        self.presentViewController(filterMenu, animated: true, completion: nil)
+        
+        switch self.filter {
+        case "Albums":
+            
+            self.table.reloadData()
+            break
+        case "Artists":
+            
+            self.table.reloadData()
+            break
+        default:
+            
+            self.table.reloadData()
+            break
+            
+        }
+        
+        if(segCtrl.selectedSegmentIndex == 0){
+        
+        
+        }
+        
     }
     
+        
     var filter: String! = "Songs"
     
     @IBAction func cancelInvites(sender: UIBarButtonItem) {
@@ -110,32 +100,29 @@ class SongSelectionViewController: UIViewController, UITableViewDelegate, UITabl
         //return number of rows for albums
         case "Albums":
             var albumsQuery = MPMediaQuery.albumsQuery()
+            albumsQuery.groupingType = MPMediaGrouping.Album
             var albums = albumsQuery.collections
-            return albums.count + 1
+            return albums.count
         
         //return number of rows for artists
         case "Artists":
             var artistsQuery = MPMediaQuery.artistsQuery()
-            //artistsQuery
-            var artists = artistsQuery.items
-            return artists.count + 1
+            artistsQuery.groupingType = MPMediaGrouping.Artist
+            var artists = artistsQuery.collections
+            return artists.count
             
         //return number of rows for song
         default:
             var songsQuery = MPMediaQuery.songsQuery()
             var songs = songsQuery.items
-            return songs.count + 1
+            return songs.count
         }
         
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
-        if( indexPath.row == 0){
-            
-            
-        }
-        else{
+        
             switch self.filter{
                 
                 //return albums cell
@@ -145,7 +132,7 @@ class SongSelectionViewController: UIViewController, UITableViewDelegate, UITabl
                 
                 var albumsQuery = MPMediaQuery.albumsQuery()
                 var albums = albumsQuery.items
-                var rowItem: MPMediaItem = albums[indexPath.row - 1] as! MPMediaItem
+                var rowItem: MPMediaItem = albums[indexPath.row ] as! MPMediaItem
                 //segue to song selection from album selection
                 
                 
@@ -156,7 +143,7 @@ class SongSelectionViewController: UIViewController, UITableViewDelegate, UITabl
                 
                 var artistsQuery = MPMediaQuery.artistsQuery()
                 var artists = artistsQuery.items
-                var rowItem: MPMediaItem = artists[indexPath.row - 1] as! MPMediaItem
+                var rowItem: MPMediaItem = artists[indexPath.row ] as! MPMediaItem
                 //segue to song selction from artist
                 
                 //return song cell
@@ -166,7 +153,7 @@ class SongSelectionViewController: UIViewController, UITableViewDelegate, UITabl
                 
                 var songsQuery = MPMediaQuery.songsQuery()
                 var songs = songsQuery.items
-                var rowItem: MPMediaItem = songs[indexPath.row - 1] as! MPMediaItem
+                var rowItem: MPMediaItem = songs[indexPath.row ] as! MPMediaItem
                 self.party.setSong(rowItem)
                 if(self.party.role == PeerType.Host_Creator){
                     self.performSegueWithIdentifier("LoadingPartySegue", sender: self)
@@ -176,19 +163,13 @@ class SongSelectionViewController: UIViewController, UITableViewDelegate, UITabl
                 
                 
             }
-        }
+        
         
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
-        if( indexPath.row == 0){
-            let cell = self.table.dequeueReusableCellWithIdentifier("FilterCell", forIndexPath: indexPath) as? FilterCell
-            
-            return cell!
-            
-        }
-        else{
+        
             switch self.filter{
                 
                 //return albums cell
@@ -197,13 +178,23 @@ class SongSelectionViewController: UIViewController, UITableViewDelegate, UITabl
                 
                 
                 var albumsQuery = MPMediaQuery.albumsQuery()
-                var albums = albumsQuery.items
-                var rowItem: MPMediaItem = albums[indexPath.row - 1] as! MPMediaItem
+                albumsQuery.groupingType = MPMediaGrouping.Album
+                var albums = albumsQuery.collections
+                var rowItem: MPMediaItemCollection = albums[indexPath.row] as! MPMediaItemCollection
+                var representative = rowItem.representativeItem
                 
-                cell?.textLabel?.text = rowItem.valueForProperty(MPMediaItemPropertyAlbumTitle) as? String!
-                cell?.detailTextLabel?.text = rowItem.valueForProperty(MPMediaItemPropertyAlbumArtist) as? String!
+                cell?.textLabel?.text = representative.albumTitle //rowItem.valueForProperty(MPMediaItemPropertyAlbumTitle) as? String!
+                cell?.detailTextLabel?.text = representative.albumArtist //rowItem.valueForProperty(MPMediaItemPropertyArtist) as? String!
                 
-                var artwork: MPMediaItemArtwork = rowItem.valueForProperty(MPMediaItemPropertyArtwork) as! MPMediaItemArtwork
+                if (representative.albumArtist == nil) {
+                    cell?.detailTextLabel?.text = "Unknown Artist"
+                }
+                
+                if (representative.albumTitle == nil) {
+                    cell?.textLabel?.text = "Unknown Album"
+                }
+                
+                var artwork: MPMediaItemArtwork = representative.artwork //rowItem.valueForProperty(MPMediaItemPropertyArtwork) as! MPMediaItemArtwork
                 
                 var artworkImage = artwork.imageWithSize(CGSize(width: 44,height: 44))
                 
@@ -223,12 +214,19 @@ class SongSelectionViewController: UIViewController, UITableViewDelegate, UITabl
                 
                 
                 var artistsQuery = MPMediaQuery.artistsQuery()
-                var artists = artistsQuery.items
-                var rowItem: MPMediaItem = artists[indexPath.row - 1] as! MPMediaItem
+                artistsQuery.groupingType = MPMediaGrouping.Artist
+                var artists = artistsQuery.collections
+                println(artists.count)
+                println(indexPath.row)
+                var rowItem: MPMediaItemCollection = artists[indexPath.row] as! MPMediaItemCollection
+                var representative = rowItem.representativeItem
+                cell?.textLabel?.text = representative.artist //rowItem.valueForProperty(MPMediaItemPropertyArtist) as? String!
                 
-                cell?.textLabel?.text = rowItem.valueForProperty(MPMediaItemPropertyArtist) as? String!
+                if (representative.artist == nil) {
+                    cell?.detailTextLabel?.text = "Unknown Artist"
+                }
                 
-                var artwork: MPMediaItemArtwork = rowItem.valueForProperty(MPMediaItemPropertyArtwork) as! MPMediaItemArtwork
+                var artwork: MPMediaItemArtwork = representative.artwork//rowItem.valueForProperty(MPMediaItemPropertyArtwork) as! MPMediaItemArtwork
                 
                 var artworkImage = artwork.imageWithSize(CGSize(width: 44,height: 44))
                 
@@ -249,7 +247,7 @@ class SongSelectionViewController: UIViewController, UITableViewDelegate, UITabl
                 
                 var songsQuery = MPMediaQuery.songsQuery()
                 var songs = songsQuery.items
-                var rowItem: MPMediaItem = songs[indexPath.row - 1] as! MPMediaItem
+                var rowItem: MPMediaItem = songs[indexPath.row] as! MPMediaItem
                 
                 cell?.textLabel?.text = rowItem.valueForProperty(MPMediaItemPropertyTitle) as? String!
                 cell?.detailTextLabel?.text = rowItem.valueForProperty(MPMediaItemPropertyArtist) as? String!
@@ -268,7 +266,7 @@ class SongSelectionViewController: UIViewController, UITableViewDelegate, UITabl
                 
                 return cell!
             }
-        }
+        
         
         
     }
@@ -284,8 +282,8 @@ class SongSelectionViewController: UIViewController, UITableViewDelegate, UITabl
             
             for i_peer in self.party.invitedFriends{
                 for peer in self.party.foundPeers {
-                    if (peer.displayName == i_peer.displayName){
-                        self.party.serviceBrowser.invitePeer(peer, toSession: self.party.session, withContext: nil, timeout: 70.0)
+                    if (peer.displayName == i_peer.displayName && self.party.myPeerID.hash > peer.hash){
+                        self.party.serviceBrowser.invitePeer(peer, toSession: self.party.session, withContext: nil, timeout: 30.0)
                         
                         break
                     }
